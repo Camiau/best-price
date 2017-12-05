@@ -18,11 +18,11 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             return productList;
         }
-        public bool UserExits(ApplicationUser user)
+        public bool UserExits(User user)
         {
             return true;
         }
-        public bool RegisterUser(ApplicationUser user)
+        public bool RegisterUser(User user)
         {
             return true;
         }
