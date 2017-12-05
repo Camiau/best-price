@@ -6,18 +6,18 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        private List<User> users = new List<User> (); //Falsa persistencia
+        private List<ApplicationUser> users = new List<ApplicationUser> (); //Falsa persistencia
 
         public bool RegisterUser (RegisterModel newUser) 
         {
 
-            User user = new User () 
+            ApplicationUser user = new ApplicationUser () 
             {
                 Name =  newUser.Name,
                 Surname = newUser.Surname,
                 Email = newUser.Email,
                 Dni = newUser.Dni,
-                EmailIsConfirmed = false
+                EmailIsConfirmed = true
             };
             users.Add(user);
             return true;
