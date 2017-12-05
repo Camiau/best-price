@@ -10,4 +10,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MejorPrecio.Common\MejorPrecio.Common.csproj" />
+  </ItemGroup>
+
 </Project>
