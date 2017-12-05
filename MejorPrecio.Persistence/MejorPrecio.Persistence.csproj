@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MejorPrecio.Common\MejorPrecio.Common.csproj" />
-    <ProjectReference Include="..\MejorPrecio.Persistence\MejorPrecio.Persistence.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
