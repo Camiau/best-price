@@ -7,10 +7,24 @@ namespace testconsola.mejor_precio_6
     {
         static void Main(string[] args)
         {
+            Gasti();
+            Fer();
+            Cami();
+        }
+        static private void Gasti()
+        {
             Console.WriteLine("Hello World!");
             var product1 = new ProductsApi();
-            string parameter ="0";
-            var p=product1.SearchByCodeBar(parameter);
+            string parameter = "0";
+            var p = product1.SearchByCodeBar(parameter);
+        }
+        static private void Fer()
+        {
+
+        }
+        static private void Cami()
+        {
+
         }
     }
 }
