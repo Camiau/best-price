@@ -17,6 +17,8 @@ namespace testconsola.mejor_precio_6
             var product1 = new ProductsApi();
             string parameter = "0";
             var p = product1.SearchByCodeBar(parameter);
+            var productPhisic=new Product();
+            var ls= product1.FindBestPrice(productPhisic);
         }
         static private void Fer()
         {

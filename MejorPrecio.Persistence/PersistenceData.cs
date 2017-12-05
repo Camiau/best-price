@@ -32,7 +32,7 @@ namespace MejorPrecio.Persistence
             var ret=new Product();
             return ret;
         }
-        public List<Product> GetBestPrice(Product prd,Price priceEspecific)
+        public List<Product> GetBestPrice(Product prd)
         {
             var prod = new Product();
             List<Product> productList = new List<Product>();
