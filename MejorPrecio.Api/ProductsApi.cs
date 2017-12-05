@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
-=======
-using System;
->>>>>>> issue-29
 using MejorPrecio.Common;
 using MejorPrecio.Persistence;
 
