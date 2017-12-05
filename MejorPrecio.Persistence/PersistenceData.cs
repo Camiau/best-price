@@ -1,12 +1,53 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using MejorPrecio.Common;
 namespace MejorPrecio.Persistence
 {
     public class PersistenceData
     {
-        public void Prueba ()
+        public List<Product> ReadAllProducts()
         {
-            System.Console.WriteLine("OK PERSISTENCE");
+            var prod = new Product();
+            List<Product> productList = new List<Product>();
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            return productList;
+        }
+        public bool UserExits(ApplicationUser user)
+        {
+            return true;
+        }
+        public bool RegisterUser(ApplicationUser user)
+        {
+            return true;
+        }
+
+        public Product GetProductByCodeBar(string codeBar)
+        {
+            var ret=new Product();
+            return ret;
+        }
+        public List<Product> GetBestPrice(Product prd,Price priceEspecific)
+        {
+            var prod = new Product();
+            List<Product> productList = new List<Product>();
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            productList.Add(prod);
+            return productList;
+        }
+        public bool RegisterPrice(Product prd,Price priceEspecific)
+        {
+            return true;
         }
     }
 }
