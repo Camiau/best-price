@@ -35,7 +35,7 @@ namespace MejorPrecio.Persistence
         public List<Product> GetBestPrice(Product prd)
         {
             var prod = new Product();
-            List<Product> productList = new List<Product>();
+            List<Product> productList = new List<Product>();    
             productList.Add(prod);
             productList.Add(prod);
             productList.Add(prod);
