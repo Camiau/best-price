@@ -13,10 +13,15 @@ namespace testconsola.mejor_precio_6
         }
         static private void Gasti()
         {
-            Console.WriteLine("Hello World!");
-            var product1 = new ProductsApi();
-            string parameter = "0";
-            var p = product1.SearchByCodeBar(parameter);
+            //Console.WriteLine("Hello World!");
+            var apiProduct = new ProductsApi();
+            var product1=new Product();
+            product1.CodeBar = "0123456789012";
+            var p = apiProduct.FindBestPrice(product1);
+            System.Console.WriteLine("ID:"+p[0].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[1].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[2].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[3].IdUser.ToString());
         }
         static private void Fer()
         {

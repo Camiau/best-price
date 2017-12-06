@@ -4,12 +4,12 @@ namespace MejorPrecio.Common
 {
     public class Price
     {
-        int Id;
-        string CodeBar;//foreign key from a specific product
-        double PriceEffective;
-        DateTimeOffset Date;
-        long Lattitude;
-        long Longittude;
-        ApplicationUser User;
+        public int Id;
+        public string CodeBar;//foreign key from a specific product
+        public double PriceEffective;
+        public DateTimeOffset Date;
+        public double Lattitude;
+        public double Longittude;
+        public int IdUser;
     }
 }
