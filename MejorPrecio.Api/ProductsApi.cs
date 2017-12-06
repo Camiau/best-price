@@ -7,7 +7,6 @@ namespace MejorPrecio.Api
 {
     public class ProductsApi
     {
-
         public Product SearchByCodeBar(string codeBar)
         {
             //codeBar is a valid codeBar chechekd by a previous function
@@ -15,7 +14,7 @@ namespace MejorPrecio.Api
             //here should be all the init for the DB
             return persistence.GetProductByCodeBar(codeBar);
         }
-        public List<Product> FindBestPrice(Product prod)
+        public List<Price> FindBestPrice(Product prod)
         {
             var data=new PersistenceData();
             //Here will be all the init for the conecction to the DB

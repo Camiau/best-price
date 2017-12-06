@@ -30,26 +30,28 @@ namespace MejorPrecio.Persistence
 
         public Product GetProductByCodeBar(string codeBar)
         {
-            var ret=new Product();
+            var ret = new Product();
             return ret;
         }
-        public List<Product> GetBestPrice(Product prd)
+        public List<Price> GetBestPrice(Product prd)
         {
-            var prod = new Product();
-            List<Product> productList = new List<Product>();
-            prod.CodeBar="123456789";
-            prod.Description[0]="Vaso";
-            prod.Description[1]="de Agua";
-            productList.Add(prod);
-            productList.Add(prod);
-            productList.Add(prod);
-            productList.Add(prod);
-            productList.Add(prod);
-            productList.Add(prod);
-            productList.Add(prod);
+            List<Price> productList = new List<Price>();
+            var today = new DateTimeOffset();
+            for (int i = 0; i < 10; i++)
+            {
+                var prod = new Price();
+                prod.PriceEffective = 50.00;
+                prod.Lattitude = -66.6666;
+                prod.Longittude = -66.6666;
+                prod.Date = today.Date;
+                prod.PriceEffective++;
+                prod.Id=i+10;
+                prod.IdUser = i;
+                productList.Add(prod);
+            }
             return productList;
         }
-        public bool RegisterPrice(Product prd,Price priceEspecific)
+        public bool RegisterPrice(Product prd, Price priceEspecific)
         {
             return true;
         }
