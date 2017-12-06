@@ -22,7 +22,7 @@ namespace MejorPrecio.Persistence
         {
             return true;
         }
-        public bool RegisterUser(ApplicationUser user)
+        public bool RegisterUser(RegisterModel user)
         {
             return true;
         }

@@ -4,7 +4,7 @@ namespace MejorPrecio.Common
 {
     public class Product
     {
-        string codeBar;
-        string[] description;
+        public string CodeBar;
+        public string[] Description;
     }
 }
