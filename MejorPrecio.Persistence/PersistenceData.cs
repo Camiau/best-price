@@ -36,6 +36,9 @@ namespace MejorPrecio.Persistence
         {
             var prod = new Product();
             List<Product> productList = new List<Product>();
+            prod.CodeBar="123456789";
+            prod.Description[0]="Vaso";
+            prod.Description[1]="de Agua";
             productList.Add(prod);
             productList.Add(prod);
             productList.Add(prod);

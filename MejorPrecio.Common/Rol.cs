@@ -4,8 +4,8 @@ namespace MejorPrecio.Common
 {
     public class Rol
     {
-        int idRol;
-        string rolName;
-        ApplicationUser user;
+        int IdRol;
+        string RolName;
+        ApplicationUser User;
     }
 }
