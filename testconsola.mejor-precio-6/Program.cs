@@ -22,6 +22,8 @@ namespace testconsola.mejor_precio_6
             System.Console.WriteLine("ID:"+p[1].IdUser.ToString());
             System.Console.WriteLine("ID:"+p[2].IdUser.ToString());
             System.Console.WriteLine("ID:"+p[3].IdUser.ToString());
+            var okLoad=apiProduct.LoadNewPrice(p[0]);
+            System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
         }
         static private void Fer()
         {

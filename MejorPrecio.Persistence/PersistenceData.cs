@@ -51,7 +51,7 @@ namespace MejorPrecio.Persistence
             }
             return productList;
         }
-        public bool RegisterPrice(Product prd, Price priceEspecific)
+        public bool RegisterPrice(Price priceEspecific)
         {
             return true;
         }
