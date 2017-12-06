@@ -24,18 +24,29 @@ namespace testconsola.mejor_precio_6
 
             LoginModel userLogin = new LoginModel();
 
-            RegisterModel newUser = new RegisterModel()
-            {
-                Name = "Nombre",
-                Surname = "Apellido",
-                Email = "correo@dominio.com",
-                Dni = "12345678"
-            };
+            RegisterModel newUser = new RegisterModel();
+
+            Console.WriteLine("Ingrese su nombre");
+
+            newUser.Name = Console.ReadLine();
+
+            Console.WriteLine("Ingrese su apellido");
+
+            newUser.Surname = Console.ReadLine();
+
+            Console.WriteLine("Ingrese su email");
+
+            newUser.Email = Console.ReadLine();
+
+            Console.WriteLine("Ingrese su dni");
+
+            newUser.Dni = Console.ReadLine();
+
 
             if (api.RegisterUser(newUser))
             {
-                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("Usuario añadido correctamente!");
+                Console.WriteLine("\n\n\nIngresando al sistema!!");
             }
 
             Console.WriteLine("Ingrese su email");

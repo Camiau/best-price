@@ -5,6 +5,8 @@ namespace MejorPrecio.Persistence
 {
     public class PersistenceData
     {
+        private static List<ApplicationUser> usersdb = new List<ApplicationUser>();
+
         public List<Product> ReadAllProducts()
         {
             var prod = new Product();
@@ -18,18 +20,20 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             return productList;
         }
-        public bool UserExits(ApplicationUser user)
+        public static ApplicationUser UserExist(string email, string dni)
         {
-            return true;
+            var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            return userexist;
         }
-        public bool RegisterUser(RegisterModel user)
+        public static bool RegisterUser(ApplicationUser user)
         {
+            usersdb.Add(user);
             return true;
         }
 
         public Product GetProductByCodeBar(string codeBar)
         {
-            var ret=new Product();
+            var ret = new Product();
             return ret;
         }
         public List<Product> GetBestPrice(Product prd)
@@ -45,7 +49,7 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             return productList;
         }
-        public bool RegisterPrice(Product prd,Price priceEspecific)
+        public bool RegisterPrice(Product prd, Price priceEspecific)
         {
             return true;
         }
