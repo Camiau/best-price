@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MejorPrecio.Common;
 using MejorPrecio.Api;
 namespace testconsola.mejor_precio_6
@@ -61,7 +61,19 @@ namespace testconsola.mejor_precio_6
         }
         static private void Cami()
         {
+            var code = new BarcodeScanner();
+            
+            code.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\img-codbarra.jpg");//Cambiar path imagen
 
+            if(code.codebar != null)
+            {
+                Console.WriteLine("Barcode: " + code.codebar );
+            }
+            else
+            {
+                Console.WriteLine("No se pudo leer el codigo");
+            }
+            Console.Read();
         }
     }
 

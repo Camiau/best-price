@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MejorPrecio.Common;
+
 namespace MejorPrecio.Persistence
 {
     public class PersistenceData
