@@ -5,7 +5,7 @@ namespace MejorPrecio.Persistence
 {
     public class PersistenceData
     {
-        private static List<ApplicationUser> usersdb = new List<ApplicationUser>();
+        public static List<ApplicationUser> usersdb = new List<ApplicationUser>();
 
         public List<Product> ReadAllProducts()
         {

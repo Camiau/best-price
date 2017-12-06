@@ -9,7 +9,7 @@ namespace MejorPrecio.Api
     {
         public bool RegisterUser(RegisterModel newUser)
         {
-            var user = PersistenceData.UserExist(newUser.Email, newUser.Dni);
+            var user = UserExist(newUser.Email, newUser.Dni);
 
             if (user == null)
             {
@@ -30,7 +30,7 @@ namespace MejorPrecio.Api
         public bool Login(LoginModel userLogin)
         {
 
-            var user = PersistenceData.UserExist(userLogin.Email, userLogin.Dni);
+            var user = UserExist(userLogin.Email, userLogin.Dni);
 
             if (user != null && user.EmailIsConfirmed)
             {
@@ -44,5 +44,12 @@ namespace MejorPrecio.Api
 
             else return false;
         }
+
+        public static ApplicationUser UserExist(string email, string dni)
+        {
+            var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            return userexist;
+        }
+
     }
 }
