@@ -41,14 +41,15 @@ namespace MejorPrecio.Persistence
         {
             List<Price> productList = new List<Price>();
             var today = new DateTimeOffset();
+             
+             
             for (int i = 0; i < 10; i++)
             {
                 var prod = new Price();
-                prod.PriceEffective = 50.00;
                 prod.Lattitude = -66.6666;
                 prod.Longittude = -66.6666;
                 prod.Date = today.Date;
-                prod.PriceEffective++;
+                prod.PriceEffective = i + 50;
                 prod.Id=i+10;
                 prod.IdUser = i;
                 productList.Add(prod);
