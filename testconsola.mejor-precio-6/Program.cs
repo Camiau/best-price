@@ -7,21 +7,46 @@ namespace testconsola.mejor_precio_6
     {
         static void Main(string[] args)
         {
-            Gasti();
+            /*Gasti();
             Fer();
-            Cami();
+            Cami();*/
+            Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            Console.WriteLine("\t\tMEJOR - PRECIO - 6");
+            Console.WriteLine("Ingrese número de opción");
+            Console.WriteLine("1-Listar products\n2-Registrarse\n3-Escanear código de barras");
+            string opt = Console.ReadLine();
+            if (Int32.TryParse(opt, out int number))
+            {
+                switch (number)
+                {
+                    case 1:
+                        Gasti();
+                        break;
+                    case 2:
+                        Fer();
+                        break;
+                    case 3:
+                        Cami();
+                        break;
+                    default:
+                        Console.WriteLine("Opción no válida");
+                        break;
+
+                }
+
+            }
         }
         static private void Gasti()
         {
             //Console.WriteLine("Hello World!");
             var apiProduct = new ProductsApi();
-            var product1=new Product();
+            var product1 = new Product();
             product1.CodeBar = "0123456789012";
             var p = apiProduct.FindBestPrice(product1);
-            System.Console.WriteLine("ID:"+p[0].IdUser.ToString());
-            System.Console.WriteLine("ID:"+p[1].IdUser.ToString());
-            System.Console.WriteLine("ID:"+p[2].IdUser.ToString());
-            System.Console.WriteLine("ID:"+p[3].IdUser.ToString());
+            System.Console.WriteLine("ID:" + p[0].IdUser.ToString());
+            System.Console.WriteLine("ID:" + p[1].IdUser.ToString());
+            System.Console.WriteLine("ID:" + p[2].IdUser.ToString());
+            System.Console.WriteLine("ID:" + p[3].IdUser.ToString());
         }
         static private void Fer()
         {
@@ -72,20 +97,20 @@ namespace testconsola.mejor_precio_6
         }
         static private void Cami()
         {
-                         //PRUEBA
-           var code = new BarcodeScanner();
-           
-           code.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\img-codbarra.jpg");//Cambiar path imagen
+            //PRUEBA
+            var code = new BarcodeScanner();
 
-           if(code.codebar != null)
-           {
-               Console.WriteLine("Barcode: " + code.codebar );
-           }
-           else
-           {
-               Console.WriteLine("No se pudo leer el codigo");
-           }
-           Console.Read();
+            code.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\img-codbarra.jpg");//Cambiar path imagen
+
+            if (code.codebar != null)
+            {
+                Console.WriteLine("Barcode: " + code.codebar);
+            }
+            else
+            {
+                Console.WriteLine("No se pudo leer el codigo");
+            }
+            Console.Read();
         }
     }
 
