@@ -43,10 +43,19 @@ namespace testconsola.mejor_precio_6
             var product1 = new Product();
             product1.CodeBar = "0123456789012";
             var p = apiProduct.FindBestPrice(product1);
+<<<<<<< HEAD
             System.Console.WriteLine("ID:" + p[0].IdUser.ToString());
             System.Console.WriteLine("ID:" + p[1].IdUser.ToString());
             System.Console.WriteLine("ID:" + p[2].IdUser.ToString());
             System.Console.WriteLine("ID:" + p[3].IdUser.ToString());
+=======
+            System.Console.WriteLine("ID:"+p[0].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[1].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[2].IdUser.ToString());
+            System.Console.WriteLine("ID:"+p[3].IdUser.ToString());
+            var okLoad=apiProduct.LoadNewPrice(p[0]);
+            System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
+>>>>>>> 39d4728a7e11791839a139f969d9828268d4ee0a
         }
         static private void Fer()
         {
