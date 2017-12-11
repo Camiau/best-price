@@ -10,33 +10,33 @@ namespace testconsola.mejor_precio_6
             /*Gasti();
             Fer();
             Cami();*/
-            while(true)
+            while (true)
             {
-            Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            Console.WriteLine("\t\tMEJOR - PRECIO - 6");
-            Console.WriteLine("Ingrese número de opción");
-            Console.WriteLine("1-Registrarse\n2-Escanear código de barras\n3-Listar precios\n");
-            string opt = Console.ReadLine();
-            if (Int32.TryParse(opt, out int number))
-            {
-                switch (number)
+                Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                Console.WriteLine("\t\tMEJOR - PRECIO - 6");
+                Console.WriteLine("Ingrese número de opción");
+                Console.WriteLine("1-Registrarse\n2-Escanear código de barras\n3-Listar precios\n");
+                string opt = Console.ReadLine();
+                if (Int32.TryParse(opt, out int number))
                 {
-                    case 3:
-                        Gasti();
-                        break;
-                    case 1:
-                        Fer();
-                        break;
-                    case 2:
-                        Cami();
-                        break;
-                    default:
-                        Console.WriteLine("Opción no válida");
-                        break;
+                    switch (number)
+                    {
+                        case 3:
+                            Gasti();
+                            break;
+                        case 1:
+                            Fer();
+                            break;
+                        case 2:
+                            Cami();
+                            break;
+                        default:
+                            Console.WriteLine("Opción no válida");
+                            break;
+
+                    }
 
                 }
-
-            }
 
             }
         }
@@ -49,12 +49,12 @@ namespace testconsola.mejor_precio_6
             product1.Description = "Lata de cocacola";
             var p = apiProduct.FindBestPrice(product1);
             Console.WriteLine(product1.Description);
-            System.Console.WriteLine("Price:"+p[0].PriceEffective.ToString());
-            System.Console.WriteLine("Price:"+p[1].PriceEffective.ToString());
-            System.Console.WriteLine("Price:"+p[2].PriceEffective.ToString());
-            System.Console.WriteLine("Price:"+p[3].PriceEffective.ToString());
-            var okLoad=apiProduct.LoadNewPrice(p[0]);
-           // System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
+            System.Console.WriteLine("Price:" + p[0].PriceEffective.ToString());
+            System.Console.WriteLine("Price:" + p[1].PriceEffective.ToString());
+            System.Console.WriteLine("Price:" + p[2].PriceEffective.ToString());
+            System.Console.WriteLine("Price:" + p[3].PriceEffective.ToString());
+            var okLoad = apiProduct.LoadNewPrice(p[0]);
+            // System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
         }
         static private void Fer()
         {
@@ -81,11 +81,20 @@ namespace testconsola.mejor_precio_6
             newUser.Dni = Console.ReadLine();
 
 
-            if (api.RegisterUser(newUser))
+            if (api.RegisterUser(newUser) != null)
             {
                 Console.WriteLine("Usuario añadido correctamente!");
-                Console.WriteLine("\n\n\nIngresando al sistema!!");
+
             }
+            else
+            {
+                Console.WriteLine("Correo electrónico o email no válido");
+                Environment.Exit(-1);
+            };
+
+
+            Console.WriteLine("\n\n\nIngresando al sistema!!");
+
 
             Console.WriteLine("Ingrese su email");
 

@@ -7,24 +7,35 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        public bool RegisterUser(RegisterModel newUser)
+        public ApplicationUser RegisterUser(RegisterModel newUser)
         {
-            var user = UserExist(newUser.Email, newUser.Dni);
-
-            if (user == null)
+            if(newUser.ValidateDni(newUser.Dni))
             {
-                ApplicationUser saveuser = new ApplicationUser()
+                var user = UserExist(newUser.Email, newUser.Dni);
+                
+                if (user == null) //Si el usuario es null significa que no está en la DB
                 {
-                    Name = newUser.Name,
-                    Surname = newUser.Surname,
-                    Dni = newUser.Dni,
-                    Email = newUser.Email,
-                    EmailIsConfirmed = true
+                    ApplicationUser saveuser = new ApplicationUser()
+                    {
+                        Name = newUser.Name,
+                        Surname = newUser.Surname,
+                        Dni = newUser.Dni,
+                        Email = newUser.Email,
+                        EmailIsConfirmed = false
+                    };
+                    PersistenceData.RegisterUser(saveuser);
+                    return saveuser;
+                }
+                
+
+                else // De otra forma devolvemos los datos del usuario 
+                {
+                    user.EmailIsConfirmed = true; // Mockeamos la cosa que dice que el usuario está validado. Esto después se tiene que ir >.<
+                    return user;
                 };
-                return PersistenceData.RegisterUser(saveuser);
+
             }
-            
-            else return false;
+            else return null;
         }
 
         public bool Login(LoginModel userLogin)
@@ -45,7 +56,7 @@ namespace MejorPrecio.Api
             else return false;
         }
 
-        public static ApplicationUser UserExist(string email, string dni)
+        private static ApplicationUser UserExist(string email, string dni)
         {
             var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
             return userexist;
