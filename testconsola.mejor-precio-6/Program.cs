@@ -14,6 +14,8 @@ namespace testconsola.mejor_precio_6
         static private void Gasti()
         {
             //Console.WriteLine("Hello World!");
+            var os = Environment.OSVersion;
+            System.Console.WriteLine("OS:"+os.Platform.ToString());
             var apiProduct = new ProductsApi();
             var product1=new Product();
             product1.CodeBar = "0123456789012";
