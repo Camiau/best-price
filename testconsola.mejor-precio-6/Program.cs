@@ -47,6 +47,7 @@ namespace testconsola.mejor_precio_6
             System.Console.WriteLine("OS:"+os.Platform.ToString());
             var apiProduct = new ProductsApi();
             var product1 = new Product();
+            var a123=apiProduct.SearchByCodeBar("0123456789012");
             product1.CodeBar = Cami();
             product1.Description = "Lata de cocacola";
             var p = apiProduct.FindBestPrice(product1);
