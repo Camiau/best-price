@@ -19,6 +19,7 @@ namespace testconsola.mejor_precio_6
             var apiProduct = new ProductsApi();
             var product1=new Product();
             product1.CodeBar = "0123456789012";
+            var a12=apiProduct.SearchByCodeBar("0123456789012");
             var p = apiProduct.FindBestPrice(product1);
             System.Console.WriteLine("ID:"+p[0].IdUser.ToString());
             System.Console.WriteLine("ID:"+p[1].IdUser.ToString());

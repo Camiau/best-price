@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MejorPrecio.Common;
+using System.Data.SqlClient;
 
 namespace MejorPrecio.Persistence
 {
@@ -19,6 +20,17 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             productList.Add(prod);
             productList.Add(prod);
+            //var conectionString = "user:";
+            using (SqlConnection conn = new SqlConnection())
+            {
+                //conn.ConnectionString = "Server=[server_name];Database=[database_name];Trusted_Connection=true";
+                //conn.ConnectionString = "Server=[server_name];Database=[database_name];Trusted_Connection=true";
+                //conn.ConnectionString = @"Server=[DESKTOP-3MV52PP\SQLEXPRESS];Database=[mejorprecio6];Integrated Security=true;";
+                conn.ConnectionString = @"Server=(mejorprecio6)\v11.0;Integrated Security=true;";
+                conn.Open();
+                // using the code here...
+
+            }
             return productList;
         }
         public static ApplicationUser UserExist(string email, string dni)
@@ -49,7 +61,7 @@ namespace MejorPrecio.Persistence
                 prod.Longittude = -66.6666;
                 prod.Date = today.Date;
                 prod.PriceEffective++;
-                prod.Id=i+10;
+                prod.Id = i + 10;
                 prod.IdUser = i;
                 productList.Add(prod);
             }

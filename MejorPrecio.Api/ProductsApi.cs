@@ -12,6 +12,7 @@ namespace MejorPrecio.Api
             //codeBar is a valid codeBar chechekd by a previous function
             var persistence = new PersistenceData();
             //here should be all the init for the DB
+           var a= persistence.ReadAllProducts();
             return persistence.GetProductByCodeBar(codeBar);
         }
         public List<Price> FindBestPrice(Product prod)
