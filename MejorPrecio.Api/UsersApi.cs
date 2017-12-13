@@ -9,8 +9,9 @@ namespace MejorPrecio.Api
     {
         public ApplicationUser RegisterUser(RegisterModel newUser)
         {
-            if(newUser.ValidateDni(newUser.Dni))
+            if(newUser.ValidateDni())
             {
+                
                 var user = UserExist(newUser.Email, newUser.Dni);
                 
                 if (user == null) //Si el usuario es null significa que no está en la DB
