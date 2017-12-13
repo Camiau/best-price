@@ -46,15 +46,9 @@ namespace testconsola.mejor_precio_6
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:"+os.Platform.ToString());
             var apiProduct = new ProductsApi();
-<<<<<<< HEAD
-            var product1=new Product();
-            product1.CodeBar = "0123456789012";
-            var a12=apiProduct.SearchByCodeBar("0123456789012");
-=======
             var product1 = new Product();
             product1.CodeBar = Cami();
             product1.Description = "Lata de cocacola";
->>>>>>> master
             var p = apiProduct.FindBestPrice(product1);
             Console.WriteLine(product1.Description);
             System.Console.WriteLine("Price:"+p[0].PriceEffective.ToString());

@@ -21,13 +21,10 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             productList.Add(prod);
             //var conectionString = "user:";
-            using (SqlConnection conn = new SqlConnection())
+            using (SqlConnection conn = new SqlConnection("Server=localhost;Database=mejorprecio6;Trusted_Connection=True"))
             {
-                //conn.ConnectionString = "Server=[server_name];Database=[database_name];Trusted_Connection=true";
-                //conn.ConnectionString = "Server=[server_name];Database=[database_name];Trusted_Connection=true";
-                //conn.ConnectionString = @"Server=[DESKTOP-3MV52PP\SQLEXPRESS];Database=[mejorprecio6];Integrated Security=true;";
-                conn.ConnectionString = @"Server=(mejorprecio6)\v11.0;Integrated Security=true;";
                 conn.Open();
+                
                 // using the code here...
 
             }
