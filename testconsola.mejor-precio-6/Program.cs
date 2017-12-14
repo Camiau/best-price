@@ -46,9 +46,13 @@ namespace testconsola.mejor_precio_6
             System.Console.WriteLine("OS:"+os.Platform.ToString());
             var apiProduct = new ProductsApi();
             var UsersApi= new UsersApi();
-            long dnitest=39244338;
-            var asw=UsersApi.UserExist("asdkddskds@adskjds.com",dnitest);
-            System.Console.WriteLine(asw.Name);
+            var userToRegister=new RegisterModel();
+            userToRegister.Name="cami";
+            userToRegister.Surname="F";
+            userToRegister.Email="cami@f.com";
+            userToRegister.Dni=38243776;
+            userToRegister.ImagePath="";
+            var okcreate=UsersApi.RegisterUser(userToRegister);
         }
         static private void Fer()
         {
@@ -72,7 +76,7 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            //newUser.Dni = Console.ReadLine();
+            newUser.Dni = int.Parse(Console.ReadLine());
 
 
             if (api.RegisterUser(newUser))
@@ -87,7 +91,7 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            //userLogin.Dni = Console.ReadLine();
+            userLogin.Dni = int.Parse(Console.ReadLine());
 
             if (api.Login(userLogin))
             {

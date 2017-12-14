@@ -132,3 +132,5 @@ VALUES
 GO
 SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
+INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('fer','G',38324779,'fer@123.com','',1) 
+GO
