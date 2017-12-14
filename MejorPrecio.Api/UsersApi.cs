@@ -45,9 +45,11 @@ namespace MejorPrecio.Api
             else return false;
         }
 
-        public static ApplicationUser UserExist(string email, string dni)
+        public static ApplicationUser UserExist(string email, long dni)
         {
-            var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            //var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            var persistence = new PersistenceData();
+            var userexist = persistence.UserExist(email,dni);
             return userexist;
         }
 

@@ -7,9 +7,8 @@ namespace MejorPrecio.Persistence
 {
     public class PersistenceData
     {
-        private string conectionStringLocalDB=@"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-        public static List<ApplicationUser> usersdb = new List<ApplicationUser>();
-
+        private static string conectionStringLocalDB=@"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+        //public static List<ApplicationUser> usersdb = new List<ApplicationUser>();
         public List<Product> ReadAllProducts()
         {
             List<Product> productList = new List<Product>();
@@ -19,7 +18,7 @@ namespace MejorPrecio.Persistence
                 SqlDataReader myReader = null;
                 SqlCommand myCommand = new SqlCommand("SELECT * FROM products", conn);
                 myReader = myCommand.ExecuteReader();
-                // using the code here...
+                //until this, is the db conection
                 while (myReader.Read())
                 {
                     var prod = new Product();
@@ -31,14 +30,34 @@ namespace MejorPrecio.Persistence
             }
             return productList;
         }
-        public static ApplicationUser UserExist(string email, string dni)
+        public ApplicationUser UserExist(string email, long dni)
         {
-            var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            //var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
+            var userexist= new ApplicationUser();
+            //select example:
+            //SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                SqlDataReader myReader = null;
+                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='"+email+"' AND users.dni="+dni, conn);
+                myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    userexist.IdUser= int.Parse(myReader["iduser"].ToString());
+                    userexist.Name=myReader["nameUser"].ToString();
+                    userexist.Surname=myReader["lastName"].ToString();
+                    userexist.Dni=int.Parse(myReader["dni"].ToString());
+                    userexist.Email=myReader["mail"].ToString();
+                    userexist.ImagePath=myReader["imagePath"].ToString();
+                    userexist.IdRol=int.Parse(myReader["idRol"].ToString());
+                }
+            }
             return userexist;
         }
         public static bool RegisterUser(ApplicationUser user)
         {
-            usersdb.Add(user);
+            //usersdb.Add(user);
             return true;
         }
 

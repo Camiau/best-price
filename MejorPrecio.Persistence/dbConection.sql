@@ -94,14 +94,14 @@ CREATE TABLE dbo.searches
 GO
 -- Insert rows into table 'users'
 INSERT INTO users
-    ([nameUser],[lastName],[dni],[mail])
+    ([nameUser],[lastName],[dni],[mail],[idRol])
 VALUES
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com'),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com'),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com'),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com'),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com'),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com')
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1)
     
 GO
 -- Query the total count of employees
@@ -129,4 +129,6 @@ VALUES
     ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
     ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
     
+GO
+SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
