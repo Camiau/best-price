@@ -56,7 +56,7 @@ namespace testconsola.mejor_precio_6
             var okLoad = apiProduct.LoadNewPrice(p[0]);
             // System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
         }
-        static private void Fer()
+        static private async void Fer()
         {
             UsersApi api = new UsersApi();
 
@@ -81,16 +81,9 @@ namespace testconsola.mejor_precio_6
             newUser.Dni = Console.ReadLine();
 
 
-            if (api.RegisterUser(newUser) != null)
-            {
-                Console.WriteLine("Usuario añadido correctamente!");
+            var resultado = await api.RegisterUser(newUser);
 
-            }
-            else
-            {
-                Console.WriteLine("Correo electrónico o email no válido");
-                Environment.Exit(-1);
-            };
+            Console.WriteLine("{0}", resultado);      
 
 
             Console.WriteLine("\n\n\nIngresando al sistema!!");
@@ -104,12 +97,9 @@ namespace testconsola.mejor_precio_6
 
             userLogin.Dni = Console.ReadLine();
 
-            if (api.Login(userLogin))
-            {
-                Console.WriteLine("Logeado!");
-
-            }
-            else Console.WriteLine("No logeado :C");
+            var result = await api.Login(userLogin);
+            
+            Console.WriteLine("{0}", result);
 
         }
         static private string Cami()

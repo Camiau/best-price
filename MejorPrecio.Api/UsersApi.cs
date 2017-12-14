@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MejorPrecio.Common;
 using MejorPrecio.Persistence;
 
@@ -7,61 +8,55 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        public ApplicationUser RegisterUser(RegisterModel newUser)
+        public async Task<string> RegisterUser(RegisterModel newUser)
         {
-            if(newUser.ValidateDni())
+            var result = await UserManager.CreateUserAsync(newUser);
+            switch (result)
             {
-                
-                var user = UserExist(newUser.Email, newUser.Dni);
-                
-                if (user == null) //Si el usuario es null significa que no está en la DB
-                {
-                    ApplicationUser saveuser = new ApplicationUser()
-                    {
-                        Name = newUser.Name,
-                        Surname = newUser.Surname,
-                        Dni = newUser.Dni,
-                        Email = newUser.Email,
-                        EmailIsConfirmed = false
-                    };
-                    PersistenceData.RegisterUser(saveuser);
-                    return saveuser;
-                }
-                
-
-                else // De otra forma devolvemos los datos del usuario 
-                {
-                    user.EmailIsConfirmed = true; // Mockeamos la cosa que dice que el usuario está validado. Esto después se tiene que ir >.<
-                    return user;
-                };
-
+                case SignUpStatus.Success:
+                    return "Usuario registrado correctamente";
+                case SignUpStatus.Failure:
+                    return "Hubo un error al ingresar los datos. Intente nuevamente";
+                default:
+                    return "Caíste en el default";
             }
-            else return null;
         }
 
-        public bool Login(LoginModel userLogin)
+        public async Task<string> Login(LoginModel userLogin)
         {
-
-            var user = UserExist(userLogin.Email, userLogin.Dni);
-
-            if (user != null && user.EmailIsConfirmed)
+            var result = await UserManager.Login(userLogin);
+            switch (result)
             {
-                return true;
+                case SignInStatus.Success:
+                    return "Usuario registrado correctamente";
+                case SignInStatus.Failure:
+                    return "Hubo un error al ingresar los datos. Intente nuevamente";
+                case SignInStatus.RequiresVerification:
+                    return "Necesita verificación del mail";
+                default:
+                    return "Caíste en el default";
             }
 
-            else if (user != null && !user.EmailIsConfirmed)
+        }
+
+        public async Task<string> ConfirmEmail(LoginModel userLogin)
+        {
+            var result = await UserManager.Login(userLogin);
+            switch (result)
             {
-                return false;
+                case SignInStatus.Success:
+                    return "Usuario registrado correctamente";
+                case SignInStatus.Failure:
+                    return "Hubo un error al ingresar los datos. Intente nuevamente";
+                case SignInStatus.RequiresVerification:
+                    return "Necesita verificación del mail";
+                default:
+                    return "Caíste en el default";
             }
 
-            else return false;
         }
 
-        private static ApplicationUser UserExist(string email, string dni)
-        {
-            var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
-            return userexist;
-        }
 
     }
+
 }
