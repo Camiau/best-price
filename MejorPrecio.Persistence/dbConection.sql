@@ -1,6 +1,6 @@
 -- Create a new database called 'mejorprecio6'
 -- Connect to the 'master' database to run this snippet
-USE master
+USE mejorprecio6
 GO
 -- Create the new database if it does not exist already
 IF NOT EXISTS (
@@ -110,4 +110,23 @@ FROM dbo.users;
 -- Query all employee information
 SELECT e.idUser, e.nameUser,e.lastName,e.dni,e.idRol,e.mail,e.imagePath
 FROM dbo.users as e
+GO
+INSERT INTO products
+([codeBar],[descriptionProuct])
+VALUES
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
+    
 GO
