@@ -72,12 +72,12 @@ namespace MejorPrecio.Common
         }
 
 
-        private static Task<ApplicationUser> UserExist(string email, string dni)
+        private static Task<ApplicationUser> UserExist(string email, long dni)
         {
             //var user = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni); //Cambiar esto por la persistencia verdadera
             //return user;
             ApplicationUser user = new ApplicationUser();
-            return Task.FromResult<ApplicationUser>(PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni)
+            return Task.FromResult<ApplicationUser>(PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni));
         }
 
     }

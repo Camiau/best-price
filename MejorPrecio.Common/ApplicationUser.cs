@@ -1,7 +1,3 @@
-using System;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
 namespace MejorPrecio.Common
 {
     public class ApplicationUser
@@ -9,8 +5,10 @@ namespace MejorPrecio.Common
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public string Dni { get; set; }
+        public long Dni { get; set; }
         public bool EmailIsConfirmed { get; set; }
+        public string ImagePath { get; set; }
+        public Role RoleId { get; set; }
 
     }
     public class RegisterModel
@@ -19,14 +17,14 @@ namespace MejorPrecio.Common
         public string Surname { get; set; }
 
         public string Email { get; set; }
-        public string Dni { get; set; }
+        public long Dni { get; set; }
 
     }
 
     public class LoginModel
     {
         public string Email { get; set; }
-        public string Dni { get; set; }
+        public long Dni { get; set; }
     }
 
 
