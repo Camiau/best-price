@@ -10,49 +10,51 @@ namespace testconsola.mejor_precio_6
             /*Gasti();
             Fer();
             Cami();*/
-            while(true)
+            while (true)
             {
-            Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-            Console.WriteLine("\t\tMEJOR - PRECIO - 6");
-            Console.WriteLine("Ingrese número de opción");
-            Console.WriteLine("1-Registrarse\n2-Escanear código de barras\n3-Listar precios\n");
-            string opt = Console.ReadLine();
-            if (Int32.TryParse(opt, out int number))
-            {
-                switch (number)
+                Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+                Console.WriteLine("\t\tMEJOR - PRECIO - 6");
+                Console.WriteLine("Ingrese número de opción");
+                Console.WriteLine("1-Registrarse\n2-Escanear código de barras\n3-Listar precios\n");
+                string opt = Console.ReadLine();
+                if (Int32.TryParse(opt, out int number))
                 {
-                    case 3:
-                        Gasti();
-                        break;
-                    case 1:
-                        Fer();
-                        break;
-                    case 2:
-                        Cami();
-                        break;
-                    default:
-                        Console.WriteLine("Opción no válida");
-                        break;
+                    switch (number)
+                    {
+                        case 3:
+                            Gasti();
+                            break;
+                        case 1:
+                            Fer();
+                            break;
+                        case 2:
+                            Cami();
+                            break;
+                        default:
+                            Console.WriteLine("Opción no válida");
+                            break;
+
+                    }
 
                 }
-
-            }
 
             }
         }
         static private void Gasti()
         {
             var os = Environment.OSVersion;
-            System.Console.WriteLine("OS:"+os.Platform.ToString());
+            System.Console.WriteLine("OS:" + os.Platform.ToString());
+            var dateto = new DateTimeOffset();
+            System.Console.WriteLine(dateto.Date);
             var apiProduct = new ProductsApi();
-            var UsersApi= new UsersApi();
-            var userToRegister=new RegisterModel();
-            userToRegister.Name="cami";
-            userToRegister.Surname="F";
-            userToRegister.Email="cami@f.com";
-            userToRegister.Dni=38243776;
-            userToRegister.ImagePath="";
-            var okcreate=UsersApi.RegisterUser(userToRegister);
+            var UsersApi = new UsersApi();
+            var userToRegister = new RegisterModel();
+            userToRegister.Name = "cami";
+            userToRegister.Surname = "F";
+            userToRegister.Email = "cami@f.com";
+            userToRegister.Dni = 38243776;
+            userToRegister.ImagePath = "";
+            var okcreate = UsersApi.RegisterUser(userToRegister);
         }
         static private void Fer()
         {
