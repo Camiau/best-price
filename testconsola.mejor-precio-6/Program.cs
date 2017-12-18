@@ -80,12 +80,19 @@ namespace testconsola.mejor_precio_6
 
             newUser.Dni = int.Parse(Console.ReadLine());
 
+            var resultado = api.RegisterUser(newUser);
 
-            if (api.RegisterUser(newUser))
-            {
-                Console.WriteLine("Usuario añadido correctamente!");
-                Console.WriteLine("\n\n\nIngresando al sistema!!");
-            }
+            Console.WriteLine("{0}", resultado);      
+
+            var confirmInProgress = api.ConfirmEmail(newUser.Email, newUser.Dni);
+
+            Console.WriteLine("\n\n\nValidando email!!");
+
+            Console.WriteLine("\n\n\n{0}", confirmInProgress);
+
+
+            Console.WriteLine("\n\n\nIngresando al sistema!!");
+
 
             Console.WriteLine("Ingrese su email");
 
@@ -95,12 +102,9 @@ namespace testconsola.mejor_precio_6
 
             userLogin.Dni = int.Parse(Console.ReadLine());
 
-            if (api.Login(userLogin))
-            {
-                Console.WriteLine("Logeado!");
-
-            }
-            else Console.WriteLine("No logeado :C");
+            var result = api.Login(userLogin);
+            
+            Console.WriteLine("{0}", result);
 
         }
         static private string Cami()
