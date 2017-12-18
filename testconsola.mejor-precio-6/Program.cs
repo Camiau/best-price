@@ -44,16 +44,9 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            var dateto = new DateTimeOffset();
-            System.Console.WriteLine(dateto.Date);
             var apiProduct = new ProductsApi();
             var UsersApi = new UsersApi();
-            var userToRegister = new RegisterModel();
-            userToRegister.Name = "cami";
-            userToRegister.Surname = "F";
-            userToRegister.Email = "cami@f.com";
-            userToRegister.Dni = 38243776;
-            userToRegister.ImagePath = "";
+            var userToRegister = new RegisterModel(); 
             var okcreate = UsersApi.RegisterUser(userToRegister);
         }
         static private void Fer()

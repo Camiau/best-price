@@ -10,29 +10,13 @@ namespace MejorPrecio.Api
         public Product SearchByCodeBar(string codeBar)
         {
             //codeBar is a valid codeBar chechekd by a previous function
-            var persistence = new PersistenceData();
-            return persistence.GetProductByCodeBar(codeBar);
+            var persistenceProduct = new ProductManager();
+            return persistenceProduct.GetProductByCodeBar(codeBar);
         }
-        public List<Price> FindBestPrice(Product prod)
+        public List<Product> ReadAllProducts()
         {
-            var data = new PersistenceData();
-            //Here will be all the init for the conecction to the DB
-            return data.GetBestPrice(prod);
-        }
-        public bool LoadNewPrice(Price newPrice)
-        {
-            try
-            {
-                var data = new PersistenceData();
-                //Here will be all the init for the conecction to the DB
-                return data.RegisterPrice(newPrice); ;
-            }
-            catch (System.Exception)
-            {
-                return false;
-                throw;
-            }
-
+            var persistenceProduct = new ProductManager();
+            return persistenceProduct.ReadAllProducts();
         }
     }
 }
