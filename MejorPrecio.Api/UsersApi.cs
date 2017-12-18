@@ -27,11 +27,12 @@ namespace MejorPrecio.Api
             var result = await UserManager.Login(userLogin);
             switch (result)
             {
-                case SignInStatus.Success:
+                case UserManager.SignInStatus.Success:
+                    //Debería crearse la cookie aquí
                     return "Usuario registrado correctamente";
-                case SignInStatus.Failure:
+                case UserManager.SignInStatus.Failure:
                     return "Hubo un error al ingresar los datos. Intente nuevamente";
-                case SignInStatus.RequiresVerification:
+                case UserManager.SignInStatus.RequiresVerification:
                     return "Necesita verificación del mail";
                 default:
                     return "Caíste en el default";
@@ -44,11 +45,12 @@ namespace MejorPrecio.Api
             var result = await UserManager.Login(userLogin);
             switch (result)
             {
-                case SignInStatus.Success:
+                case UserManager.SignInStatus.Success:
+                    //Aquí debería crearse la cookie
                     return "Usuario registrado correctamente";
-                case SignInStatus.Failure:
+                case UserManager.SignInStatus.Failure:
                     return "Hubo un error al ingresar los datos. Intente nuevamente";
-                case SignInStatus.RequiresVerification:
+                case UserManager.SignInStatus.RequiresVerification:
                     return "Necesita verificación del mail";
                 default:
                     return "Caíste en el default";

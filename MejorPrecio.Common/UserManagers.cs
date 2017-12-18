@@ -7,9 +7,14 @@ namespace MejorPrecio.Common
     /// <summary>
     ///  Manejara las operaciones de login, registro y validación del estado del usuario
     /// </summary>
-
     public class UserManager
     {
+        public enum SignInStatus
+        {
+            Success,
+            Failure,
+            RequiresVerification
+        }
         public static Task<ApplicationUser> ConfirmEmailAsync(string email)
 
         {
@@ -71,7 +76,6 @@ namespace MejorPrecio.Common
                 return SignInStatus.Success;
         }
 
-
         private static Task<ApplicationUser> UserExist(string email, long dni)
         {
             //var user = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni); //Cambiar esto por la persistencia verdadera
@@ -85,12 +89,7 @@ namespace MejorPrecio.Common
     /// <summary>
     ///  Servira de auxilio para devolver los estados del login del usuario
     /// </summary>
-    public enum SignInStatus
-    {
-        Success,
-        Failure,
-        RequiresVerification
-    }
+
 
     /// <summary>
     ///  Servira de auxilio para devolver los estados del registro de usuario
