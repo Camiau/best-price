@@ -42,19 +42,19 @@ namespace testconsola.mejor_precio_6
         }
         static private void Gasti()
         {
-            //Console.WriteLine("Hello World!");
+            var os = Environment.OSVersion;
+            System.Console.WriteLine("OS:" + os.Platform.ToString());
+            var dateto = new DateTimeOffset();
+            System.Console.WriteLine(dateto.Date);
             var apiProduct = new ProductsApi();
-            var product1 = new Product();
-            product1.CodeBar = Cami();
-            product1.Description = "Lata de cocacola";
-            var p = apiProduct.FindBestPrice(product1);
-            Console.WriteLine(product1.Description);
-            System.Console.WriteLine("Price:" + p[0].PriceEffective.ToString());
-            System.Console.WriteLine("Price:" + p[1].PriceEffective.ToString());
-            System.Console.WriteLine("Price:" + p[2].PriceEffective.ToString());
-            System.Console.WriteLine("Price:" + p[3].PriceEffective.ToString());
-            var okLoad = apiProduct.LoadNewPrice(p[0]);
-            // System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
+            var UsersApi = new UsersApi();
+            var userToRegister = new RegisterModel();
+            userToRegister.Name = "cami";
+            userToRegister.Surname = "F";
+            userToRegister.Email = "cami@f.com";
+            userToRegister.Dni = 38243776;
+            userToRegister.ImagePath = "";
+            var okcreate = UsersApi.RegisterUser(userToRegister);
         }
         static private void Fer()
         {
@@ -78,7 +78,7 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            newUser.Dni = Convert.ToInt64(Console.ReadLine());
+            newUser.Dni = int.Parse(Console.ReadLine());
 
             var resultado = api.RegisterUser(newUser);
 
@@ -100,7 +100,7 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            userLogin.Dni = Convert.ToInt64(Console.ReadLine());
+            userLogin.Dni = int.Parse(Console.ReadLine());
 
             var result = api.Login(userLogin);
             
