@@ -12,10 +12,17 @@ public class UserManager
         Failure,
         RequiresVerification
     }
-    public static async Task<bool> ConfirmEmailAsync(string email, long dni)
+
+    public enum SignUpStatus
+    {
+        Success,
+        Failure,
+
+    }
+    public static bool ConfirmEmail(string email, long dni)
 
     {
-        var result = await UserExist(email, dni);
+        var result = UserExist(email, dni);
 
         if (result != null)
         {
@@ -25,7 +32,7 @@ public class UserManager
                 conn.Open();
                 //MODEL OF QUERY
                 //UPDATE users SET emailIsConfirmed=1 WHERE idUser=1
-                SqlCommand myCommand = new SqlCommand("UPDATE users SET emailIsConfirmed=1 WHERE idUser="+result.IdUser, conn);
+                SqlCommand myCommand = new SqlCommand("UPDATE users SET emailIsConfirmed=1 WHERE idUser=" + result.IdUser, conn);
                 myCommand.ExecuteNonQuery();
                 return true;
             }
@@ -53,7 +60,7 @@ public class UserManager
                 conn.Open();
                 //MODEL OF QUERY
                 //INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('fer','G',38324779,'fer@123.com','',1) 
-                SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('" + user.Name + "','" + user.Surname + "'," + user.Dni + ",'" + user.Email + "','" + user.ImagePath + "'," + user.IdRol + ")", conn);
+                SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('" + user.Name + "','" + user.Surname + "'," + user.Dni + ",'" + user.Email + "','" + user.ImagePath + "'," + 0 + ")", conn);
                 myCommand.ExecuteNonQuery();
             }
             return Task.FromResult<SignUpStatus>(SignUpStatus.Success);
@@ -68,10 +75,10 @@ public class UserManager
     }
 
 
-    public static async Task<SignInStatus> Login(LoginModel userLogin)
+    public static SignInStatus Login(LoginModel userLogin)
     {
 
-        var user = await UserExist(userLogin.Email, userLogin.Dni);
+        var user = UserExist(userLogin.Email, userLogin.Dni);
         if (user == null)
         {
             //return Task.FromResult<SignInStatus>(SignInStatus.Failure);
@@ -88,7 +95,7 @@ public class UserManager
             return SignInStatus.Success;
     }
 
-    private static Task<ApplicationUser> UserExist(string email, long dni)
+    private static ApplicationUser UserExist(string email, long dni)
     {
         ApplicationUser userexist = null;
         //SELECT example:
@@ -111,7 +118,7 @@ public class UserManager
                 userexist.IdRol = int.Parse(myReader["idRol"].ToString());
             }
         }
-        return Task.FromResult<ApplicationUser>(userexist);
+        return userexist;
     }
 
 }
@@ -124,9 +131,3 @@ public class UserManager
 /// <summary>
 ///  Servira de auxilio para devolver los estados del registro de usuario
 /// </summary>
-public enum SignUpStatus
-{
-    Success,
-    Failure,
-
-}
