@@ -9,29 +9,35 @@ namespace MejorPrecio.Common
     /// </summary>
     public class UserManager
     {
+        private LoginModel _logedIn = new LoginModel();
+
+        public LoginModel logedIn {get {return _logedIn;}}
+
+        public static List<ApplicationUser> usersdb = new List<ApplicationUser>();
+
+
+        /// <summary>
+        ///  Servira de auxilio para devolver los estados del login del usuario
+        /// </summary>
         public enum SignInStatus
         {
             Success,
             Failure,
             RequiresVerification
         }
-        public static Task<ApplicationUser> ConfirmEmailAsync(string email)
 
+        /// <summary>
+        ///  Servira de auxilio para devolver los estados del registro de usuario
+        /// </summary>
+        public enum SignUpStatus
         {
-            var result = PersistenceData.usersdb.Find(u => u.email == email);
-            if (result != null)
-            {
-                result.EmailIsConfirmed = true;
-                return Task.FromResult<ApplicationUser>(result);
-            }
-            else return Task.FromResult<ApplicationUser>(result); ;
+            Success,
+            Failure
 
         }
-
-        public static Task<SignUpStatus> CreateUserAsync(RegisterModel user)
+        public SignUpStatus CreateUser(RegisterModel user)
         {
             var userExist = UserExist(user.Email, user.Dni);
-
             if (userExist == null)
             {
                 ApplicationUser saveuser = new ApplicationUser()
@@ -42,62 +48,61 @@ namespace MejorPrecio.Common
                     Email = user.Email,
                     EmailIsConfirmed = false
                 };
-                PersistenceData.usersdb.Add(saveuser); //Cambiar esto por la persistencia verdadera
+                usersdb.Add(saveuser); //Cambiar esto por la persistencia verdadera
 
-                return Task.FromResult<SignUpStatus>(SignUpStatus.Success);
+                return SignUpStatus.Success;
 
             }
 
             else
             {
-                return Task.FromResult<SignUpStatus>(SignUpStatus.Failure);
+                return SignUpStatus.Failure;
             }
 
         }
 
 
-        public static async Task<SignInStatus> Login(LoginModel userLogin)
+        public  SignInStatus Login(LoginModel userLogin)
         {
 
-            var user = await UserManager.UserExist(userLogin.Email, userLogin.Dni);
+            var user = UserExist(userLogin.Email, userLogin.Dni);
+
             if (user == null)
             {
-                //return Task.FromResult<SignInStatus>(SignInStatus.Failure);
                 return SignInStatus.Failure;
             }
             if (!user.EmailIsConfirmed)
             {
-                //return Task.FromResult<SignInStatus>(SignInStatus.RequiresVerification);
                 return SignInStatus.RequiresVerification;
             }
 
             else
-                //return Task.FromResult<SignInStatus>(SignInStatus.Success);
+            {
+                this._logedIn.Dni = user.Dni;
+                this._logedIn.Email = user.Email;
                 return SignInStatus.Success;
+            }
         }
 
-        private static Task<ApplicationUser> UserExist(string email, long dni)
+        private ApplicationUser UserExist(string email, long dni)
         {
-            //var user = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni); //Cambiar esto por la persistencia verdadera
-            //return user;
             ApplicationUser user = new ApplicationUser();
-            return Task.FromResult<ApplicationUser>(PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni));
+            return usersdb.Find(u => u.Email == email && u.Dni == dni);
         }
 
-    }
+        public bool? ConfirmEmail(string email, long dni)
 
-    /// <summary>
-    ///  Servira de auxilio para devolver los estados del login del usuario
-    /// </summary>
+        {
+            var result = UserExist(email, dni);
 
+            if (result != null && !result.EmailIsConfirmed)
+            {
+                result.EmailIsConfirmed = true;
+                return true;
+            }
 
-    /// <summary>
-    ///  Servira de auxilio para devolver los estados del registro de usuario
-    /// </summary>
-    public enum SignUpStatus
-    {
-        Success,
-        Failure,
+            else return null;
 
+        }
     }
 }

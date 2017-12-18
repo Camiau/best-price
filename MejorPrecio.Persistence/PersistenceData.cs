@@ -21,7 +21,7 @@ namespace MejorPrecio.Persistence
             productList.Add(prod);
             return productList;
         }
-        public static ApplicationUser UserExist(string email, string dni)
+        public static ApplicationUser UserExist(string email, long dni)
         {
             var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
             return userexist;

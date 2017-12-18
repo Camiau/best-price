@@ -26,6 +26,6 @@ namespace MejorPrecio.Common
         public string Email { get; set; }
         public long Dni { get; set; }
     }
-
+    
 
 }

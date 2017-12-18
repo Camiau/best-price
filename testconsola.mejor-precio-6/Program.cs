@@ -56,7 +56,7 @@ namespace testconsola.mejor_precio_6
             var okLoad = apiProduct.LoadNewPrice(p[0]);
             // System.Console.WriteLine("Se pudo carga el nuevo precio?"+okLoad.ToString());
         }
-        static private async void Fer()
+        static private void Fer()
         {
             UsersApi api = new UsersApi();
 
@@ -78,12 +78,17 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            newUser.Dni = Console.ReadLine();
+            newUser.Dni = Convert.ToInt64(Console.ReadLine());
 
-
-            var resultado = await api.RegisterUser(newUser);
+            var resultado = api.RegisterUser(newUser);
 
             Console.WriteLine("{0}", resultado);      
+
+            var confirmInProgress = api.ConfirmEmail(newUser.Email, newUser.Dni);
+
+            Console.WriteLine("\n\n\nValidando email!!");
+
+            Console.WriteLine("\n\n\n{0}", confirmInProgress);
 
 
             Console.WriteLine("\n\n\nIngresando al sistema!!");
@@ -95,9 +100,9 @@ namespace testconsola.mejor_precio_6
 
             Console.WriteLine("Ingrese su dni");
 
-            userLogin.Dni = Console.ReadLine();
+            userLogin.Dni = Convert.ToInt64(Console.ReadLine());
 
-            var result = await api.Login(userLogin);
+            var result = api.Login(userLogin);
             
             Console.WriteLine("{0}", result);
 

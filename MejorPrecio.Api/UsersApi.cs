@@ -8,30 +8,31 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        public async Task<string> RegisterUser(RegisterModel newUser)
+        private UserManager userManager = new UserManager();
+        public string RegisterUser(RegisterModel newUser)
         {
-            var result = await UserManager.CreateUserAsync(newUser);
+            var result = userManager.CreateUser(newUser);
             switch (result)
             {
-                case SignUpStatus.Success:
+                case UserManager.SignUpStatus.Success:
                     return "Usuario registrado correctamente";
-                case SignUpStatus.Failure:
+                case UserManager.SignUpStatus.Failure:
                     return "Hubo un error al ingresar los datos. Intente nuevamente";
                 default:
                     return "Caíste en el default";
             }
         }
 
-        public async Task<string> Login(LoginModel userLogin)
+        public string Login(LoginModel userLogin)
         {
-            var result = await UserManager.Login(userLogin);
+            var result = userManager.Login(userLogin);
             switch (result)
             {
                 case UserManager.SignInStatus.Success:
                     //Debería crearse la cookie aquí
-                    return "Usuario registrado correctamente";
+                    return userManager.logedIn.Email.ToString();
                 case UserManager.SignInStatus.Failure:
-                    return "Hubo un error al ingresar los datos. Intente nuevamente";
+                    return "Correo electrónico o DNI no existentes";
                 case UserManager.SignInStatus.RequiresVerification:
                     return "Necesita verificación del mail";
                 default:
@@ -40,20 +41,18 @@ namespace MejorPrecio.Api
 
         }
 
-        public async Task<string> ConfirmEmail(LoginModel userLogin)
+        public string ConfirmEmail(string email, long dni)  
         {
-            var result = await UserManager.Login(userLogin);
+            var result = userManager.ConfirmEmail(email, dni);
             switch (result)
             {
-                case UserManager.SignInStatus.Success:
+                case true:
                     //Aquí debería crearse la cookie
-                    return "Usuario registrado correctamente";
-                case UserManager.SignInStatus.Failure:
-                    return "Hubo un error al ingresar los datos. Intente nuevamente";
-                case UserManager.SignInStatus.RequiresVerification:
-                    return "Necesita verificación del mail";
-                default:
-                    return "Caíste en el default";
+                    return "Email validado correctamente";
+                case false:
+                    return "El email ya está validado";
+                default: 
+                    return "El email no existe";
             }
 
         }
