@@ -97,6 +97,24 @@ CREATE TABLE dbo.searches
     -- specify more columns here
 );
 GO
+IF OBJECT_ID('dbo.stores', 'U') IS NOT NULL
+DROP TABLE dbo.stores
+GO
+
+-- Create the table in the specified schema
+CREATE TABLE dbo.stores
+(
+    idStore INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    -- primary key column
+    nameStore [VARCHAR](50) NOT NULL,
+    descriptionStore[VARCHAR](50),
+    imagePath[VARCHAR](50),
+    latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
+    longitude FLOAT DEFAULT 0.0000000000000 NOT NULL
+
+    -- specify more columns here
+);
+GO
 -- Insert rows into table 'users'
 INSERT INTO users
     ([nameUser],[lastName],[dni],[mail],[idRol])
