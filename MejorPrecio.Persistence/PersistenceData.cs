@@ -8,7 +8,6 @@ namespace MejorPrecio.Persistence
     public class PersistenceData
     {
         private static string conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-        //public static List<ApplicationUser> usersdb = new List<ApplicationUser>();
         public List<Product> ReadAllProducts()
         {
             List<Product> productList = new List<Product>();
@@ -32,9 +31,8 @@ namespace MejorPrecio.Persistence
         }
         public ApplicationUser UserExist(string email, long dni)
         {
-            //var userexist = PersistenceData.usersdb.Find(u => u.Email == email && u.Dni == dni);
             ApplicationUser userexist = null;
-            //select example:
+            //SELECT example:
             //SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
@@ -63,54 +61,58 @@ namespace MejorPrecio.Persistence
                 conn.Open();
                 //MODEL OF QUERY
                 //INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('fer','G',38324779,'fer@123.com','',1) 
-                //SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) "+"VALUES('fer','G',38324779,'fer@123.com','',1)" , conn);
-                SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('"+user.Name+"','"+user.Surname+"',"+user.Dni+",'"+user.Email+"','"+user.ImagePath+"',"+user.IdRol+")", conn);
+                SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('" + user.Name + "','" + user.Surname + "'," + user.Dni + ",'" + user.Email + "','" + user.ImagePath + "'," + user.IdRol + ")", conn);
                 myCommand.ExecuteNonQuery();
                 return true;
             }
         }
 
-            public Product GetProductByCodeBar(string codeBar)
+        public Product GetProductByCodeBar(string codeBar)
+        {
+            var ret = new Product();
+            using (SqlConnection conn = new SqlConnection(@"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"))
             {
-                var ret = new Product();
-                using (SqlConnection conn = new SqlConnection(@"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"))
+                conn.Open();
+                SqlDataReader myReader = null;
+                SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE codeBar=" + codeBar, conn);
+                myReader = myCommand.ExecuteReader();
+                // using the code here...
+                while (myReader.Read())
                 {
-                    conn.Open();
-                    SqlDataReader myReader = null;
-                    SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE codeBar=" + codeBar, conn);
-                    myReader = myCommand.ExecuteReader();
-                    // using the code here...
-                    while (myReader.Read())
-                    {
-                        ret.IdProduct = int.Parse(myReader["idProduct"].ToString());
-                        ret.CodeBar = myReader["codeBar"].ToString();
-                        ret.Description = myReader["descriptionProuct"].ToString();
-                    }
+                    ret.IdProduct = int.Parse(myReader["idProduct"].ToString());
+                    ret.CodeBar = myReader["codeBar"].ToString();
+                    ret.Description = myReader["descriptionProuct"].ToString();
                 }
-                return ret;
             }
-            public List<Price> GetBestPrice(Product prd)
+            return ret;
+        }
+        public List<Price> GetBestPrice(Product prd)
+        {
+            List<Price> productList = new List<Price>();
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
-                List<Price> productList = new List<Price>();
-                var today = new DateTimeOffset();
-
-
-                for (int i = 0; i < 10; i++)
+                conn.Open();
+                SqlDataReader myReader = null;
+                SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.IdProduct + "ORDER BY price ASC", conn);
+                myReader = myCommand.ExecuteReader();
+                // using the code here...
+                while (myReader.Read())
                 {
                     var prod = new Price();
-                    prod.Lattitude = -66.6666;
-                    prod.Longittude = -66.6666;
-                    prod.Date = today.Date;
-                    prod.PriceEffective = i + 50;
-                    prod.Id = i + 10;
-                    prod.IdUser = i;
+                    prod.Lattitude =double.Parse(myReader["latitude"].ToString());
+                    prod.Longittude =double.Parse(myReader["longitude"].ToString());
+                    prod.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
+                    prod.PriceEffective =double.Parse(myReader["price"].ToString());
+                    prod.Id =int.Parse(myReader["idProduct"].ToString());
+                    prod.IdUser = int.Parse(myReader["idUser"].ToString());
                     productList.Add(prod);
                 }
-                return productList;
             }
-            public bool RegisterPrice(Price priceEspecific)
-            {
-                return true;
-            }
+            return productList;
+        }
+        public bool RegisterPrice(Price priceEspecific)
+        {
+            return true;
         }
     }
+}

@@ -29,6 +29,9 @@ CREATE TABLE dbo.users
     -- specify more columns here
 );
 GO
+ALTER TABLE users
+ADD emailIsConfirmed BIT DEFAULT 0 NOT NULL
+GO
 -- Create a new table called 'roles' in schema 'dbo'
 -- Drop the table if it already exists
 IF OBJECT_ID('dbo.roles', 'U') IS NOT NULL
@@ -71,11 +74,13 @@ CREATE TABLE dbo.prices
 (
     idPrice INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     -- primary key column
-    price money,
+    price money NOT NULL,
+    idProduct INT NOT NULL,
+    idUser INT NOT NULL,
+    latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
+    longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
+    dateOfUpload DATETIMEOFFSET,
     descriptionProuct text,
-    latitude DECIMAL,
-    longitude DECIMAL,
-    idProduct INT
     -- specify more columns here
 );
 GO
@@ -96,41 +101,74 @@ GO
 INSERT INTO users
     ([nameUser],[lastName],[dni],[mail],[idRol])
 VALUES
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com',1)
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1)
     
 GO
 -- Query the total count of employees
 SELECT COUNT(*) as users
 FROM dbo.users;
 -- Query all employee information
-SELECT e.idUser, e.nameUser,e.lastName,e.dni,e.idRol,e.mail,e.imagePath
+SELECT e.idUser, e.nameUser, e.lastName, e.dni, e.idRol, e.mail, e.imagePath
 FROM dbo.users as e
 GO
 INSERT INTO products
-([codeBar],[descriptionProuct])
+    ([codeBar],[descriptionProuct])
 VALUES
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012','ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
+    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
     
 GO
-SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
+SELECT *
+FROM users
+WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
-INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('fer','G',38324779,'fer@123.com','',1) 
+INSERT INTO users
+    (nameUser,lastName,dni,mail,imagePath,idRol)
+VALUES('fer', 'G', 38324779, 'fer@123.com', '', 1) 
+GO
+SELECT TOP 15
+    *
+FROM prices
+WHERE idProduct=1
+ORDER BY price ASC 
+GO
+INSERT INTO prices
+    (price,latitude,longitude,idProduct,idUser,dateOfUpload)
+VALUES
+    (19, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (2, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (19, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (7, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (14, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (22, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (8, -34.706911, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9, -34.706921, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (29, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9.44, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9, -34.706901, -58.436451, 1, 1, '1/1/0001 12:00:00 AM'),
+    (11.43, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (6, -34.706901, -58.436341, 1, 1, '1/1/0001 12:00:00 AM'),
+    (7, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (4.9999, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (22, -34.706981, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
+    (9, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM') 
 GO
