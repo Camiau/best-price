@@ -102,7 +102,7 @@ namespace MejorPrecio.Persistence
                     prod.Lattitude =double.Parse(myReader["latitude"].ToString());
                     prod.Longittude =double.Parse(myReader["longitude"].ToString());
                     prod.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
-                    prod.PriceEffective =double.Parse(myReader["price"].ToString());
+                    prod.PriceEffective =decimal.Parse(myReader["price"].ToString());
                     prod.Id =int.Parse(myReader["idProduct"].ToString());
                     prod.IdUser = int.Parse(myReader["idUser"].ToString());
                     productList.Add(prod);

@@ -44,10 +44,20 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
+            var today=new DateTimeOffset();
             var apiProduct = new ProductsApi();
             var UsersApi = new UsersApi();
             var userToRegister = new RegisterModel(); 
-            var okcreate = UsersApi.RegisterUser(userToRegister);
+            var priceNow = new PricesApi();
+            var checkPrice= new Price();
+            checkPrice.idProduct=5;
+            checkPrice.Date=today.Date;
+            checkPrice.IdUser=2;
+            checkPrice.Lattitude=-34.617898;
+            checkPrice.Longittude=-58.425286;
+            decimal pr = new decimal(5.44);
+            checkPrice.PriceEffective=pr;
+            priceNow.LoadNewPrice(checkPrice);
         }
         static private void Fer()
         {

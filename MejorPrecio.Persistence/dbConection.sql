@@ -25,13 +25,16 @@ CREATE TABLE dbo.users
     dni [bigint],
     mail [VARCHAR](50),
     imagePath[VARCHAR](50),
-    idRol INT
+    idRol INT,
+    emailIsConfirmed BIT DEFAULT 0 NOT NULL,
+    active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
 GO
-ALTER TABLE users
-ADD emailIsConfirmed BIT DEFAULT 0 NOT NULL
-GO
+/*ALTER TABLE users
+ADD emailIsConfirmed BIT DEFAULT 0 NOT NULL,
+ active BIT DEFAULT 1 NOT NULL
+GO*/
 -- Create a new table called 'roles' in schema 'dbo'
 -- Drop the table if it already exists
 IF OBJECT_ID('dbo.roles', 'U') IS NOT NULL
@@ -59,7 +62,8 @@ CREATE TABLE dbo.products
     idProduct INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     -- primary key column
     codeBar [VARCHAR](50) NOT NULL,
-    descriptionProuct text
+    descriptionProuct text,
+    active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
 GO
@@ -81,6 +85,7 @@ CREATE TABLE dbo.prices
     longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
     dateOfUpload DATETIMEOFFSET,
     descriptionProuct text,
+    active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
 GO
@@ -92,8 +97,9 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.searches
 (
-    idSearch INT NOT NULL IDENTITY(1,1) PRIMARY KEY
+    idSearch INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     -- primary key column
+    active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
 GO
@@ -110,7 +116,8 @@ CREATE TABLE dbo.stores
     descriptionStore[VARCHAR](50),
     imagePath[VARCHAR](50),
     latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
-    longitude FLOAT DEFAULT 0.0000000000000 NOT NULL
+    longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
+    active BIT DEFAULT 1 NOT NULL
 
     -- specify more columns here
 );
@@ -126,13 +133,6 @@ VALUES
     ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
     ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1)
     
-GO
--- Query the total count of employees
-SELECT COUNT(*) as users
-FROM dbo.users;
--- Query all employee information
-SELECT e.idUser, e.nameUser, e.lastName, e.dni, e.idRol, e.mail, e.imagePath
-FROM dbo.users as e
 GO
 INSERT INTO products
     ([codeBar],[descriptionProuct])
@@ -152,10 +152,6 @@ VALUES
     ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
     ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
     
-GO
-SELECT *
-FROM users
-WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
 INSERT INTO users
     (nameUser,lastName,dni,mail,imagePath,idRol)
@@ -189,4 +185,8 @@ VALUES
     (22, -34.706981, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
     (9, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM'),
     (9, -34.706901, -58.436441, 1, 1, '1/1/0001 12:00:00 AM') 
+GO
+SELECT *
+FROM users
+WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO

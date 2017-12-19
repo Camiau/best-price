@@ -9,24 +9,18 @@ namespace MejorPrecio.Api
     {
         public List<Price> FindBestPrice(Product prod)
         {
-            var data = new PersistenceData();
-            //Here will be all the init for the conecction to the DB
+            var data = new PriceManager();
             return data.GetBestPrice(prod);
         }
         public bool LoadNewPrice(Price newPrice)
         {
-            try
-            {
-                var data = new PersistenceData();
-                //Here will be all the init for the conecction to the DB
-                return data.RegisterPrice(newPrice); ;
-            }
-            catch (System.Exception)
-            {
-                return false;
-                throw;
-            }
-
+                var data = new PriceManager();
+                return data.RegisterPrice(newPrice);
+        }
+        public bool DeletePrice(Price priceToDelete)
+        {
+                var data = new PriceManager();
+                return data.DeletePrice(priceToDelete);
         }
     }
 }
