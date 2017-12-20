@@ -5,6 +5,8 @@
   </ItemGroup>
 
    <ItemGroup>
+     <PackageReference Include="CentralConfig" Version="1.6.3" />
+     <PackageReference Include="System.Configuration.Abstractions" Version="2.0.2.26" />
      <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
    </ItemGroup>
  

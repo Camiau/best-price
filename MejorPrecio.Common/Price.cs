@@ -6,7 +6,7 @@ namespace MejorPrecio.Common
     {
         public int Id;
         public int idProduct;//foreign key from a specific product
-        public double PriceEffective;
+        public decimal PriceEffective;
         public DateTimeOffset Date;
         public double Lattitude;
         public double Longittude;

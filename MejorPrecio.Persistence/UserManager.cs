@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
-
+using System.Configuration;
 
 namespace MejorPrecio.Persistence
 {
@@ -16,8 +16,26 @@ namespace MejorPrecio.Persistence
 
         public LoginModel logedIn { get { return _logedIn; } }
 
-        private static string conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-
+        private static string conectionStringLocalDB;
+        public UserManager()
+        {
+            var userLocal = Environment.UserName;
+            switch (userLocal)
+            {
+                case "gastonh_lu":
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+                case "iskandar":
+                    conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234";
+                    break;
+                case "camilaf_lu":
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+                default:
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+            }
+        }
         /// <summary>
         ///  Servira de auxilio para devolver los estados del login del usuario
         /// </summary>
@@ -131,7 +149,7 @@ namespace MejorPrecio.Persistence
             {
                 conn.Open();
                 SqlDataReader myReader = null;
-                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni=" + dni, conn);
+                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni=" + dni + "AND active=1", conn);
                 myReader = myCommand.ExecuteReader();
                 while (myReader.Read())
                 {

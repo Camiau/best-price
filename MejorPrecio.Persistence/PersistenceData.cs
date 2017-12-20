@@ -2,12 +2,32 @@
 using System.Collections.Generic;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace MejorPrecio.Persistence
 {
     public class PersistenceData
     {
-        private static string conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+        private static string conectionStringLocalDB;
+        public PersistenceData()
+        {
+            var userLocal = Environment.UserName;
+            switch (userLocal)
+            {
+                case "gastonh_lu":
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+                case "iskandar":
+                    conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234";
+                    break;
+                case "camilaf_lu":
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+                default:
+                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                    break;
+            }
+        }
         public List<Product> ReadAllProducts()
         {
             List<Product> productList = new List<Product>();
@@ -99,11 +119,11 @@ namespace MejorPrecio.Persistence
                 while (myReader.Read())
                 {
                     var prod = new Price();
-                    prod.Lattitude =double.Parse(myReader["latitude"].ToString());
-                    prod.Longittude =double.Parse(myReader["longitude"].ToString());
+                    prod.Lattitude = double.Parse(myReader["latitude"].ToString());
+                    prod.Longittude = double.Parse(myReader["longitude"].ToString());
                     prod.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
-                    prod.PriceEffective =double.Parse(myReader["price"].ToString());
-                    prod.Id =int.Parse(myReader["idProduct"].ToString());
+                    prod.PriceEffective = decimal.Parse(myReader["price"].ToString());
+                    prod.Id = int.Parse(myReader["idProduct"].ToString());
                     prod.IdUser = int.Parse(myReader["idUser"].ToString());
                     productList.Add(prod);
                 }
