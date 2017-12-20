@@ -13,7 +13,7 @@ public class ProductManager
             {
                 conn.Open();
                 SqlDataReader myReader = null;
-                SqlCommand myCommand = new SqlCommand("SELECT * FROM products", conn);
+                SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE active=1", conn);
                 myReader = myCommand.ExecuteReader();
                 //until this, is the db conection
                 while (myReader.Read())
@@ -34,7 +34,7 @@ public class ProductManager
             {
                 conn.Open();
                 SqlDataReader myReader = null;
-                SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE codeBar=" + codeBar, conn);
+                SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE codeBar=" + codeBar+"AND actve=1", conn);
                 myReader = myCommand.ExecuteReader();
                 // using the code here...
                 while (myReader.Read())

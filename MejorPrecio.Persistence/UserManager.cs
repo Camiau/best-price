@@ -131,7 +131,7 @@ namespace MejorPrecio.Persistence
             {
                 conn.Open();
                 SqlDataReader myReader = null;
-                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni=" + dni, conn);
+                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni=" + dni+ "AND active=1", conn);
                 myReader = myCommand.ExecuteReader();
                 while (myReader.Read())
                 {

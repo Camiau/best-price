@@ -190,3 +190,5 @@ SELECT *
 FROM users
 WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
+UPDATE prices SET active=0 WHERE idPrice=2
+GO
