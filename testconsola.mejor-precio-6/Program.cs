@@ -44,20 +44,7 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            var today=new DateTimeOffset();
-            var apiProduct = new ProductsApi();
-            var UsersApi = new UsersApi();
-            var userToRegister = new RegisterModel(); 
-            var priceNow = new PricesApi();
-            var checkPrice= new Price();
-            checkPrice.idProduct=5;
-            checkPrice.Date=today.Date;
-            checkPrice.IdUser=2;
-            checkPrice.Lattitude=-34.617898;
-            checkPrice.Longittude=-58.425286;
-            decimal pr = new decimal(5.44);
-            checkPrice.PriceEffective=pr;
-            priceNow.LoadNewPrice(checkPrice);
+            
         }
         static private void Fer()
         {
@@ -85,7 +72,7 @@ namespace testconsola.mejor_precio_6
 
             var resultado = api.RegisterUser(newUser);
 
-            Console.WriteLine("{0}", resultado);      
+            Console.WriteLine("{0}", resultado);
 
             var confirmInProgress = api.ConfirmEmail(newUser.Email, newUser.Dni);
 
@@ -106,7 +93,7 @@ namespace testconsola.mejor_precio_6
             userLogin.Dni = int.Parse(Console.ReadLine());
 
             var result = api.Login(userLogin);
-            
+
             Console.WriteLine("{0}", result);
 
         }

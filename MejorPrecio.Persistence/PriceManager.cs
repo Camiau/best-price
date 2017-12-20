@@ -3,9 +3,31 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
+using System.Configuration;
+
 public class PriceManager
 {
-    private static string conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+    private static string conectionStringLocalDB;
+    public PriceManager()
+    {
+        var userLocal = Environment.UserName;
+        switch (userLocal)
+        {
+            case "gastonh_lu":
+                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                break;
+            case "iskandar":
+                conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234";
+                break;
+            case "camilaf_lu":
+                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                break;
+            default:
+                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
+                break;
+        }
+    }
+
     public List<Price> GetBestPrice(Product prd)
     {
         List<Price> productList = new List<Price>();
@@ -43,11 +65,10 @@ public class PriceManager
     }
     public bool DeletePrice(Price priceEspecific)
     {
-        var today = new DateTimeOffset();
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"UPDATE prices SET active=0 WHERE idPrice="+priceEspecific.Id, conn);
+            SqlCommand myCommand = new SqlCommand(@"UPDATE prices SET active=0 WHERE idPrice=" + priceEspecific.Id, conn);
             myCommand.ExecuteNonQuery();
         }
         return true;
