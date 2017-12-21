@@ -84,7 +84,7 @@ CREATE TABLE dbo.prices
     latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
     longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
     dateOfUpload DATETIMEOFFSET,
-    descriptionProuct text,
+    --descriptionProuct text, No va
     active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
