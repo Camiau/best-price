@@ -1,6 +1,9 @@
 ﻿﻿using System;
 using MejorPrecio.Common;
+using System.Collections.Generic;
+using System.IO;
 using MejorPrecio.Api;
+using System.Text.RegularExpressions;// For regex
 namespace testconsola.mejor_precio_6
 {
     class Program
@@ -43,7 +46,8 @@ namespace testconsola.mejor_precio_6
         static private void Gasti()
         {
             var os = Environment.OSVersion;
-            System.Console.WriteLine("OS:" + os.Platform.ToString());            
+            System.Console.WriteLine("OS:" + os.Platform.ToString());
+            
         }
         static private void Fer()
         {
