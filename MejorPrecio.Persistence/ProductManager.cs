@@ -66,4 +66,14 @@ public class ProductManager
         }
         return ret;
     }
+    public bool RegisterProduct(Product productNew)
+    {
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('"+productNew.CodeBar+"','"+productNew.Description+"')", conn);
+            myCommand.ExecuteNonQuery();
+        }
+        return true;
+    }
 }

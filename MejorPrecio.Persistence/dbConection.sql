@@ -63,6 +63,8 @@ CREATE TABLE dbo.products
     -- primary key column
     codeBar [VARCHAR](50) NOT NULL,
     descriptionProuct text,
+    brand VARCHAR(50),
+    presentation VARCHAR(50),
     active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
