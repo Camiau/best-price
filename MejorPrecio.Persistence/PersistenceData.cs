@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
-using System.Configuration;
 
 namespace MejorPrecio.Persistence
 {
