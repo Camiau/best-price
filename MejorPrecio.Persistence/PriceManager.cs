@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
-using System.Configuration;
 
 public class PriceManager
 {
