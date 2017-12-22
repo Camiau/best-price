@@ -93,19 +93,19 @@ namespace testconsola.mejor_precio_6
         static private string Cami()
         {
             //PRUEBA
-            var code = new BarcodeScanner();
+            var scanner = new BarcodeScanner();
+            
+           string code = scanner.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg");//Cambiar path imagen
 
-            code.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg");//Cambiar path imagen
-
-            if (code.codebar != null)
+            if (code != null)
             {
-                Console.WriteLine("Barcode: " + code.codebar);
+                Console.WriteLine("Barcode: " + code);
             }
             else
             {
                 Console.WriteLine("No se pudo leer el codigo");
             }
-            return code.codebar;
+            return code;
         }
 
         static private void userLogins()
@@ -127,9 +127,16 @@ namespace testconsola.mejor_precio_6
         {
             var apiPro = new ProductsApi();
             var apiPrice = new PricesApi();
+            var scanner = new BarcodeScanner();
 
-            var product = apiPro.SearchByCodeBar("0123456789012");
+            var product = apiPro.SearchByCodeBar(scanner.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg"));
             Console.WriteLine(product.Description);
+
+            if(product.CodeBar == null)
+            {
+                Console.WriteLine("Codigo inexistente");
+                return;
+            }
 
             var bestPricesList = apiPrice.FindBestPrice(product);
 
