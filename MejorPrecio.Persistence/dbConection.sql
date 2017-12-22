@@ -86,7 +86,6 @@ CREATE TABLE dbo.prices
     latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
     longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
     dateOfUpload DATETIMEOFFSET,
-    descriptionProuct text,
     active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
 );
@@ -193,4 +192,6 @@ FROM users
 WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
 UPDATE prices SET active=0 WHERE idPrice=2
+GO
+UPDATE products SET active=0 WHERE idProduct=6
 GO

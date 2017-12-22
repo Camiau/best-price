@@ -26,7 +26,6 @@ public class PriceManager
                 break;
         }
     }
-
     public List<Price> GetBestPrice(Product prd)
     {
         List<Price> productList = new List<Price>();
