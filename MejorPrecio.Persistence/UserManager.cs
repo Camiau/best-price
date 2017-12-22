@@ -54,9 +54,6 @@ namespace MejorPrecio.Persistence
             Failure
 
         }
-
-
-
         public SignUpStatus CreateUser(RegisterModel user)
         {
             var userExist = UserExist(user.Email, user.Dni);
@@ -80,7 +77,6 @@ namespace MejorPrecio.Persistence
                 }
 
                 return SignUpStatus.Success;
-
             }
 
             else
@@ -89,7 +85,6 @@ namespace MejorPrecio.Persistence
             }
 
         }
-
         public bool? ConfirmEmail(string email, long dni)
 
         {
@@ -116,7 +111,6 @@ namespace MejorPrecio.Persistence
             else return null;
 
         }
-
         public SignInStatus Login(LoginModel userLogin)
         {
 
@@ -138,7 +132,6 @@ namespace MejorPrecio.Persistence
                 return SignInStatus.Success;
             }
         }
-
         private ApplicationUser UserExist(string email, long dni)
         {
             ApplicationUser user = null;

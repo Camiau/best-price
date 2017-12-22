@@ -18,7 +18,7 @@ public class ProductManager
                 conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234>";
                 break;
             case "camilaf_lu":
-                conectionStringLocalDB =  @"Server=DESKTOP-TBLA16F\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True;";
+                conectionStringLocalDB = @"Server=DESKTOP-TBLA16F\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True;";
                 break;
             default:
                 conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
@@ -48,21 +48,45 @@ public class ProductManager
     }
     public Product GetProductByCodeBar(string codeBar)
     {
-        var ret = new Product();
+        Product ret = null;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
             SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE codeBar=" + codeBar + "AND actve=1", conn);
+            var query="SELECT * FROM products WHERE codeBar='" + codeBar + "' AND active=1";
+            SqlCommand myCommand = new SqlCommand(query, conn);
             myReader = myCommand.ExecuteReader();
             // using the code here...
             while (myReader.Read())
             {
+                ret = new Product();
                 ret.IdProduct = int.Parse(myReader["idProduct"].ToString());
                 ret.CodeBar = myReader["codeBar"].ToString();
                 ret.Description = myReader["descriptionProuct"].ToString();
             }
         }
         return ret;
+    }
+    public bool RegisterProduct(ProductRegister productNew)
+    {
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + productNew.CodeBar + "','" + productNew.Description + "')", conn);
+            myCommand.ExecuteNonQuery();
+        }
+        return true;
+    }
+    public bool DeleteProduct(Product prdToDelete)
+    {
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            // query exsample:
+            //UPDATE products SET active=0 WHERE idProduct=6
+            SqlCommand myCommand = new SqlCommand(@"UPDATE products SET active=0 WHERE idProduct="+prdToDelete.IdProduct, conn);
+            myCommand.ExecuteNonQuery();
+        }
+        return true;
     }
 }
