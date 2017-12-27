@@ -7,7 +7,6 @@ namespace MejorPrecio.Common
 {
     public class BarcodeScanner
     {
-        public String codebar {get; set;}
         public string ScanBarcode( string image )//devuelve el codigo de barras
         {
             // create a barcode reader instance
@@ -30,7 +29,7 @@ namespace MejorPrecio.Common
             /* Console.WriteLine($"Decoded barcode text: {barcodeResult?.Text}");
             Console.WriteLine($"Barcode format: {barcodeResult?.BarcodeFormat}"); */
             
-            return codebar = barcodeResult?.Text;
+            return barcodeResult?.Text;
         }    
 
     }
