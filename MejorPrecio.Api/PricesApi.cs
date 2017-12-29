@@ -9,17 +9,17 @@ namespace MejorPrecio.Api
     {
         public List<Price> FindBestPrice(Product prod)
         {
-            var data = new PriceManager();
+            var data = new PriceRepository();
             return data.GetBestPrice(prod);
         }
         public bool LoadNewPrice(Price newPrice)
         {
-                var data = new PriceManager();
+                var data = new PriceRepository();
                 return data.RegisterPrice(newPrice);
         }
         public bool DeletePrice(Price priceToDelete)
         {
-                var data = new PriceManager();
+                var data = new PriceRepository();
                 return data.DeletePrice(priceToDelete);
         }
     }
