@@ -10,12 +10,12 @@ namespace MejorPrecio.Api
         public Product SearchByCodeBar(string codeBar)
         {
             //codeBar is a valid codeBar chechekd by a previous function
-            var persistenceProduct = new ProductManager();
+            var persistenceProduct = new ProductRepository();
             return persistenceProduct.GetProductByCodeBar(codeBar);
         }
         public List<Product> ReadAllProducts()
         {
-            var persistenceProduct = new ProductManager();
+            var persistenceProduct = new ProductRepository();
             return persistenceProduct.ReadAllProducts();
         }
     }

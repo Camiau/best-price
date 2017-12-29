@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
-public class ProductManager
+public class ProductRepository
 {
     private static string conectionStringLocalDB;
-    public ProductManager()
+    public ProductRepository()
     {
         var userLocal = Environment.UserName;
         switch (userLocal)

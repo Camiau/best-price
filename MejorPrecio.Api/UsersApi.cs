@@ -8,43 +8,101 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        private UserManager userManager = new UserManager();
-        public string RegisterUser(RegisterModel newUser)
+        UserRepository db = new UserRepository();
+        /// <summary>
+        ///  Servira de auxilio para devolver los estados del login del usuario
+        /// </summary>
+        public enum SignInStatus
         {
-            var result = userManager.CreateUser(newUser);
-            switch (result)
+            Success,
+            Failure,
+            RequiresVerification
+        }
+
+        /// <summary>
+        ///  Servira de auxilio para devolver los estados del registro de usuario
+        /// </summary>
+        public enum SignUpStatus
+        {
+            Success,
+            Failure
+
+        }
+        public SignUpStatus RegisterUser(RegisterModel newUser)
+        {
+            var userExist = db.UserExist(newUser.Email, newUser.Dni);
+            if (userExist == null)
             {
-                case UserManager.SignUpStatus.Success:
-                    return "Usuario registrado correctamente";
-                case UserManager.SignUpStatus.Failure:
-                    return "Hubo un error al ingresar los datos. Intente nuevamente";
-                default:
-                    return "Caíste en el default";
+                ApplicationUser saveuser = new ApplicationUser()
+                {
+                    Name = newUser.Name,
+                    Surname = newUser.Surname,
+                    Dni = newUser.Dni,
+                    Email = newUser.Email,
+                    EmailIsConfirmed = false
+                };
+                return SignUpStatus.Success;
+        
+            }
+            else 
+            {
+                return SignUpStatus.Failure;
             }
         }
 
-        public string Login(LoginModel userLogin)
+        public SignInStatus Login(LoginModel userLogin)
         {
-            var result = userManager.Login(userLogin);
-            switch (result)
+            var user = db.UserExist(userLogin.Email, userLogin.Dni);
+
+            if (user == null)
             {
-                case UserManager.SignInStatus.Success:
+                return SignInStatus.Failure;
+            }
+            if (!user.EmailIsConfirmed)
+            {
+                return SignInStatus.RequiresVerification;
+            }
+            else
+            {
+                return SignInStatus.Success;
+            }
+            /*switch (result)
+            {
+                case UserRepository.SignInStatus.Success:
                     //Debería crearse la cookie aquí
                     return userManager.logedIn.Email.ToString();
-                case UserManager.SignInStatus.Failure:
+                case UserRepository.SignInStatus.Failure:
                     return "Correo electrónico o DNI no existentes";
-                case UserManager.SignInStatus.RequiresVerification:
+                case UserRepository.SignInStatus.RequiresVerification:
                     return "Necesita verificación del mail";
                 default:
                     return "Caíste en el default";
             }
+            Por si lo necesitamos en un futuro*/
 
         }
 
-        public string ConfirmEmail(string email, long dni)  
+        public bool? ConfirmEmail(string email, long dni)  
         {
-            var result = userManager.ConfirmEmail(email, dni);
-            switch (result)
+
+            var result = db.UserExist(email, dni);
+            if(result == null)
+            {
+                return null;
+            }
+            else if (result != null && !result.EmailIsConfirmed)
+            {
+                db.ConfirmEmail(result);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+            
+            /* switch (result)
             {
                 case true:
                     //Aquí debería crearse la cookie
@@ -53,7 +111,7 @@ namespace MejorPrecio.Api
                     return "El email ya está validado";
                 default: 
                     return "El email no existe";
-            }
+            } */
 
         }
 

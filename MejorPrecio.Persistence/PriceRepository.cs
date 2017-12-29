@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
 
-public class PriceManager
+public class PriceRepository
 {
     private static string conectionStringLocalDB;
-    public PriceManager()
+    public PriceRepository()
     {
         var userLocal = Environment.UserName;
         switch (userLocal)
