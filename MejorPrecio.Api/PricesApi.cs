@@ -22,5 +22,7 @@ namespace MejorPrecio.Api
                 var data = new PriceRepository();
                 return data.DeletePrice(priceToDelete);
         }
+
+
     }
 }
