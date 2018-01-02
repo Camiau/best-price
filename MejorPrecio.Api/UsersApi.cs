@@ -82,7 +82,7 @@ namespace MejorPrecio.Api
 
         }
 
-        public bool? ConfirmEmail(string email, long dni)  
+        public bool? ConfirmEmail(string email, string dni)  
         {
 
             var result = db.UserExist(email, dni);
