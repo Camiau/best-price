@@ -67,24 +67,24 @@ public class ProductRepository
         }
         return ret;
     }
-    public bool RegisterProduct(ProductRegister productNew)
+    public bool RegisterProduct(Product product)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + productNew.CodeBar + "','" + productNew.Description + "')", conn);
+            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + product.CodeBar + "','" + product.Description + "')", conn);
             myCommand.ExecuteNonQuery();
         }
         return true;
     }
-    public bool DeleteProduct(Product prdToDelete)
+    public bool DeleteProduct(int id)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
             // query exsample:
             //UPDATE products SET active=0 WHERE idProduct=6
-            SqlCommand myCommand = new SqlCommand(@"UPDATE products SET active=0 WHERE idProduct="+prdToDelete.IdProduct, conn);
+            SqlCommand myCommand = new SqlCommand(@"UPDATE products SET active=0 WHERE idProduct="+ id, conn);
             myCommand.ExecuteNonQuery();
         }
         return true;
