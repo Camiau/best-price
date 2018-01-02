@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MejorPrecio.Common;
+using MejorPrecio.Api;
 
 namespace MejorPrecio.WebApi.Controllers
 {
-    [Route("MejorPrecio/WebApi/[controller]")]
-    public class ValuesController : Controller
+    [Route("api/[controller]")]
+    public class UsersController : Controller
     {
         // GET api/values
         [HttpGet]
@@ -27,6 +29,16 @@ namespace MejorPrecio.WebApi.Controllers
         [HttpPost]
         public void Post([FromBody]string value)
         {
+        }
+        [HttpPost("login")]
+        public IActionResult Post([FromBody]LoginModel mod1)
+        {
+            LoginModel logModel = new LoginModel();
+            logModel.Email = mod1.Email;
+            //chekeo sí el usuario es correcto
+            UsersApi usersApi = new UsersApi();
+            var res = usersApi.Login(mod1);
+            return this.Json(res);
         }
 
         // PUT api/values/5

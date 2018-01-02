@@ -64,7 +64,7 @@ namespace MejorPrecio.Persistence
         }
 
         
-        public ApplicationUser UserExist(string email, long dni)
+        public ApplicationUser UserExist(string email, string dni)
         {
             ApplicationUser user = null;
             //SELECT example:
@@ -73,7 +73,8 @@ namespace MejorPrecio.Persistence
             {
                 conn.Open();
                 SqlDataReader myReader = null;
-                SqlCommand myCommand = new SqlCommand(@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni=" + dni + "AND active=1", conn);
+                var query=@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni='" + dni + "' AND active=1";
+                SqlCommand myCommand = new SqlCommand(query, conn);
                 myReader = myCommand.ExecuteReader();
                 while (myReader.Read())
                 {
@@ -81,7 +82,7 @@ namespace MejorPrecio.Persistence
                     user.IdUser = int.Parse(myReader["iduser"].ToString());
                     user.Name = myReader["nameUser"].ToString();
                     user.Surname = myReader["lastName"].ToString();
-                    user.Dni = int.Parse(myReader["dni"].ToString());
+                    user.Dni = myReader["dni"].ToString();
                     user.Email = myReader["mail"].ToString();
                     user.ImagePath = myReader["imagePath"].ToString();
                     user.IdRol = int.Parse(myReader["idRol"].ToString());
