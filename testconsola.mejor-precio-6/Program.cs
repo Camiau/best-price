@@ -68,7 +68,7 @@ namespace testconsola.mejor_precio_6
             newUser.Email = Console.ReadLine();
 
             Console.WriteLine("Ingrese su dni");
-            newUser.Dni = int.Parse(Console.ReadLine());
+            newUser.Dni = Console.ReadLine();
 
             var resultado = api.RegisterUser(newUser);
             Console.WriteLine("{0}", resultado);
@@ -87,7 +87,7 @@ namespace testconsola.mejor_precio_6
             userLogin.Email = Console.ReadLine();
 
             Console.WriteLine("Ingrese su dni");
-            userLogin.Dni = int.Parse(Console.ReadLine());
+            userLogin.Dni = Console.ReadLine();
 
             var result = api.Login(userLogin);
             Console.WriteLine("{0}", result);
@@ -120,7 +120,7 @@ namespace testconsola.mejor_precio_6
             userLogin.Email = Console.ReadLine();
 
             Console.WriteLine("Ingrese su dni");
-            userLogin.Dni = int.Parse(Console.ReadLine());
+            userLogin.Dni = Console.ReadLine();
 
             var dataOfUser = api.Login(userLogin); 
             Console.WriteLine(dataOfUser);

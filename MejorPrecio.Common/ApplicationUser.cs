@@ -6,7 +6,7 @@ namespace MejorPrecio.Common
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public long Dni { get; set; }
+        public string Dni { get; set; }
         public bool EmailIsConfirmed { get; set; }
         public string ImagePath { get; set; }
         public int IdRol { get; set; }
@@ -18,7 +18,7 @@ namespace MejorPrecio.Common
         public string Surname { get; set; }
 
         public string Email { get; set; }
-        public long Dni { get; set; }
+        public string Dni { get; set; }
 
         public string ImagePath{get;set;}
 
@@ -27,7 +27,7 @@ namespace MejorPrecio.Common
     public class LoginModel
     {
         public string Email { get; set; }
-        public long Dni { get; set; }
+        public string Dni { get; set; }
     }
     
 

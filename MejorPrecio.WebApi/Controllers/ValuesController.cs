@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MejorPrecio.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("MejorPrecio/WebApi/[controller]")]
     public class ValuesController : Controller
     {
         // GET api/values
