@@ -36,6 +36,9 @@ namespace testconsola.mejor_precio_6
                         case 2:
                             userLogins();
                             break;
+                        case 5:
+                            Gasti();
+                            break;
                         default:
                             Console.WriteLine("Opción no válida");
                             break;
@@ -50,7 +53,8 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            
+            var uApi = new UsersApi();
+            uApi.ConfirmEmail("fer@123.com","11223344");
         }
         static private void Fer()
         {
@@ -97,8 +101,8 @@ namespace testconsola.mejor_precio_6
         {
             //PRUEBA
             var scanner = new BarcodeScanner();
-            
-           string code = scanner.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg");//Cambiar path imagen
+
+            string code = scanner.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg");//Cambiar path imagen
 
             if (code != null)
             {
@@ -122,7 +126,7 @@ namespace testconsola.mejor_precio_6
             Console.WriteLine("Ingrese su dni");
             userLogin.Dni = Console.ReadLine();
 
-            var dataOfUser = api.Login(userLogin); 
+            var dataOfUser = api.Login(userLogin);
             Console.WriteLine(dataOfUser);
         }
 
@@ -135,7 +139,7 @@ namespace testconsola.mejor_precio_6
             var product = apiPro.SearchByCodeBar(scanner.ScanBarcode(@"C:\Users\camilaf_lu\Pictures\barcode-cocacola.jpg"));
             Console.WriteLine(product.Description);
 
-            if(product.CodeBar == null)
+            if (product.CodeBar == null)
             {
                 Console.WriteLine("Codigo inexistente");
                 return;
@@ -154,7 +158,7 @@ namespace testconsola.mejor_precio_6
             si existe mostrar datos y mejores precios
             si no existe dar la opcion de cargar un nuevo barcode con descripcion y nuevo precio
             */
-          
+
         }
     }
 
