@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MejorPrecio.Api;
 using System.Text.RegularExpressions;// For regex
+using System.Diagnostics;//To see who is calling the functions
 namespace testconsola.mejor_precio_6
 {
     class Program
@@ -53,6 +54,11 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
+            // Get call stack
+            StackTrace stackTrace = new StackTrace();
+
+            // Get calling method name
+            Console.WriteLine(stackTrace.GetFrame(1).GetMethod().Name);
         }
         static private void Fer()
         {
