@@ -11,9 +11,9 @@ namespace MejorPrecio.Persistence
     /// </summary>
     public class UserRepository
     {
-        private LoginModel _logedIn = new LoginModel();
+        private SimpleUserModel _logedIn = new SimpleUserModel();
 
-        public LoginModel logedIn { get { return _logedIn; } }
+        public SimpleUserModel logedIn { get { return _logedIn; } }
 
         private static string conectionStringLocalDB;
         public UserRepository()
@@ -68,7 +68,7 @@ namespace MejorPrecio.Persistence
         {
             ApplicationUser user = null;
             //SELECT example:
-            //SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
+            //SELECT * FROM users WHERE users.mail='asdkddskds@adskjds.com' AND users.dni='39244338'
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
