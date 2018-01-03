@@ -38,46 +38,45 @@ public class ProductRepository
             while (myReader.Read())
             {
                 var prod = new Product();
-                prod.IdProduct = int.Parse(myReader["idProduct"].ToString());
-                prod.CodeBar = myReader["codeBar"].ToString();
+                prod.Id = int.Parse(myReader["idProduct"].ToString());
+                prod.BarCode = myReader["codeBar"].ToString();
                 prod.Description = myReader["descriptionProuct"].ToString();
                 productList.Add(prod);
             }
         }
         return productList;
     }
-    public Product GetProductByCodeBar(string codeBar)
+    public Product GetProductByBarCode(string barCode)
     {
         Product ret = null;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
             SqlDataReader myReader = null;
-            var query="SELECT * FROM products WHERE codeBar='" + codeBar + "' AND active=1";
+            var query="SELECT * FROM products WHERE codeBar='" + barCode + "' AND active=1";
             SqlCommand myCommand = new SqlCommand(query, conn);
             myReader = myCommand.ExecuteReader();
             // using the code here...
             while (myReader.Read())
             {
                 ret = new Product();
-                ret.IdProduct = int.Parse(myReader["idProduct"].ToString());
-                ret.CodeBar = myReader["codeBar"].ToString();
+                ret.Id = int.Parse(myReader["idProduct"].ToString());
+                ret.BarCode = myReader["codeBar"].ToString();
                 ret.Description = myReader["descriptionProuct"].ToString();
             }
         }
         return ret;
     }
-    public bool RegisterProduct(Product product)
+    public void RegisterProduct(Product product)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + product.CodeBar + "','" + product.Description + "')", conn);
+            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + product.BarCode + "','" + product.Description + "')", conn);
             myCommand.ExecuteNonQuery();
         }
-        return true;
     }
-    public bool DeleteProduct(int id)
+    public void DeleteProduct(int id)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
@@ -86,7 +85,7 @@ public class ProductRepository
             //UPDATE products SET active=0 WHERE idProduct=6
             SqlCommand myCommand = new SqlCommand(@"UPDATE products SET active=0 WHERE idProduct="+ id, conn);
             myCommand.ExecuteNonQuery();
+        
         }
-        return true;
     }
 }

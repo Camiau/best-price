@@ -9,10 +9,10 @@ namespace MejorPrecio.Api
     {
         private ProductRepository db = new ProductRepository();
 
-        public Product SearchByCodeBar(string codeBar)
+        public Product SearchByBarCode(string codeBar)
         {
             //codeBar is a valid codeBar cheched by a previous function
-            return db.GetProductByCodeBar(codeBar);
+            return db.GetProductByBarCode(codeBar);
         }
 
         public List<Product> ReadAllProducts()
@@ -20,40 +20,37 @@ namespace MejorPrecio.Api
             return db.ReadAllProducts();
         }
 
-        public bool Register(ProductRegister newProduct)
+        public void Register(ProductRegister newProduct)
         {
-            var productExists = db.GetProductByCodeBar(newProduct.CodeBar);
+            var productExists = db.GetProductByBarCode(newProduct.BarCode);
 
             if (productExists != null)
             {
-                return false;
+                throw new ArgumentException("Existe el producto para el código de barras: " + newProduct.BarCode);
+                
             }
 
             else
             {
                 Product product = new Product()
                 {
-                    CodeBar = newProduct.CodeBar,
+                    BarCode = newProduct.BarCode,
                     Description = newProduct.Description
                 };
                 db.RegisterProduct(product);
-                return true;
             }
         }
 
-        public bool Delete(string barCode)
+        public void Delete(string barCode)
         {
-            var productExists = db.GetProductByCodeBar(barCode);
-            if(productExists == null)
+            var productExists = db.GetProductByBarCode(barCode);
+
+            if (productExists == null)
             {
-                return false;
-            }
-            else
-            {
-                db.DeleteProduct(productExists.IdProduct);
-                return true;
+                throw new ArgumentException("No existe producto para: " + barCode);
             }
 
+            db.DeleteProduct(productExists.Id);
         }
     }
 }

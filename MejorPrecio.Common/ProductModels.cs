@@ -5,18 +5,18 @@ namespace MejorPrecio.Common
 {
     public class Product
     {
-        public int IdProduct;
-        public string CodeBar;
+        public int Id;
+        public string BarCode;
         public string Description;
     }
     public class ProductRegister
     {
-        public string CodeBar;
+        public string BarCode;
         public string Description;
-        public ProductRegister(string CodeBar,string Description)
+        public ProductRegister(string barCode,string description)
         {
-            this.CodeBar=CodeBar;
-            this.Description=Description;
+            this.BarCode=barCode;
+            this.Description=description;
         }
         public ProductRegister()
         {

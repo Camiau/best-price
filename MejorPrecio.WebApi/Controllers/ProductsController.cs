@@ -19,21 +19,27 @@ namespace MejorPrecio.WebApi.Controllers
         BarcodeScanner scanner = new BarcodeScanner();
 
         [HttpGet]
-        public IActionResult Get([FromBody]string filePath)
+        public IActionResult Get(string search)
         {
-
-            /*var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
+            if (search == null)
             {
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(stream);
-                }
-            }*/
-            string code = scanner.ScanBarcode(filePath);//Cambiar path imagen
-            var product = negocio.SearchByCodeBar(code);
+                return StatusCode(400);
+            }
+
+            var product = negocio.SearchByBarCode(search);
             return Json(product);
+        }
+
+        [HttpPost]
+        public IActionResult Post(IFormFile file)
+        {
+            using (var stream = file.OpenReadStream())
+            {
+                BarcodeScanner scanner = new BarcodeScanner();
+                var code = scanner.ScanBarcode(stream);
+
+                return this.RedirectToAction(nameof(Get), new {search = code});
+            }
         }
 
     }

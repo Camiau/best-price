@@ -33,7 +33,7 @@ public class PriceRepository
         {
             conn.Open();
             SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.IdProduct + "AND active=1 ORDER BY price ASC", conn);
+            SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.Id + "AND active=1 ORDER BY price ASC", conn);
             myReader = myCommand.ExecuteReader();
             // using the code here...
             while (myReader.Read())
