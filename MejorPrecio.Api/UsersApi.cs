@@ -47,7 +47,7 @@ namespace MejorPrecio.Api
             }
         }
 
-        public SignInStatus Login(LoginModel userLogin)
+        public SignInStatus Login(SimpleUserModel userLogin)
         {
             var db = new UserRepository();
             var user = db.UserExist(userLogin.Email, userLogin.Dni);
@@ -78,8 +78,10 @@ namespace MejorPrecio.Api
             Por si lo necesitamos en un futuro*/
         }
 
-        public bool? ConfirmEmail(string email, string dni)
+        public bool? ConfirmEmail(SimpleUserModel usrModel)
         {
+            var email=usrModel.Email;
+            var dni=usrModel.Dni;
             var db = new UserRepository();
             var result = db.UserExist(email, dni);
             if (result == null)
