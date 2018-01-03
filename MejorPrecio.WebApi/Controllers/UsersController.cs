@@ -30,7 +30,7 @@ namespace MejorPrecio.WebApi.Controllers
         public void Post([FromBody]string value)
         {
         }
-        [HttpPost("singUp")]
+        [HttpPost("signUp")]
         public IActionResult Post([FromBody]RegisterModel registerModelFromHttp)
         {
             UsersApi usersApiInstance = new UsersApi();
