@@ -53,13 +53,11 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            var uApi = new UsersApi();
-            uApi.ConfirmEmail("fer@123.com","11223344");
         }
         static private void Fer()
         {
             UsersApi api = new UsersApi();
-            LoginModel userLogin = new LoginModel();
+            SimpleUserModel userLogin = new SimpleUserModel();
             RegisterModel newUser = new RegisterModel();
 
             Console.WriteLine("Ingrese su nombre");
@@ -76,8 +74,8 @@ namespace testconsola.mejor_precio_6
 
             var resultado = api.RegisterUser(newUser);
             Console.WriteLine("{0}", resultado);
-
-            var confirmInProgress = api.ConfirmEmail(newUser.Email, newUser.Dni);
+            var usrModel = new SimpleUserModel(newUser.Email, newUser.Dni);
+            var confirmInProgress = api.ConfirmEmail(usrModel);
 
             Console.WriteLine("\n\n\nValidando email!!");
 
@@ -118,7 +116,7 @@ namespace testconsola.mejor_precio_6
         static private void userLogins()
         {
             UsersApi api = new UsersApi();
-            LoginModel userLogin = new LoginModel();
+            SimpleUserModel userLogin = new SimpleUserModel();
 
             Console.WriteLine("Ingrese su email");
             userLogin.Email = Console.ReadLine();

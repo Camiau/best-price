@@ -11,9 +11,9 @@ namespace MejorPrecio.Persistence
     /// </summary>
     public class UserRepository
     {
-        private LoginModel _logedIn = new LoginModel();
+        private SimpleUserModel _logedIn = new SimpleUserModel();
 
-        public LoginModel logedIn { get { return _logedIn; } }
+        public SimpleUserModel logedIn { get { return _logedIn; } }
 
         private static string conectionStringLocalDB;
         public UserRepository()
