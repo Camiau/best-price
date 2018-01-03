@@ -14,7 +14,7 @@ namespace MejorPrecio.WebApi.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        private ProductsApi negocio = new ProductsApi();
+        private ProductsApi logic = new ProductsApi();
 
         BarcodeScanner scanner = new BarcodeScanner();
 
@@ -26,7 +26,7 @@ namespace MejorPrecio.WebApi.Controllers
                 return StatusCode(400);
             }
 
-            var product = negocio.SearchByBarCode(search);
+            var product = logic.SearchByBarCode(search);
             return Json(product);
         }
 

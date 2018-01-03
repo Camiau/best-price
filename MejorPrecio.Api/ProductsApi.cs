@@ -47,7 +47,7 @@ namespace MejorPrecio.Api
 
             if (productExists == null)
             {
-                throw new ArgumentException("No existe producto para: " + barCode);
+                throw new ArgumentException("No existe producto para el código de barras: " + barCode);
             }
 
             db.DeleteProduct(productExists.Id);
