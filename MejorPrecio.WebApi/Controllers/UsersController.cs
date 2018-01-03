@@ -31,13 +31,17 @@ namespace MejorPrecio.WebApi.Controllers
         {
         }
         [HttpPost("login")]
-        public IActionResult Post([FromBody]LoginModel mod1)
+        public IActionResult Post([FromBody]LoginModel logInModelFromHttp)
         {
-            LoginModel logModel = new LoginModel();
-            logModel.Email = mod1.Email;
-            //chekeo sí el usuario es correcto
             UsersApi usersApi = new UsersApi();
-            var res = usersApi.Login(mod1);
+            var res = usersApi.Login(logInModelFromHttp);
+            return this.Json(res);
+        }
+        [HttpPost("singUp")]
+        public IActionResult Post([FromBody]RegisterModel registerModelFromHttp)
+        {
+            UsersApi usersApiInstance = new UsersApi();
+            var res  = usersApiInstance.RegisterUser(registerModelFromHttp);
             return this.Json(res);
         }
 
