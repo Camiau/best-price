@@ -38,17 +38,17 @@ namespace MejorPrecio.WebApi.Controllers
             return this.Json(res);
         }
         [HttpPost("login")]
-        public IActionResult Post([FromBody]SimpleUserModel logInModelFromHttp)
+        public IActionResult PostLogin([FromBody]SimpleUserModel logInModelFromHttp)
         {
             UsersApi usersApi = new UsersApi();
             var res = usersApi.Login(logInModelFromHttp);
             return this.Json(res);
         }
         [HttpPost("confirmEmail")]
-        public IActionResult Post([FromBody]SimpleUserModel logInModelFromHttp)
+        public IActionResult PostConfirmarEmail([FromBody]SimpleUserModel userModelConfirmEmail)
         {
             UsersApi usersApi = new UsersApi();
-            var res = usersApi.Login(logInModelFromHttp);
+            var res = usersApi.ConfirmEmail(userModelConfirmEmail);
             return this.Json(res);
         }
         // PUT api/values/5
