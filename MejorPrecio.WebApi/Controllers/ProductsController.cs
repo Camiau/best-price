@@ -16,7 +16,7 @@ namespace MejorPrecio.WebApi.Controllers
     {
         private ProductsApi logic = new ProductsApi();
 
-        BarcodeScanner scanner = new BarcodeScanner();
+        private BarcodeScanner scanner = new BarcodeScanner();
 
         [HttpGet]
         public IActionResult Get(string search)
@@ -41,6 +41,12 @@ namespace MejorPrecio.WebApi.Controllers
                 return this.RedirectToAction(nameof(Get), new {search = code});
             }
         }
+
+        /*[HttpPatch]
+        public IActionResult Patch(Product update)
+        {
+
+        }*/
 
     }
 }
