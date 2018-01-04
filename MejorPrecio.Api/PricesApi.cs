@@ -23,6 +23,12 @@ namespace MejorPrecio.Api
                 return data.DeletePrice(priceToDelete);
         }
 
+        public Price ObtainPrice(Price priceToSearch)
+        {
+            var data = new PriceRepository();
+            return data.ObtainPrice(priceToSearch);
+        }
+
 
     }
 }

@@ -8,7 +8,7 @@ using MejorPrecio.Api;
 
 namespace MejorPrecio.WebApi.Controllers
 {
-    [Route("api/price")]
+    [Route("api/[controller]")]
     public class PriceController : Controller
     {
         // GET api/findbestprice
@@ -23,6 +23,31 @@ namespace MejorPrecio.WebApi.Controllers
             return pricesAPI.FindBestPrice(prod);     
         }
 
+        // POST api/loadnewprice
+        [HttpPost]
+        public IActionResult Post([FromBody]Price price)
+        {
+            new PricesApi().LoadNewPrice(price);
+            return this.StatusCode(201);
+        }
+
+        // DELETE api/values/5
+        [HttpDelete] //[HttpDelete("price")]
+        public IActionResult Delete(Price price)
+        {
+            var priceAPI = new PricesApi();
+            var priceToDelete = priceAPI.ObtainPrice(price);
+            if (priceToDelete != null)
+            {
+                priceAPI.DeletePrice(priceToDelete);
+                return this.StatusCode(204);
+            }
+            else
+            {
+                return this.StatusCode(404);
+            }
+
+        }
         // GET api/values/5
         /* 
         [HttpGet("{id}")]
@@ -32,38 +57,11 @@ namespace MejorPrecio.WebApi.Controllers
         } 
         */
 
-        // POST api/loadnewprice
-        [HttpPost]
-        public IActionResult Post([FromBody]Price price)//COMO ASIGNO EL ID DE PRODUCTO?
-        {
-            new PricesApi().LoadNewPrice(price);
-            
-            return this.StatusCode(201);
-        }
-
         // PUT api/values/5
-        [HttpPut("{id}")]
+        /* [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
-        }
+        } */
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var priceAPI = new PricesApi();
-           // var price = PricesApi.ObtainPrice(id);
-            if (price != null)
-            {
-                priceAPI.DeletePrice(price);
-                return this.StatusCode(204);
-            }
-            else
-            {
-                return this.StatusCode(404);
-            }
-
-
-        }
     }
 }

@@ -71,4 +71,29 @@ public class PriceRepository
         }
         return true;
     }
+
+    public Price ObtainPrice(Price priceToSearch)
+    {
+        Price price = null;
+        
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            SqlDataReader myReader = null;
+            SqlCommand myCommand = new SqlCommand("SELECT * FROM prices WHERE idPrice=" + priceToSearch.Id + " AND active=1", conn);
+            myReader = myCommand.ExecuteReader();
+            // using the code here..
+            
+            while (myReader.Read())
+            {        
+                price.Lattitude = double.Parse(myReader["latitude"].ToString());
+                price.Longittude = double.Parse(myReader["longitude"].ToString());
+                price.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
+                price.PriceEffective = decimal.Parse(myReader["price"].ToString());
+                price.Id = int.Parse(myReader["idProduct"].ToString());
+                price.IdUser = int.Parse(myReader["idUser"].ToString());
+            }
+        }
+        return price;
+    }
 }
