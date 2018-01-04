@@ -24,10 +24,18 @@ namespace MejorPrecio.Common
 
     }
 
-    public class LoginModel
+    public class SimpleUserModel
     {
         public string Email { get; set; }
         public string Dni { get; set; }
+        public SimpleUserModel(string email,string dni)
+        {
+            this.Email=email;
+            this.Dni=Dni;
+        }
+        public SimpleUserModel()
+        {
+        }
     }
     
 

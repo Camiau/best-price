@@ -30,17 +30,27 @@ namespace MejorPrecio.WebApi.Controllers
         public void Post([FromBody]string value)
         {
         }
-        [HttpPost("login")]
-        public IActionResult Post([FromBody]LoginModel mod1)
+        [HttpPost("signUp")]
+        public IActionResult Post([FromBody]RegisterModel registerModelFromHttp)
         {
-            LoginModel logModel = new LoginModel();
-            logModel.Email = mod1.Email;
-            //chekeo sí el usuario es correcto
-            UsersApi usersApi = new UsersApi();
-            var res = usersApi.Login(mod1);
+            UsersApi usersApiInstance = new UsersApi();
+            var res = usersApiInstance.RegisterUser(registerModelFromHttp);
             return this.Json(res);
         }
-
+        [HttpPost("login")]
+        public IActionResult PostLogin([FromBody]SimpleUserModel logInModelFromHttp)
+        {
+            UsersApi usersApi = new UsersApi();
+            var res = usersApi.Login(logInModelFromHttp);
+            return this.Json(res);
+        }
+        [HttpPost("confirmEmail")]
+        public IActionResult PostConfirmarEmail([FromBody]SimpleUserModel userModelConfirmEmail)
+        {
+            UsersApi usersApi = new UsersApi();
+            var res = usersApi.ConfirmEmail(userModelConfirmEmail);
+            return this.Json(res);
+        }
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

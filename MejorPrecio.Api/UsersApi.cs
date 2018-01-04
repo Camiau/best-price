@@ -8,52 +8,49 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        UserRepository db = new UserRepository();
-        /// <summary>
-        ///  Servira de auxilio para devolver los estados del login del usuario
-        /// </summary>
         public enum SignInStatus
         {
             Success,
             Failure,
             RequiresVerification
         }
-
-        /// <summary>
-        ///  Servira de auxilio para devolver los estados del registro de usuario
-        /// </summary>
         public enum SignUpStatus
         {
             Success,
             Failure
-
         }
         public SignUpStatus RegisterUser(RegisterModel newUser)
         {
+            var db = new UserRepository();
             var userExist = db.UserExist(newUser.Email, newUser.Dni);
             if (userExist == null)
             {
-                ApplicationUser saveuser = new ApplicationUser()
+                ApplicationUser saveuser = new ApplicationUser();
+                saveuser.Name = newUser.Name;
+                saveuser.Surname = newUser.Surname;
+                saveuser.Dni = newUser.Dni;
+                saveuser.Email = newUser.Email;
+                saveuser.EmailIsConfirmed = false;
+                var singUpStatus = db.CreateUser(saveuser);
+                if (singUpStatus == true)
                 {
-                    Name = newUser.Name,
-                    Surname = newUser.Surname,
-                    Dni = newUser.Dni,
-                    Email = newUser.Email,
-                    EmailIsConfirmed = false
-                };
-                return SignUpStatus.Success;
-        
+                    return SignUpStatus.Success;
+                }
+                else
+                {
+                    return SignUpStatus.Failure;
+                }
             }
-            else 
+            else
             {
                 return SignUpStatus.Failure;
             }
         }
 
-        public SignInStatus Login(LoginModel userLogin)
+        public SignInStatus Login(SimpleUserModel userLogin)
         {
+            var db = new UserRepository();
             var user = db.UserExist(userLogin.Email, userLogin.Dni);
-
             if (user == null)
             {
                 return SignInStatus.Failure;
@@ -79,14 +76,15 @@ namespace MejorPrecio.Api
                     return "Caíste en el default";
             }
             Por si lo necesitamos en un futuro*/
-
         }
 
-        public bool? ConfirmEmail(string email, string dni)  
+        public bool? ConfirmEmail(SimpleUserModel usrModel)
         {
-
+            var email=usrModel.Email;
+            var dni=usrModel.Dni;
+            var db = new UserRepository();
             var result = db.UserExist(email, dni);
-            if(result == null)
+            if (result == null)
             {
                 return null;
             }
@@ -99,9 +97,6 @@ namespace MejorPrecio.Api
             {
                 return false;
             }
-
-
-            
             /* switch (result)
             {
                 case true:
