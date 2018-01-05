@@ -195,3 +195,11 @@ UPDATE prices SET active=0 WHERE idPrice=2
 GO
 UPDATE products SET active=0 WHERE idProduct=6
 GO
+insert into roles
+    (role)
+values
+    ('defensor')
+GO
+ALTER TABLE roles
+DROP COLUMN idUser;
+GO

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MejorPrecio.Api;
 using System.Text.RegularExpressions;// For regex
-using System.Diagnostics;//To see who is calling the functions
+
 namespace testconsola.mejor_precio_6
 {
     class Program
@@ -54,11 +54,11 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            // Get call stack
-            StackTrace stackTrace = new StackTrace();
-
-            // Get calling method name
-            Console.WriteLine(stackTrace.GetFrame(1).GetMethod().Name);
+            var nRole= new RolesApi();
+            var lstRoles= nRole.GetAllRoles();
+            System.Console.WriteLine("IdRol:"+lstRoles[0].Id.ToString()+"Role:"+lstRoles[0].RoleName);
+            System.Console.WriteLine("IdRol:"+lstRoles[1].Id.ToString()+"Role:"+lstRoles[1].RoleName);
+            System.Console.WriteLine("IdRol:"+lstRoles[2].Id.ToString()+"Role:"+lstRoles[2].RoleName);
         }
         static private void Fer()
         {

@@ -13,7 +13,7 @@ namespace MejorPrecio.Api
         {
             var myRole = new Role();
             myRole.Id=3;
-            myRole.Name="Administrador";
+            myRole.RoleName="Administrador";
             return myRole;
         }
         public enum SignInStatus
@@ -86,7 +86,7 @@ namespace MejorPrecio.Api
             Por si lo necesitamos en un futuro*/
         }
 
-        public bool? ConfirmEmail(SimpleUserModel usrModel,)
+        public bool? ConfirmEmail(SimpleUserModel usrModel)
         {
             var email = usrModel.Email;
             var dni = usrModel.Dni;
