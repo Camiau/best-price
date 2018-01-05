@@ -18,7 +18,7 @@ namespace MejorPrecio.WebApi.Controllers
 
         private BarcodeScanner scanner = new BarcodeScanner();
 
-        [HttpGet]
+        [HttpGet("/{search}")]
         public IActionResult Get(string search)
         {
             if (search == null)
@@ -27,7 +27,12 @@ namespace MejorPrecio.WebApi.Controllers
             }
 
             var product = logic.SearchByBarCode(search);
-            return Json(product);
+
+            if(product == null)
+            {
+                return StatusCode(404);
+            }
+            else return Json(product);
         }
 
         [HttpPost]
@@ -42,11 +47,36 @@ namespace MejorPrecio.WebApi.Controllers
             }
         }
 
-        /*[HttpPatch]
-        public IActionResult Patch(Product update)
+        [HttpPost("register")]
+        public IActionResult Register(ProductRegister newProduct)
         {
+            try
+            {
+                var product = logic.Register(newProduct);
 
-        }*/
+                return Json(product);
+
+            }
+            catch
+            {
+                return StatusCode(409);
+            }
+
+        }
+        [HttpDelete]
+        public IActionResult Delete(string barCode)
+        {
+            try
+            {
+                logic.Delete(barCode);
+                return StatusCode(200);
+            }
+            catch
+            {
+                return StatusCode(404);
+            }
+        }
+
 
     }
 }

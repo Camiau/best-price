@@ -9,10 +9,10 @@ namespace MejorPrecio.Api
     {
         private ProductRepository db = new ProductRepository();
 
-        public Product SearchByBarCode(string codeBar)
+        public Product SearchByBarCode(string barCode)
         {
             //codeBar is a valid codeBar cheched by a previous function
-            return db.GetProductByBarCode(codeBar);
+            return db.GetProductByBarCode(barCode);
         }
 
         public List<Product> ReadAllProducts()
@@ -20,7 +20,7 @@ namespace MejorPrecio.Api
             return db.ReadAllProducts();
         }
 
-        public void Register(ProductRegister newProduct)
+        public Product Register(ProductRegister newProduct)
         {
             var productExists = db.GetProductByBarCode(newProduct.BarCode);
 
@@ -37,20 +37,23 @@ namespace MejorPrecio.Api
                     BarCode = newProduct.BarCode,
                     Description = newProduct.Description
                 };
+                
                 db.RegisterProduct(product);
+
+                return productExists = db.GetProductByBarCode(product.BarCode);
             }
         }
 
         public void Delete(string barCode)
         {
-            var productExists = db.GetProductByBarCode(barCode);
+            var product = db.GetProductByBarCode(barCode);
 
-            if (productExists == null)
+            if (product == null)
             {
                 throw new ArgumentException("No existe producto para el código de barras: " + barCode);
             }
 
-            db.DeleteProduct(productExists.Id);
+            db.DeleteProduct(product.Id);
         }
     }
 }
