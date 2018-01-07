@@ -48,20 +48,6 @@ namespace MejorPrecio.WebApi.Controllers
             }
 
         }
-        // GET api/values/5
-        /* 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        } 
-        */
-
-        // PUT api/values/5
-        /* [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        } */
-
+       
     }
 }

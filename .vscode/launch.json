@@ -28,7 +28,8 @@
            }
        },
        "env": {
-           "ASPNETCORE_ENVIRONMENT": "Development"
+           "ASPNETCORE_ENVIRONMENT": "Development",
+           "conectionStringLocalDB":"Server=DESKTOP-TBLA16F\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"         
        },
        "sourceFileMap": {
            "/Views": "${workspaceRoot}/Views"
@@ -46,7 +47,10 @@
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "externalTerminal",
             "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart"
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "conectionStringLocalDB":"Server=DESKTOP-TBLA16F\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"
+            },
         },
         {
             "name": ".NET Core Attach",
