@@ -24,6 +24,7 @@ public class PriceRepository
                     while (reader.Read())
                     {
                         var price = new Price();
+                        price.Id = (int)reader["idPrice"];
                         price.Lattitude = double.Parse(reader["latitude"].ToString());
                         price.Longittude = double.Parse(reader["longitude"].ToString());
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
@@ -34,21 +35,6 @@ public class PriceRepository
                     }
                 }
             }
-            /* SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.IdProduct + "AND active=1 ORDER BY price ASC", conn);
-            myReader = myCommand.ExecuteReader();
-            // using the code here...
-            while (myReader.Read())
-            {
-                var prod = new Price();
-                prod.Lattitude = double.Parse(myReader["latitude"].ToString());
-                prod.Longittude = double.Parse(myReader["longitude"].ToString());
-                prod.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
-                prod.PriceEffective = decimal.Parse(myReader["price"].ToString());
-                prod.Id = int.Parse(myReader["idProduct"].ToString());
-                prod.IdUser = int.Parse(myReader["idUser"].ToString());
-                productList.Add(prod);
-            } */
         }
         return priceList;
     }
@@ -93,15 +79,13 @@ public class PriceRepository
                 {
                 }
             }
-            /*  SqlCommand myCommand = new SqlCommand(@"UPDATE prices SET active=0 WHERE idPrice=" + priceEspecific.Id, conn);
-             myCommand.ExecuteNonQuery(); */
         }
         return true;
     }
 
     public Price ObtainPrice(Price priceToSearch)
     {
-        Price price = null;
+        var price = new Price();
 
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
@@ -113,8 +97,9 @@ public class PriceRepository
                 command.Parameters.AddWithValue("@idPri", priceToSearch.Id);
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
+                        price.Id = (int)reader["idPrice"];
                         price.Lattitude = double.Parse(reader["latitude"].ToString());
                         price.Longittude = double.Parse(reader["longitude"].ToString());
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
@@ -122,23 +107,12 @@ public class PriceRepository
                         price.idProduct = int.Parse(reader["idProduct"].ToString());
                         price.IdUser = int.Parse(reader["idUser"].ToString());
                     }
+                    else
+                    {
+                        price = null;
+                    }
                 }
             }
-
-            /* SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT * FROM prices WHERE idPrice=" + priceToSearch.Id + " AND active=1", conn);
-            myReader = myCommand.ExecuteReader();
-            // using the code here..
-
-            while (myReader.Read())
-            {
-                price.Lattitude = double.Parse(myReader["latitude"].ToString());
-                price.Longittude = double.Parse(myReader["longitude"].ToString());
-                price.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
-                price.PriceEffective = decimal.Parse(myReader["price"].ToString());
-                price.Id = int.Parse(myReader["idProduct"].ToString());
-                price.IdUser = int.Parse(myReader["idUser"].ToString());
-            } */
         }
         return price;
     }
