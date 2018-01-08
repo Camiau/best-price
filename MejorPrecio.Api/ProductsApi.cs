@@ -9,6 +9,7 @@ namespace MejorPrecio.Api
     {
         private ProductRepository db = new ProductRepository();
 
+        private PricesApi priceApi = new PricesApi();
         public Product SearchByBarCode(string barCode)
         {
             //codeBar is a valid codeBar cheched by a previous function
@@ -27,7 +28,7 @@ namespace MejorPrecio.Api
             if (productExists != null)
             {
                 throw new ArgumentException("Existe el producto para el código de barras: " + newProduct.BarCode);
-                
+
             }
 
             else
@@ -37,10 +38,32 @@ namespace MejorPrecio.Api
                     BarCode = newProduct.BarCode,
                     Description = newProduct.Description
                 };
-                
+
                 db.RegisterProduct(product);
 
-                return productExists = db.GetProductByBarCode(product.BarCode);
+                productExists = db.GetProductByBarCode(product.BarCode);
+
+                Price newPrice = new Price()
+                {
+                    idProduct = productExists.Id,
+                    PriceEffective = newProduct.Price,
+                    Lattitude = newProduct.Latitude,
+                    Longittude = newProduct.Longitude,
+                    IdUser = newProduct.IdUser
+                };
+                
+                if(priceApi.LoadNewPrice(newPrice))
+                {
+                    return productExists;
+
+                }
+
+                else 
+                {
+                    throw new SystemException("No se pudo cargar el precio para el código de barras: " + newProduct.BarCode);
+
+                }
+
             }
         }
 

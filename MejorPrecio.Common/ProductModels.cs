@@ -13,6 +13,14 @@ namespace MejorPrecio.Common
     {
         public string BarCode;
         public string Description;
+
+        public decimal Price;
+
+        public double Latitude;
+
+        public double Longitude;
+        public int IdUser;
+
         public ProductRegister(string barCode,string description)
         {
             this.BarCode=barCode;
