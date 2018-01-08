@@ -1,8 +1,9 @@
+using System;
 namespace MejorPrecio.Common
 {
     public class Role
     {
-        int Id {get;set;}
-        string Name{get;set;}
+        public int Id {get;set;}
+        public string RoleName{get;set;}
     }
 }
