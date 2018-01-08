@@ -5,7 +5,7 @@ namespace MejorPrecio.Common
 {
     public class Product
     {
-        public int Id;
+        public int IdProduct;
         public string BarCode;
         public string Description;
     }

@@ -45,10 +45,10 @@ namespace MejorPrecio.Api
 
                 Price newPrice = new Price()
                 {
-                    idProduct = productExists.Id,
+                    IdProduct = productExists.IdProduct,
                     PriceEffective = newProduct.Price,
-                    Lattitude = newProduct.Latitude,
-                    Longittude = newProduct.Longitude,
+                    Latitude = newProduct.Latitude,
+                    Longitude = newProduct.Longitude,
                     IdUser = newProduct.IdUser
                 };
                 
@@ -76,7 +76,7 @@ namespace MejorPrecio.Api
                 throw new ArgumentException("No existe producto para el código de barras: " + barCode);
             }
 
-            db.DeleteProduct(product.Id);
+            db.DeleteProduct(product.IdProduct);
         }
     }
 }
