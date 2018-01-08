@@ -18,7 +18,7 @@ public class PriceRepository
             {
                 command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
                 command.CommandText = @"SELECT TOP 15 * FROM prices WHERE idProduct=@idProd AND active=1 ORDER BY price ASC";
-                command.Parameters.AddWithValue("@idProd", prod.IdProduct);
+                command.Parameters.AddWithValue("@idProd", prod.Id);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -44,15 +44,7 @@ public class PriceRepository
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-<<<<<<< HEAD
-            SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.Id + "AND active=1 ORDER BY price ASC", conn);
-            myReader = myCommand.ExecuteReader();
-            // using the code here...
-            while (myReader.Read())
-=======
             using (var command = conn.CreateCommand())
->>>>>>> 3fe20250ab5d869dbeed58a0f76a26f238b1e419
             {
                 command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
                 command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUs ,@date)";
