@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.IO;
 using ZXing;
 
 
@@ -7,14 +8,14 @@ namespace MejorPrecio.Common
 {
     public class BarcodeScanner
     {
-        public string ScanBarcode( string image )//devuelve el codigo de barras
+        public string ScanBarcode(Stream imageStream)//devuelve el codigo de barras
         {
             // create a barcode reader instance
             var barcodeReader = new BarcodeReader();
             barcodeReader.Options.TryHarder = true;
  
             // create an in memory bitmap
-            var barcodeBitmap = (Bitmap)Bitmap.FromFile(image);
+            var barcodeBitmap = new Bitmap(imageStream);
     
             // decode the barcode from the in memory bitmap
             var barcodeResult = barcodeReader.Decode(barcodeBitmap);

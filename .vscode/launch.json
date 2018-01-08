@@ -1,64 +1,65 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
-   {
-       "name": ".NET Core Launch (web)",
-       "type": "coreclr",
-       "request": "launch",
-       "preLaunchTask": "build",
-       "program": "${workspaceFolder}/MejorPrecio.WebApi/bin/Debug/netcoreapp2.0/MejorPrecio.WebApi.dll",
-       "args": [],
-       "cwd": "${workspaceRoot}",
-       "stopAtEntry": false,
-       "launchBrowser": {
-           "enabled": true,
-           "args": "${auto-detect-url}",
-           "windows": {
-               "command": "cmd.exe",
-               "args": "/C start ${auto-detect-url}"
-           },
-           "osx": {
-               "command": "open"
-           },
-           "linux": {
-               "command": "xdg-open"
-           }
-       },
-       "env": {
-           "ASPNETCORE_ENVIRONMENT": "Development",
-           "connstr":"sddsdsfsfd"
-       },
-       "sourceFileMap": {
-           "/Views": "${workspaceRoot}/Views"
-       }
-   },
-        {
-            "name": ".NET Core Launch (console)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/testconsola.mejor-precio-6/bin/Debug/netcoreapp2.0/testconsola.mejor-precio-6.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/testconsola.mejor-precio-6",
-            // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
-            "console": "externalTerminal",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "env": {
-                "conectionStringLocalDB":"Server=DESKTOP-3MV52PP\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
+    {
+        "name": ".NET Core Launch (web)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/MejorPrecio.WebApi/bin/Debug/netcoreapp2.0/MejorPrecio.WebApi.dll",
+        "args": [],
+        "cwd": "${workspaceRoot}",
+        "stopAtEntry": false,
+        "launchBrowser": {
+            "enabled": true,
+            "args": "${auto-detect-url}",
+            "windows": {
+                "command": "cmd.exe",
+                "args": "/C start ${auto-detect-url}"
             },
-            
+            "osx": {
+                "command": "open"
+            },
+            "linux": {
+                "command": "xdg-open"
+            }
         },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "connstr":"sddsdsfsfd"
+        },
+        "sourceFileMap": {
+            "/Views": "${workspaceRoot}/Views"
         }
-        
-    ]
-}
+    },
+         {
+             "name": ".NET Core Launch (console)",
+             "type": "coreclr",
+             "request": "launch",
+             "preLaunchTask": "build",
+             // If you have changed target frameworks, make sure to update the program path.
+             "program": "${workspaceFolder}/testconsola.mejor-precio-6/bin/Debug/netcoreapp2.0/testconsola.mejor-precio-6.dll",
+             "args": [],
+             "cwd": "${workspaceFolder}/testconsola.mejor-precio-6",
+             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
+             "console": "externalTerminal",
+             "stopAtEntry": false,
+             "internalConsoleOptions": "openOnSessionStart",
+             "env": {
+                 "conectionStringLocalDB":"Server=DESKTOP-3MV52PP\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"
+             },
+             
+         },
+         {
+             "name": ".NET Core Attach",
+             "type": "coreclr",
+             "request": "attach",
+             "processId": "${command:pickProcess}"
+         }
+         
+     ]
+ }
+ 
