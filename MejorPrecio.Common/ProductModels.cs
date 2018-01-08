@@ -5,7 +5,7 @@ namespace MejorPrecio.Common
 {
     public class Product
     {
-        public int IdProduct;
+        public Guid IdProduct;
         public string BarCode;
         public string Description;
     }
@@ -19,7 +19,7 @@ namespace MejorPrecio.Common
         public double Latitude;
 
         public double Longitude;
-        public int IdUser;
+        public Guid IdUser;
 
         public ProductRegister(string barCode,string description)
         {

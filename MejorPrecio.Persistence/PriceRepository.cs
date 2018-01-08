@@ -30,7 +30,7 @@ public class PriceRepository
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
                         price.PriceEffective = decimal.Parse(reader["price"].ToString());
                         price.IdProduct = (Guid)reader["idProduct"];
-                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                        price.IdUser = (Guid)reader["idUser"];
                         priceList.Add(price);
                     }
                 }
@@ -105,7 +105,7 @@ public class PriceRepository
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
                         price.PriceEffective = decimal.Parse(reader["price"].ToString());
                         price.IdProduct = (Guid)reader["idProduct"];
-                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                        price.IdUser = (Guid)reader["idUser"];
                     }
                     else
                     {

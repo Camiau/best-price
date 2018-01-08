@@ -10,6 +10,6 @@ namespace MejorPrecio.Common
         public DateTimeOffset Date;
         public double Latitude;
         public double Longitude;
-        public int IdUser;
+        public Guid IdUser;
     }
 }
