@@ -29,7 +29,7 @@
        },
        "env": {
            "ASPNETCORE_ENVIRONMENT": "Development",
-           "conectionStringLocalDB":"Server=DESKTOP-TBLA16F\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"         
+           "connstr":"sddsdsfsfd"
        },
        "sourceFileMap": {
            "/Views": "${workspaceRoot}/Views"
@@ -49,8 +49,9 @@
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "env": {
-                "conectionStringLocalDB":"Server=DESKTOP-TBLA16F\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"
+                "conectionStringLocalDB":"Server=DESKTOP-3MV52PP\\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True"
             },
+            
         },
         {
             "name": ".NET Core Attach",
@@ -58,5 +59,6 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         }
+        
     ]
 }

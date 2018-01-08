@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using MejorPrecio.Persistence;
+using System.Diagnostics;
 
 namespace MejorPrecio.Api
 {
     public class UsersApi
     {
+        public Role GetRole()
+        {
+            var myRole = new Role();
+            myRole.Id=3;
+            myRole.RoleName="Administrador";
+            return myRole;
+        }
         public enum SignInStatus
         {
             Success,
@@ -80,8 +88,8 @@ namespace MejorPrecio.Api
 
         public bool? ConfirmEmail(SimpleUserModel usrModel)
         {
-            var email=usrModel.Email;
-            var dni=usrModel.Dni;
+            var email = usrModel.Email;
+            var dni = usrModel.Dni;
             var db = new UserRepository();
             var result = db.UserExist(email, dni);
             if (result == null)
