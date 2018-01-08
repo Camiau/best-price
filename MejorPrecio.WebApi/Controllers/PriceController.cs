@@ -33,7 +33,7 @@ namespace MejorPrecio.WebApi.Controllers
 
         // DELETE api/values/5
         [HttpDelete] //[HttpDelete("price")]
-        public IActionResult Delete(Price price)
+        public IActionResult Delete([FromBody]Price price)
         {
             var priceAPI = new PricesApi();
             var priceToDelete = priceAPI.ObtainPrice(price);
