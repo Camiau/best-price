@@ -18,7 +18,7 @@ namespace MejorPrecio.WebApi.Controllers
             var pricesAPI = new PricesApi();
 
             var prod = new Product();
-            prod.IdProduct = idProd;
+            prod.Id = idProd;
 
             return pricesAPI.FindBestPrice(prod);     
         }
