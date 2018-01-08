@@ -12,20 +12,21 @@ CREATE DATABASE mejorprecio6
 GO
 -- Create a new table called 'users' in schema 'dbo'
 -- Drop the table if it already exists
-IF OBJECT_ID('dbo.users', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.users', 'U') IS NOT   NULL
 DROP TABLE dbo.users
 GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.users
 (
-    idUser INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idUser uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     nameUser [VARCHAR](50) NOT NULL,
     lastName [VARCHAR](50) NOT NULL,
     dni [bigint],
     mail [VARCHAR](50),
     imagePath[VARCHAR](50),
-    idRol INT,
+    idRol uniqueidentifier,
     emailIsConfirmed BIT DEFAULT 0 NOT NULL,
     active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
@@ -43,10 +44,10 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.roles
 (
-    idRole INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idRole uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     role [VARCHAR](50) NOT NULL,
-    idUser INT
     -- specify more columns here
 );
 GO
@@ -59,10 +60,11 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.products
 (
-    idProduct INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idProduct uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     codeBar [VARCHAR](50) NOT NULL,
-    descriptionProuct text,
+    descriptionProduct text,
     brand VARCHAR(50),
     presentation VARCHAR(50),
     active BIT DEFAULT 1 NOT NULL
@@ -78,11 +80,12 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.prices
 (
-    idPrice INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idPrice uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     price money NOT NULL,
-    idProduct INT NOT NULL,
-    idUser INT NOT NULL,
+    idProduct UNIQUEIDENTIFIER NOT NULL,
+    idUser uniqueidentifier NOT NULL,
     latitude FLOAT DEFAULT 0.0000000000000 NOT NULL ,
     longitude FLOAT DEFAULT 0.0000000000000 NOT NULL,
     dateOfUpload DATETIMEOFFSET,
@@ -98,7 +101,8 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.searches
 (
-    idSearch INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idSearch uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     active BIT DEFAULT 1 NOT NULL
     -- specify more columns here
@@ -111,7 +115,8 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.stores
 (
-    idStore INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    idStore uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
     -- primary key column
     nameStore [VARCHAR](50) NOT NULL,
     descriptionStore[VARCHAR](50),
@@ -123,40 +128,24 @@ CREATE TABLE dbo.stores
     -- specify more columns here
 );
 GO
+SELECT * FROM users
 -- Insert rows into table 'users'
 INSERT INTO users
     ([nameUser],[lastName],[dni],[mail],[idRol])
 VALUES
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1),
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 1)
-    
-GO
-INSERT INTO products
-    ([codeBar],[descriptionProuct])
-VALUES
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba'),
-    ( '0123456789012', 'ashdhbakdakjbbksakbdasbdbbasbasbbadbahasasba')
-    
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f') 
 GO
 INSERT INTO users
     (nameUser,lastName,dni,mail,imagePath,idRol)
-VALUES('fer', 'G', 38324779, 'fer@123.com', '', 1) 
+VALUES('fer', 'G', 38324779, 'fer@123.com', '', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f') 
 GO
 SELECT TOP 15
     *
@@ -191,15 +180,14 @@ SELECT *
 FROM users
 WHERE users.mail='asdkddskds@adskjds.com' AND users.dni=39244338
 GO
-UPDATE prices SET active=0 WHERE idPrice=2
+--UPDATE prices SET active=0 WHERE idPrice=2
 GO
-UPDATE products SET active=0 WHERE idProduct=6
+--UPDATE products SET active=0 WHERE idProduct=6
 GO
 insert into roles
     (role)
 values
-    ('defensor')
-GO
-ALTER TABLE roles
-DROP COLUMN idUser;
+    ('user'),
+    ('admin'),
+    ('defender')
 GO
