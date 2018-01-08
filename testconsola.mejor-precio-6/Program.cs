@@ -26,16 +26,16 @@ namespace testconsola.mejor_precio_6
                     switch (number)
                     {
                         case 4:
-                            BestPricesForAProduct();
+                            //BestPricesForAProduct();
                             break;
                         case 1:
-                            Fer();
+                            //Fer();
                             break;
                         case 3:
-                            Cami();
+                            //Cami();
                             break;
                         case 2:
-                            userLogins();
+                            //userLogins();
                             break;
                         case 5:
                             Gasti();
@@ -60,7 +60,7 @@ namespace testconsola.mejor_precio_6
             System.Console.WriteLine("IdRol:"+lstRoles[1].Id.ToString()+"Role:"+lstRoles[1].RoleName);
             System.Console.WriteLine("IdRol:"+lstRoles[2].Id.ToString()+"Role:"+lstRoles[2].RoleName);
         }
-        static private void Fer()
+        /*static private void Fer()
         {
             UsersApi api = new UsersApi();
             SimpleUserModel userLogin = new SimpleUserModel();
@@ -100,8 +100,8 @@ namespace testconsola.mejor_precio_6
             var result = api.Login(userLogin);
             Console.WriteLine("{0}", result);
 
-        }
-        static private string Cami()
+        }*/
+        /*static private string Cami()
         {
             //PRUEBA
             var scanner = new BarcodeScanner();
@@ -117,9 +117,9 @@ namespace testconsola.mejor_precio_6
                 Console.WriteLine("No se pudo leer el codigo");
             }
             return code;
-        }
+        }*/
 
-        static private void userLogins()
+        /*static private void userLogins()
         {
             UsersApi api = new UsersApi();
             SimpleUserModel userLogin = new SimpleUserModel();
@@ -132,9 +132,9 @@ namespace testconsola.mejor_precio_6
 
             var dataOfUser = api.Login(userLogin);
             Console.WriteLine(dataOfUser);
-        }
+        }*/
 
-        static private void BestPricesForAProduct()
+        /*static private void BestPricesForAProduct()
         {
             var apiPro = new ProductsApi();
             var apiPrice = new PricesApi();
@@ -161,9 +161,9 @@ namespace testconsola.mejor_precio_6
             HACER:
             si existe mostrar datos y mejores precios
             si no existe dar la opcion de cargar un nuevo barcode con descripcion y nuevo precio
-            */
+            
 
-        }
+        }*/
     }
 
 }
