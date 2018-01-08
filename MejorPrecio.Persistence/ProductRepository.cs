@@ -22,7 +22,7 @@ public class ProductRepository
                     while (reader.Read())
                     {
                         var prod = new Product();
-                        prod.Id = int.Parse(reader["idProduct"].ToString());
+                        prod.IdProduct = int.Parse(reader["idProduct"].ToString());
                         prod.BarCode = reader["codeBar"].ToString();
                         prod.Description = reader["descriptionProuct"].ToString();
                         productList.Add(prod);
@@ -49,7 +49,7 @@ public class ProductRepository
                     while (reader.Read())
                     {
                         ret = new Product();
-                        ret.Id = int.Parse(reader["idProduct"].ToString());
+                        ret.IdProduct = int.Parse(reader["idProduct"].ToString());
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProuct"].ToString();
                     }
