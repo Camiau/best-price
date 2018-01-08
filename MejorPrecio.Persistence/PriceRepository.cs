@@ -3,61 +3,64 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
+using System.Data;
 
 public class PriceRepository
 {
-    private static string conectionStringLocalDB;
-    public PriceRepository()
+    private static string conectionStringLocalDB = Environment.GetEnvironmentVariable("conectionStringLocalDB");
+    public List<Price> GetBestPrice(Product prod)
     {
-        var userLocal = Environment.UserName;
-        switch (userLocal)
-        {
-            case "gastonh_lu":
-                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                break;
-            case "iskandar":
-                conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234>";
-                break;
-            case "camilaf_lu":
-                conectionStringLocalDB = @"Server=DESKTOP-TBLA16F\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True;";
-                break;
-            default:
-                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                break;
-        }
-    }
-    public List<Price> GetBestPrice(Product prd)
-    {
-        List<Price> productList = new List<Price>();
+        List<Price> priceList = new List<Price>();
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT TOP 15 * FROM prices WHERE idProduct=" + prd.IdProduct + "AND active=1 ORDER BY price ASC", conn);
-            myReader = myCommand.ExecuteReader();
-            // using the code here...
-            while (myReader.Read())
+            using (var command = conn.CreateCommand())
             {
-                var prod = new Price();
-                prod.Lattitude = double.Parse(myReader["latitude"].ToString());
-                prod.Longittude = double.Parse(myReader["longitude"].ToString());
-                prod.Date = DateTimeOffset.Parse(myReader["dateOfUpload"].ToString());
-                prod.PriceEffective = decimal.Parse(myReader["price"].ToString());
-                prod.Id = int.Parse(myReader["idProduct"].ToString());
-                prod.IdUser = int.Parse(myReader["idUser"].ToString());
-                productList.Add(prod);
+                command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
+                command.CommandText = @"SELECT TOP 15 * FROM prices WHERE idProduct=@idProd AND active=1 ORDER BY price ASC";
+                command.Parameters.AddWithValue("@idProd", prod.IdProduct);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var price = new Price();
+                        price.Id = (int)reader["idPrice"];
+                        price.Lattitude = double.Parse(reader["latitude"].ToString());
+                        price.Longittude = double.Parse(reader["longitude"].ToString());
+                        price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
+                        price.PriceEffective = decimal.Parse(reader["price"].ToString());
+                        price.idProduct = int.Parse(reader["idProduct"].ToString());
+                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                        priceList.Add(price);
+                    }
+                }
             }
         }
-        return productList;
+        return priceList;
     }
     public bool RegisterPrice(Price priceEspecific)
     {
-        var today = new DateTimeOffset();
+        var today = DateTimeOffset.Now;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (" + priceEspecific.PriceEffective + "," + priceEspecific.Lattitude + "," + priceEspecific.Longittude + "," + priceEspecific.idProduct + "," + priceEspecific.IdUser + "," + today.Date + ")", conn);
-            myCommand.ExecuteNonQuery();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
+                command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUs ,@date)";
+
+                command.Parameters.AddWithValue("@priceEsp", priceEspecific.PriceEffective);
+                command.Parameters.AddWithValue("@lat", priceEspecific.Lattitude);
+                command.Parameters.AddWithValue("@long", priceEspecific.Longittude);
+                command.Parameters.AddWithValue("@idProd", priceEspecific.idProduct);
+                command.Parameters.AddWithValue("@idUs", priceEspecific.IdUser);
+                command.Parameters.AddWithValue("@date", today);
+
+                using (var reader = command.ExecuteReader())
+                {
+
+                }
+            }
         }
         return true;
     }
@@ -66,9 +69,51 @@ public class PriceRepository
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"UPDATE prices SET active=0 WHERE idPrice=" + priceEspecific.Id, conn);
-            myCommand.ExecuteNonQuery();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
+                command.CommandText = @"UPDATE prices SET active=0 WHERE idPrice=@idPri";
+
+                command.Parameters.AddWithValue("@idPri", priceEspecific.Id);
+                using (var reader = command.ExecuteReader())
+                {
+                }
+            }
         }
         return true;
+    }
+
+    public Price ObtainPrice(Price priceToSearch)
+    {
+        var price = new Price();
+
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
+                command.CommandText = @"SELECT * FROM prices WHERE idPrice=@idPri";
+                command.Parameters.AddWithValue("@idPri", priceToSearch.Id);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        price.Id = (int)reader["idPrice"];
+                        price.Lattitude = double.Parse(reader["latitude"].ToString());
+                        price.Longittude = double.Parse(reader["longitude"].ToString());
+                        price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
+                        price.PriceEffective = decimal.Parse(reader["price"].ToString());
+                        price.idProduct = int.Parse(reader["idProduct"].ToString());
+                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                    }
+                    else
+                    {
+                        price = null;
+                    }
+                }
+            }
+        }
+        return price;
     }
 }
