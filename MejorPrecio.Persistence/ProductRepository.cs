@@ -3,90 +3,90 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
+using System.Data;
 public class ProductRepository
 {
-    private static string conectionStringLocalDB;
-    public ProductRepository()
-    {
-        var userLocal = Environment.UserName;
-        switch (userLocal)
-        {
-            case "gastonh_lu":
-                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                break;
-            case "iskandar":
-                conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234>";
-                break;
-            case "camilaf_lu":
-                conectionStringLocalDB = @"Server=DESKTOP-TBLA16F\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True;";
-                break;
-            default:
-                conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                break;
-        }
-    }
+    private static string conectionStringLocalDB = Environment.GetEnvironmentVariable("conectionStringLocalDB");
     public List<Product> ReadAllProducts()
     {
         List<Product> productList = new List<Product>();
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlDataReader myReader = null;
-            SqlCommand myCommand = new SqlCommand("SELECT * FROM products WHERE active=1", conn);
-            myReader = myCommand.ExecuteReader();
-            //until this, is the db conection
-            while (myReader.Read())
+            using (var command = conn.CreateCommand())
             {
-                var prod = new Product();
-                prod.IdProduct = int.Parse(myReader["idProduct"].ToString());
-                prod.CodeBar = myReader["codeBar"].ToString();
-                prod.Description = myReader["descriptionProuct"].ToString();
-                productList.Add(prod);
+                command.CommandType = CommandType.Text;
+                command.CommandText = @"SELECT * FROM products WHERE active=1";
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var prod = new Product();
+                        prod.Id = int.Parse(reader["idProduct"].ToString());
+                        prod.BarCode = reader["codeBar"].ToString();
+                        prod.Description = reader["descriptionProuct"].ToString();
+                        productList.Add(prod);
+
+                    }
+                }
             }
         }
         return productList;
     }
-    public Product GetProductByCodeBar(string codeBar)
+    public Product GetProductByBarCode(string barCode)
     {
         Product ret = null;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlDataReader myReader = null;
-            var query="SELECT * FROM products WHERE codeBar='" + codeBar + "' AND active=1";
-            SqlCommand myCommand = new SqlCommand(query, conn);
-            myReader = myCommand.ExecuteReader();
-            // using the code here...
-            while (myReader.Read())
+            using (var command = conn.CreateCommand())
             {
-                ret = new Product();
-                ret.IdProduct = int.Parse(myReader["idProduct"].ToString());
-                ret.CodeBar = myReader["codeBar"].ToString();
-                ret.Description = myReader["descriptionProuct"].ToString();
+                command.CommandType = CommandType.Text;
+                command.CommandText = @"SELECT * FROM products WHERE codeBar = @barCode AND active=1";
+                command.Parameters.AddWithValue("@barCode", barCode);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ret = new Product();
+                        ret.Id = int.Parse(reader["idProduct"].ToString());
+                        ret.BarCode = reader["codeBar"].ToString();
+                        ret.Description = reader["descriptionProuct"].ToString();
+                    }
+                }
+
             }
         }
         return ret;
     }
-    public bool RegisterProduct(ProductRegister productNew)
+    public void RegisterProduct(Product product)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            SqlCommand myCommand = new SqlCommand(@"INSERT INTO products (codeBar,descriptionProuct) VALUES ('" + productNew.CodeBar + "','" + productNew.Description + "')", conn);
-            myCommand.ExecuteNonQuery();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;
+                command.CommandText = @"INSERT INTO products (codeBar, descriptionProuct) VALUES (@barCode, @description)";
+                command.Parameters.AddWithValue("@barCode", product.BarCode);
+                command.Parameters.AddWithValue("@description", product.Description);
+                command.ExecuteNonQuery();
+            }
         }
-        return true;
     }
-    public bool DeleteProduct(Product prdToDelete)
+    public void DeleteProduct(int id)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
-            // query exsample:
-            //UPDATE products SET active=0 WHERE idProduct=6
-            SqlCommand myCommand = new SqlCommand(@"UPDATE products SET active=0 WHERE idProduct="+prdToDelete.IdProduct, conn);
-            myCommand.ExecuteNonQuery();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;
+                command.CommandText = @"UPDATE products SET active = 0 WHERE idProduct=@idProd";
+                command.Parameters.AddWithValue("@idProd", id);
+                command.ExecuteNonQuery();
+            }
+
         }
-        return true;
     }
 }
