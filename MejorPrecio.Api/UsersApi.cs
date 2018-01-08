@@ -12,7 +12,7 @@ namespace MejorPrecio.Api
         public Role GetRole()
         {
             var myRole = new Role();
-            myRole.Id=3;
+            //myRole.Id=(Guid)"C81F1970-A6A7-4096-86AA-89EA6C9FD89F";
             myRole.RoleName="Administrador";
             return myRole;
         }

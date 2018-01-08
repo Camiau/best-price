@@ -24,7 +24,7 @@ public class RoleRepository
                     while (reader.Read())
                     {
                         var roleToInit = new Role();
-                        roleToInit.Id = (int)reader["idRole"];
+                        roleToInit.Id = (Guid)reader["idRole"];
                         roleToInit.RoleName =(string) reader["role"];
                         roleList.Add(roleToInit);
                     }
