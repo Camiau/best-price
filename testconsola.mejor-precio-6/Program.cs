@@ -54,9 +54,6 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
-            var uApi=new UsersApi();
-            var md=new SimpleUserModel();
-            uApi.ConfirmEmail(md);
         }
         /*static private void Fer()
         {

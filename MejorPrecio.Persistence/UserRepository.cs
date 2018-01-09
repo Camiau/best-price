@@ -85,7 +85,7 @@ namespace MejorPrecio.Persistence
                     user.Dni = myReader["dni"].ToString();
                     user.Email = myReader["mail"].ToString();
                     user.ImagePath = myReader["imagePath"].ToString();
-                    user.IdRol = (Guid)Parse(myReader["idRol"].ToString());
+                    user.IdRol = (Guid)(myReader["idRol"]);
                     user.EmailIsConfirmed = bool.Parse(myReader["EmailIsConfirmed"].ToString());
                 }
             }
