@@ -18,19 +18,19 @@ public class PriceRepository
             {
                 command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
                 command.CommandText = @"SELECT TOP 15 * FROM prices WHERE idProduct=@idProd AND active=1 ORDER BY price ASC";
-                command.Parameters.AddWithValue("@idProd", prod.Id);
+                command.Parameters.AddWithValue("@idProd", prod.IdProduct);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         var price = new Price();
-                        price.Id = (int)reader["idPrice"];
-                        price.Lattitude = double.Parse(reader["latitude"].ToString());
-                        price.Longittude = double.Parse(reader["longitude"].ToString());
+                        price.Id = (Guid)reader["idPrice"];
+                        price.Latitude = double.Parse(reader["latitude"].ToString());
+                        price.Longitude = double.Parse(reader["longitude"].ToString());
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
                         price.PriceEffective = decimal.Parse(reader["price"].ToString());
-                        price.idProduct = int.Parse(reader["idProduct"].ToString());
-                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                        price.IdProduct = (Guid)reader["idProduct"];
+                        price.IdUser = (Guid)reader["idUser"];
                         priceList.Add(price);
                     }
                 }
@@ -50,9 +50,9 @@ public class PriceRepository
                 command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUs ,@date)";
 
                 command.Parameters.AddWithValue("@priceEsp", priceEspecific.PriceEffective);
-                command.Parameters.AddWithValue("@lat", priceEspecific.Lattitude);
-                command.Parameters.AddWithValue("@long", priceEspecific.Longittude);
-                command.Parameters.AddWithValue("@idProd", priceEspecific.idProduct);
+                command.Parameters.AddWithValue("@lat", priceEspecific.Latitude);
+                command.Parameters.AddWithValue("@long", priceEspecific.Longitude);
+                command.Parameters.AddWithValue("@idProd", priceEspecific.IdProduct);
                 command.Parameters.AddWithValue("@idUs", priceEspecific.IdUser);
                 command.Parameters.AddWithValue("@date", today);
 
@@ -99,13 +99,13 @@ public class PriceRepository
                 {
                     if (reader.Read())
                     {
-                        price.Id = (int)reader["idPrice"];
-                        price.Lattitude = double.Parse(reader["latitude"].ToString());
-                        price.Longittude = double.Parse(reader["longitude"].ToString());
+                        price.Id = (Guid)reader["idPrice"];
+                        price.Latitude = double.Parse(reader["latitude"].ToString());
+                        price.Longitude = double.Parse(reader["longitude"].ToString());
                         price.Date = DateTimeOffset.Parse(reader["dateOfUpload"].ToString());
                         price.PriceEffective = decimal.Parse(reader["price"].ToString());
-                        price.idProduct = int.Parse(reader["idProduct"].ToString());
-                        price.IdUser = int.Parse(reader["idUser"].ToString());
+                        price.IdProduct = (Guid)reader["idProduct"];
+                        price.IdUser = (Guid)reader["idUser"];
                     }
                     else
                     {

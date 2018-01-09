@@ -22,9 +22,9 @@ public class ProductRepository
                     while (reader.Read())
                     {
                         var prod = new Product();
-                        prod.Id = int.Parse(reader["idProduct"].ToString());
+                        prod.IdProduct = (Guid)reader["idProduct"];
                         prod.BarCode = reader["codeBar"].ToString();
-                        prod.Description = reader["descriptionProuct"].ToString();
+                        prod.Description = reader["descriptionProduct"].ToString();
                         productList.Add(prod);
 
                     }
@@ -49,9 +49,9 @@ public class ProductRepository
                     while (reader.Read())
                     {
                         ret = new Product();
-                        ret.Id = int.Parse(reader["idProduct"].ToString());
+                        ret.IdProduct = (Guid)reader["idProduct"];
                         ret.BarCode = reader["codeBar"].ToString();
-                        ret.Description = reader["descriptionProuct"].ToString();
+                        ret.Description = reader["descriptionProduct"].ToString();
                     }
                 }
 
@@ -67,14 +67,14 @@ public class ProductRepository
             using (var command = conn.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = @"INSERT INTO products (codeBar, descriptionProuct) VALUES (@barCode, @description)";
+                command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct) VALUES (@barCode, @description)";
                 command.Parameters.AddWithValue("@barCode", product.BarCode);
                 command.Parameters.AddWithValue("@description", product.Description);
                 command.ExecuteNonQuery();
             }
         }
     }
-    public void DeleteProduct(int id)
+    public void DeleteProduct(Guid id)
     {
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {

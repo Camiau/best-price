@@ -13,12 +13,12 @@ namespace MejorPrecio.WebApi.Controllers
     {
         // GET api/findbestprice
         [HttpGet]
-        public IEnumerable<Price> Get(int idProd)
+        public IEnumerable<Price> Get(Guid idProd)
         {
             var pricesAPI = new PricesApi();
 
             var prod = new Product();
-            prod.Id = idProd;
+            prod.IdProduct = idProd;
 
             return pricesAPI.FindBestPrice(prod);     
         }
