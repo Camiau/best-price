@@ -23,7 +23,7 @@ namespace MejorPrecio.WebApi.Controllers
         {
             if (search == null)
             {
-                return StatusCode(200, new { message = "Ups, sin resultados"});
+                return StatusCode(200, new { message = "Introduce un criterio de búsqueda"});
             }
 
             var product = logic.SearchByBarCode(search);
