@@ -30,7 +30,7 @@ namespace MejorPrecio.WebApi.Controllers
 
             if(product == null)
             {
-                return StatusCode(404);
+                return StatusCode(200, new { message = "Ups, sin resultados"});
             }
 
             else return Json(product);

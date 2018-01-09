@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MejorPrecio.Common;
 using System.Data.SqlClient;
-
+using System.Data;
 namespace MejorPrecio.Persistence
 {
     /// <summary>
@@ -14,56 +14,44 @@ namespace MejorPrecio.Persistence
         private SimpleUserModel _logedIn = new SimpleUserModel();
 
         public SimpleUserModel logedIn { get { return _logedIn; } }
-
-        private static string conectionStringLocalDB;
-        public UserRepository()
+        private static string conectionStringLocalDB = Environment.GetEnvironmentVariable("conectionStringLocalDB");
+        public bool CreateUser(ApplicationUser user)
         {
-            var userLocal = Environment.UserName;
-            switch (userLocal)
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
-                case "gastonh_lu":
-                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                    break;
-                case "iskandar":
-                    conectionStringLocalDB = @"Data Source=172.17.0.2,1433;Initial Catalog=mejorprecio6;User ID=sa;Password=<Clave_Segura1234>";
-                    break;
-                case "camilaf_lu":
-                    conectionStringLocalDB =  @"Server=DESKTOP-TBLA16F\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True;";
-                    break;
-                default:
-                    conectionStringLocalDB = @"Server=DESKTOP-3MV52PP\SQLEXPRESS;Database=mejorprecio6;Trusted_Connection=True";
-                    break;
+                conn.Open();
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('@userName', '@userSurname', '@userDni', '@userEmail', '@userImagePath ', '@idRol')";
+                    command.Parameters.AddWithValue("@username", user.Name);
+                    command.Parameters.AddWithValue("@userSurname", user.Surname);
+                    command.Parameters.AddWithValue("@userDni", user.Dni);
+                    command.Parameters.AddWithValue("@userEmail", user.Email);
+                    command.Parameters.AddWithValue("@userImagePath", user.ImagePath);
+                    command.Parameters.AddWithValue("@idRol", 0);
+                    command.ExecuteNonQuery();
+                }
+            }
+            return true;
+        }
+        public void ConfirmEmail(ApplicationUser user)
+        {
+            user.EmailIsConfirmed = true;
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"UPDATE users SET emailIsConfirmed=1 WHERE idUser=@id";
+                    command.Parameters.AddWithValue("@id", user.IdUser);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
-        public bool CreateUser(ApplicationUser user)
-        {
-                using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
-                {
-                    conn.Open();
-                    //MODEL OF QUERY
-                    //INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('fer','G',38324779,'fer@123.com','',1) 
-                    SqlCommand myCommand = new SqlCommand("INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('" + user.Name + "','" + user.Surname + "'," + user.Dni + ",'" + user.Email + "','" + user.ImagePath + "'," + 0 + ")", conn);
-                    myCommand.ExecuteNonQuery();
-                }
-                return true;
 
-        }
-        public bool ConfirmEmail(ApplicationUser user)
-        {
-                user.EmailIsConfirmed = true;
-                using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
-                {
-                    conn.Open();
-                    //MODEL OF QUERY
-                    //UPDATE users SET emailIsConfirmed=1 WHERE idUser=1
-                    SqlCommand myCommand = new SqlCommand("UPDATE users SET emailIsConfirmed=1 WHERE idUser=" + user.IdUser, conn);
-                    myCommand.ExecuteNonQuery();
-                    return true;
-                }
-        }
-
-        
         public ApplicationUser UserExist(string email, string dni)
         {
             ApplicationUser user = null;
@@ -72,21 +60,27 @@ namespace MejorPrecio.Persistence
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
-                SqlDataReader myReader = null;
-                var query=@"SELECT * FROM users WHERE users.mail='" + email + "' AND users.dni='" + dni + "' AND active=1";
-                SqlCommand myCommand = new SqlCommand(query, conn);
-                myReader = myCommand.ExecuteReader();
-                while (myReader.Read())
+                using (var command = new SqlCommand())
                 {
-                    user = new ApplicationUser();
-                    user.IdUser = int.Parse(myReader["iduser"].ToString());
-                    user.Name = myReader["nameUser"].ToString();
-                    user.Surname = myReader["lastName"].ToString();
-                    user.Dni = myReader["dni"].ToString();
-                    user.Email = myReader["mail"].ToString();
-                    user.ImagePath = myReader["imagePath"].ToString();
-                    user.IdRol = int.Parse(myReader["idRol"].ToString());
-                    user.EmailIsConfirmed = bool.Parse(myReader["EmailIsConfirmed"].ToString());
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT * FROM users WHERE users.mail='@email' AND users.dni='@dni' AND active=1";
+                    command.Parameters.AddWithValue("@email", email);
+                    command.Parameters.AddWithValue("@dni", dni);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            user = new ApplicationUser();
+                            user.IdUser = (Guid)reader["iduser"];
+                            user.Name = reader["nameUser"].ToString();
+                            user.Surname = reader["lastName"].ToString();
+                            user.Dni = reader["dni"].ToString();
+                            user.Email = reader["mail"].ToString();
+                            user.ImagePath = reader["imagePath"].ToString();
+                            user.IdRol = int.Parse(reader["idRol"].ToString());
+                            user.EmailIsConfirmed = bool.Parse(reader["EmailIsConfirmed"].ToString());
+                        }
+                    }
                 }
             }
             return user;
