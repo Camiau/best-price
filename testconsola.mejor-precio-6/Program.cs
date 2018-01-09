@@ -54,6 +54,9 @@ namespace testconsola.mejor_precio_6
         {
             var os = Environment.OSVersion;
             System.Console.WriteLine("OS:" + os.Platform.ToString());
+            var myPermissionApi= new PermissionApi();
+            var ok=myPermissionApi.CouldI(new Guid("607263FD-F917-483F-A5BC-5B022455D632"),"deleteUser");
+            System.Console.WriteLine(ok.ToString());
         }
         /*static private void Fer()
         {
