@@ -1,3 +1,4 @@
+using System;
 namespace MejorPrecio.Common
 {
     public class ApplicationUser
@@ -9,7 +10,7 @@ namespace MejorPrecio.Common
         public string Dni { get; set; }
         public bool EmailIsConfirmed { get; set; }
         public string ImagePath { get; set; }
-        public int IdRol { get; set; }
+        public Guid IdRol { get; set; }
 
     }
     public class RegisterModel

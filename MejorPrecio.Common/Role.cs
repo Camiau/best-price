@@ -5,5 +5,6 @@ namespace MejorPrecio.Common
     {
         public Guid Id {get;set;}
         public string RoleName{get;set;}
+        
     }
 }

@@ -128,19 +128,64 @@ CREATE TABLE dbo.stores
     -- specify more columns here
 );
 GO
-SELECT * FROM users
+-- Create a new table called 'Permission' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.permission', 'U') IS NOT NULL
+DROP TABLE dbo.permission
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.permission
+(
+    idPermission uniqueidentifier NOT NULL PRIMARY KEY
+        DEFAULT newid(),
+    -- primary key column
+    permission [VARCHAR](50) NOT NULL,
+    active BIT DEFAULT 1 NOT NULL
+    -- specify more columns here
+);
+GO
+-- Create a new table called 'PermissionRole' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.permissionRole', 'U') IS NOT NULL
+DROP TABLE dbo.permissionRole
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.permissionRole
+(
+    idPermission uniqueidentifier NOT NULL,
+    idRole uniqueidentifier NOT NULL,
+    active BIT DEFAULT 1 NOT NULL
+    -- specify more columns here
+);
+GO
+INSERT INTO  permission
+    ([permission])
+VALUES
+    ('confirmEmail'),
+    ('deleteUser'),
+    ('deletePrice')
+GO
+INSERT INTO  permissionRole
+    ([idPermission],[idRole])
+VALUES
+    ('BF20B211-DC1D-4B7E-92EF-C6824F29B983','607263FD-F917-483F-A5BC-5B022455D632'),
+    ('BF20B211-DC1D-4B7E-92EF-C6824F29B983','90771623-A26E-4975-9EC0-A1C81F115D4B')
+GO
+
+SELECT *
+FROM users
 -- Insert rows into table 'users'
 INSERT INTO users
     ([nameUser],[lastName],[dni],[mail],[idRol])
 VALUES
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
-    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'), 
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
+    ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f'),
     ( 'gasti', 'H', 39244338, 'asdkddskds@adskjds.com', 'c81f1970-a6a7-4096-86aa-89ea6c9fd89f') 
 GO
 INSERT INTO users

@@ -9,12 +9,11 @@ namespace MejorPrecio.Api
 {
     public class UsersApi
     {
-        public Role GetRole()
+        public Role GetCurrentRole()
         {
-            var myRole = new Role();
-            //myRole.Id=(Guid)"C81F1970-A6A7-4096-86AA-89EA6C9FD89F";
-            myRole.RoleName="Administrador";
-            return myRole;
+            var myRole = new RoleRepository();
+            var ret = myRole.InitRoles();
+            return ret[0];
         }
         public enum SignInStatus
         {
@@ -115,6 +114,7 @@ namespace MejorPrecio.Api
                 default: 
                     return "El email no existe";
             } */
+
 
         }
 
