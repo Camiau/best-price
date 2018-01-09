@@ -3,7 +3,7 @@ namespace MejorPrecio.Common
 {
     public class ApplicationUser
     {
-        public int IdUser {get;set;}
+        public Guid IdUser {get;set;}
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
