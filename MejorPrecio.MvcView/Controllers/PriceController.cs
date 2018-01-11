@@ -13,7 +13,7 @@ namespace MejorPrecio.MvcView.Controllers
         public IActionResult Index()
         {
             ViewData["Message"] = "Your application description page.";
-
+            ViewData["srcImg"]="https://www.reasonwhy.es/sites/default/files/botellas-coca-cola-reasonwhy.es_.jpg";
             return View("NewPrice");
         }
     }
