@@ -20,7 +20,7 @@ namespace MejorPrecio.Persistence
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
-                using (var command = new SqlCommand())
+                using (var command = conn.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('@userName', '@userSurname', '@userDni', '@userEmail', '@userImagePath ', '@idRol')";
