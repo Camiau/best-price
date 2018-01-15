@@ -15,7 +15,11 @@ namespace MejorPrecio.Api
             //codeBar is a valid codeBar cheched by a previous function
             return db.GetProductByBarCode(barCode);
         }
-
+        public Product SearchProductByID(Guid IdProduct)
+        {
+            //codeBar is a valid codeBar cheched by a previous function
+            return db.GetProductById(IdProduct);
+        }
         public List<Product> ReadAllProducts()
         {
             return db.ReadAllProducts();
