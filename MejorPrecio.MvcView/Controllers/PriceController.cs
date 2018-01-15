@@ -12,13 +12,21 @@ namespace MejorPrecio.MvcView.Controllers
 {
     public class PriceController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(Guid uId)
         {
-            var myProdutApi= new ProductsApi();
-            var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
-            //ViewData["srcImg"] = "http://static5.businessinsider.com/image/5810c453b28a642b0f8b45a6-2048/14500665_588909221311230_4264909815589193857_o.jpg";
-            ViewData["srcImg"] = myProduct.imgSrc;
-            
+            try
+            {
+                var myProdutApi = new ProductsApi();
+                // var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
+                var myProduct = myProdutApi.SearchProductByID(uId);
+                ViewData["srcImg"] = myProduct.imgSrc;
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message.ToString());
+                RedirectToAction("products","index");
+                
+            }
             return View("NewPrice");
         }
     }
