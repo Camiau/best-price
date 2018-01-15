@@ -15,9 +15,9 @@ namespace MejorPrecio.MvcView.Controllers
         public IActionResult Index()
         {
             var myProdutApi= new ProductsApi();
-            var myProduct=myProdutApi.SearchProductByID(new Guid("0852CCED-2D4F-4B4F-AB75-00016152F92A"));
-            ViewData["srcImg"] = "http://static5.businessinsider.com/image/5810c453b28a642b0f8b45a6-2048/14500665_588909221311230_4264909815589193857_o.jpg";
-            //ViewData["srcImg"] = ;
+            var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
+            //ViewData["srcImg"] = "http://static5.businessinsider.com/image/5810c453b28a642b0f8b45a6-2048/14500665_588909221311230_4264909815589193857_o.jpg";
+            ViewData["srcImg"] = myProduct.imgSrc;
             
             return View("NewPrice");
         }
