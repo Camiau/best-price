@@ -43,7 +43,7 @@ namespace MejorPrecio.Api
 
                 productExists = db.GetProductByBarCode(product.BarCode);
 
-                Price newPrice = new Price()
+                RegisterPriceModel newPrice = new RegisterPriceModel()
                 {
                     IdProduct = productExists.IdProduct,
                     PriceEffective = newProduct.Price,

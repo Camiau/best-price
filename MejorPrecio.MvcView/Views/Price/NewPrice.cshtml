@@ -5,4 +5,33 @@
 <h1>@ViewData["Message"]</h1>
 
 <p>Use this area to provide additional information.</p>
+<script>function parseData() {
+ var jsonString = "{\"book\":[{\"id\":\"01\",\"author\":\"j.k.rowling\",\"price\":250,\"available\":true,\"editions\":[{\"id\":\"001\",\"name\":\"2017\"},{\"id\":\"002\",\"name\":\"2018\"}]},{\"id\":\"02\",\"author\":\"carlsom james\",\"price\":500,\"available\":false,\"editions\":null}]}";  
+ var as="{\
+     idProduct:'1285FE56-176D-42A1-BB06-0000B7A3E14A'\
+ }";  
+
+    $.ajax({
+        url: 'http://localhost:5003/api/price',
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: as,
+        success: function (result) {
+            console.log('Data received: ');
+            console.log(result);
+        }
+       
+
+    });
+}</script>
 <img src=@ViewData["srcImg"]>
+<form method="POST"function=parseData>
+<input type="text" name="IdProduct" value="1285FE56-176D-42A1-BB06-0000B7A3E14A">
+<input type="text" name="PriceEffective" value="54.00">
+<input type="text" name="Date"value="5/1/2008 8:06:32 AM -07:00" >
+<input type="text" name="Latitude" value="-34.617849">
+<input type="text" name="Longitude" value="-58.423841">
+<input type="text" name="IdUser" value="0103E7C2-AB6A-4ED6-9A99-0476C88A7C09">
+<button onclick="parseData()">"OK"</button>
+</form>
