@@ -52,7 +52,9 @@ public class ProductRepository
                         ret.IdProduct = (Guid)reader["idProduct"];
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProduct"].ToString();
-                        ret.imgSrc=reader["imgProduct"].ToString();
+                        ret.ImgSrc=reader["imgProduct"].ToString();
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
                     }
                 }
 
@@ -79,7 +81,9 @@ public class ProductRepository
                         ret.IdProduct = (Guid)reader["idProduct"];
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProduct"].ToString();
-                        ret.imgSrc=reader["imgProduct"].ToString();
+                        ret.ImgSrc=reader["imgProduct"].ToString();
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
                     }
                 }
 
@@ -98,7 +102,7 @@ public class ProductRepository
                 command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct,imgProduct) VALUES (@barCode, @description,@imgProduct)";
                 command.Parameters.AddWithValue("@barCode", product.BarCode);
                 command.Parameters.AddWithValue("@description", product.Description);
-                command.Parameters.AddWithValue("@imgProduct", product.imgSrc);
+                command.Parameters.AddWithValue("@imgProduct", product.ImgSrc);
                 command.ExecuteNonQuery();
             }
         }

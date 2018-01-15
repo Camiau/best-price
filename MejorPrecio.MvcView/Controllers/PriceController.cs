@@ -17,15 +17,16 @@ namespace MejorPrecio.MvcView.Controllers
             try
             {
                 var myProdutApi = new ProductsApi();
-                // var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
-                var myProduct = myProdutApi.SearchProductByID(uId);
-                ViewData["srcImg"] = myProduct.imgSrc;
+                var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
+                //var myProduct = myProdutApi.SearchProductByID(uId);
+                ViewData["srcImg"] = myProduct.ImgSrc;
+                ViewData["nameProduct"]=myProduct.NameProduct;
+                ViewData["brand"]=myProduct.Brand;
             }
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex.Message.ToString());
                 RedirectToAction("products","index");
-                
             }
             return View("NewPrice");
         }
