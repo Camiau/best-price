@@ -12,7 +12,7 @@ namespace MejorPrecio.Api
             var data = new PriceRepository();
             return data.GetBestPrice(prod);
         }
-        public bool LoadNewPrice(Price newPrice)
+        public bool LoadNewPrice(RegisterPriceModel newPrice)
         {
                 var data = new PriceRepository();
                 return data.RegisterPrice(newPrice);

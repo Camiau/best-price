@@ -8,6 +8,7 @@ namespace MejorPrecio.Common
         public Guid IdProduct;
         public string BarCode;
         public string Description;
+        public string imgSrc;
     }
     public class ProductRegister
     {

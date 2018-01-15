@@ -38,7 +38,7 @@ public class PriceRepository
         }
         return priceList;
     }
-    public bool RegisterPrice(Price priceEspecific)
+    public bool RegisterPrice(RegisterPriceModel priceEspecific)
     {
         var today = DateTimeOffset.Now;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))

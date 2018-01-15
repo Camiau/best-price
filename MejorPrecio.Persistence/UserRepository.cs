@@ -20,7 +20,7 @@ namespace MejorPrecio.Persistence
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
-                using (var command = new SqlCommand())
+                using (var command = conn.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
                     command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('@userName', '@userSurname', '@userDni', '@userEmail', '@userImagePath ', '@idRol')";
@@ -60,10 +60,10 @@ namespace MejorPrecio.Persistence
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
-                using (var command = new SqlCommand())
+                using (var command = conn.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = @"SELECT * FROM users WHERE users.mail='@email' AND users.dni='@dni' AND active=1";
+                    command.CommandText = @"SELECT * FROM users WHERE users.mail=@email AND users.dni=@dni AND active=1";
                     command.Parameters.AddWithValue("@email", email);
                     command.Parameters.AddWithValue("@dni", dni);
                     using (var reader = command.ExecuteReader())
@@ -77,7 +77,7 @@ namespace MejorPrecio.Persistence
                             user.Dni = reader["dni"].ToString();
                             user.Email = reader["mail"].ToString();
                             user.ImagePath = reader["imagePath"].ToString();
-                            user.IdRol =(Guid)reader["idRol"];
+                            user.IdRol =(Guid)reader["idRole"];
                             user.EmailIsConfirmed = bool.Parse(reader["EmailIsConfirmed"].ToString());
                         }
                     }
