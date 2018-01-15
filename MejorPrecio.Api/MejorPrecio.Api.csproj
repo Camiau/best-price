@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
     <ProjectReference Include="..\MejorPrecio.Common\MejorPrecio.Common.csproj" />
     <ProjectReference Include="..\MejorPrecio.Persistence\MejorPrecio.Persistence.csproj" />
     <PackageReference Include="ZXing.Net" Version="0.16.2" />
