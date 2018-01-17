@@ -30,7 +30,6 @@ namespace MejorPrecio.WebApi.Controllers
             new PricesApi().LoadNewPrice(price);
             return this.StatusCode(201);
         }
-
         // DELETE api/values/5
         [HttpDelete] //[HttpDelete("price")]
         public IActionResult Delete([FromBody]Price price)
