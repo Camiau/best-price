@@ -47,13 +47,13 @@ public class PriceRepository
             using (var command = conn.CreateCommand())
             {
                 command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
-                command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUs ,@date)";
+                command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUser ,@date)";
 
                 command.Parameters.AddWithValue("@priceEsp", priceEspecific.PriceEffective);
                 command.Parameters.AddWithValue("@lat", priceEspecific.Latitude);
                 command.Parameters.AddWithValue("@long", priceEspecific.Longitude);
                 command.Parameters.AddWithValue("@idProd", priceEspecific.IdProduct);
-                command.Parameters.AddWithValue("@idUs", priceEspecific.IdUser);
+                command.Parameters.AddWithValue("@idUser", priceEspecific.IdUser);
                 command.Parameters.AddWithValue("@date", today);
 
                 using (var reader = command.ExecuteReader())

@@ -53,6 +53,11 @@ public class ProductRepository
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProduct"].ToString();
                         ret.ImgSrc=reader["imgProduct"].ToString();
+<<<<<<< HEAD
+=======
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
+>>>>>>> master
                     }
                 }
 
@@ -80,6 +85,11 @@ public class ProductRepository
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProduct"].ToString();
                         ret.ImgSrc=reader["imgProduct"].ToString();
+<<<<<<< HEAD
+=======
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
+>>>>>>> master
                     }
                 }
 
