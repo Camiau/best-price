@@ -23,11 +23,6 @@ namespace MejorPrecio.MvcView.Controllers
 [HttpGet]
         public IActionResult Map()
         {
-            /* var api = new PricesApi();
-            var prod = new Product();
-            prod.IdProduct = idProd;
-
-            ViewBag.PriceList = api.FindBestPrice(prod); */
             return View("ViewMap");
         }
 
@@ -38,6 +33,32 @@ namespace MejorPrecio.MvcView.Controllers
             prod.IdProduct = idProd;
 
             return api.FindBestPrice(prod);
+        }
+
+        public string UserEmail(Guid idUser)
+        {
+            var api = new UsersApi();
+            var user = new ApplicationUser();
+            
+            user = api.GetUserById( idUser );
+
+            if(user != null)
+            {
+                return user.Email;
+            }
+            else
+            {
+                return " -";
+            }
+            
+        }
+
+        public string ProductData(Guid idProduct)
+        {
+            var api = new ProductsApi();
+            Product prod = api.GetProductById(idProduct);
+            
+            return prod.description;
         }
 
 
