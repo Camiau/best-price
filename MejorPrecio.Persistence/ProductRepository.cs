@@ -33,6 +33,35 @@ public class ProductRepository
         }
         return productList;
     }
+    public Product GetProductById(Guid idProd)
+    {
+        Product ret = null;
+        using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+        {
+            conn.Open();
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandType = CommandType.Text;
+                command.CommandText = @"SELECT * FROM products WHERE idProduct = @idProd AND active=1";
+                command.Parameters.AddWithValue("@idProd", idProd);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ret = new Product();
+                        ret.IdProduct = (Guid)reader["idProduct"];
+                        ret.BarCode = reader["codeBar"].ToString();
+                        ret.Description = reader["descriptionProduct"].ToString();
+                        ret.ImgSrc=reader["imgProduct"].ToString();
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
+                    }
+                }
+
+            }
+        }
+        return ret;
+    }
     public Product GetProductByBarCode(string barCode)
     {
         Product ret = null;
@@ -52,6 +81,9 @@ public class ProductRepository
                         ret.IdProduct = (Guid)reader["idProduct"];
                         ret.BarCode = reader["codeBar"].ToString();
                         ret.Description = reader["descriptionProduct"].ToString();
+                        ret.ImgSrc=reader["imgProduct"].ToString();
+                        ret.NameProduct=reader["descriptionProduct"].ToString();
+                        ret.Brand=reader["brand"].ToString();
                     }
                 }
 
@@ -67,9 +99,10 @@ public class ProductRepository
             using (var command = conn.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct) VALUES (@barCode, @description)";
+                command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct,imgProduct) VALUES (@barCode, @description,@imgProduct)";
                 command.Parameters.AddWithValue("@barCode", product.BarCode);
                 command.Parameters.AddWithValue("@description", product.Description);
+                command.Parameters.AddWithValue("@imgProduct", product.ImgSrc);
                 command.ExecuteNonQuery();
             }
         }

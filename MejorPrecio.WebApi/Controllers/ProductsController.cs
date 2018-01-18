@@ -16,8 +16,6 @@ namespace MejorPrecio.WebApi.Controllers
     {
         private ProductsApi logic = new ProductsApi();
 
-        private BarcodeScanner scanner = new BarcodeScanner();
-
         [HttpGet]
         public IActionResult Get(string search)
         {
@@ -37,12 +35,12 @@ namespace MejorPrecio.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(IFormFile file)
+        public IActionResult Post(string file)
         {
-            using (var stream = file.OpenReadStream())
+            byte[] feo = Convert.FromBase64String(file);
+            using (Stream stream = new MemoryStream(feo))
             {
-                BarcodeScanner scanner = new BarcodeScanner();
-                var code = scanner.ScanBarcode(stream);
+                var code = logic.GetBarcode(stream);
 
                 return this.RedirectToAction(nameof(Get), new {search = code});
             }
