@@ -7,19 +7,15 @@ namespace MejorPrecio.Common
     {
         public Guid IdProduct;
         public string BarCode;
+        public string NameProduct;
+        public string Brand;
         public string Description;
+        public string ImgSrc;
     }
     public class ProductRegister
     {
         public string BarCode;
         public string Description;
-
-        public decimal Price;
-
-        public double Latitude;
-
-        public double Longitude;
-        public Guid IdUser;
 
         public ProductRegister(string barCode,string description)
         {
