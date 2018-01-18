@@ -12,7 +12,7 @@ namespace MejorPrecio.Api
             var data = new PriceRepository();
             return data.GetBestPrice(prod);
         }
-        public bool LoadNewPrice(Price newPrice)
+        public bool LoadNewPrice(RegisterPriceModel newPrice)
         {
                 var data = new PriceRepository();
                 return data.RegisterPrice(newPrice);
@@ -22,13 +22,10 @@ namespace MejorPrecio.Api
                 var data = new PriceRepository();
                 return data.DeletePrice(priceToDelete);
         }
-
         public Price ObtainPrice(Price priceToSearch)
         {
             var data = new PriceRepository();
             return data.ObtainPrice(priceToSearch);
         }
-
-
     }
 }

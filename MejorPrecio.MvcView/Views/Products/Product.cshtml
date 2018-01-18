@@ -1,0 +1,18 @@
+@using MejorPrecio.Common
+@model Product
+<div>
+    @if(!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="All"></div>
+    }
+    else
+    {
+        <h2>
+            @Model.BarCode
+        </h2>
+        <p>
+            @Model.IdProduct : @Model.Description
+        </p>
+
+    }
+</div>

@@ -25,12 +25,11 @@ namespace MejorPrecio.WebApi.Controllers
 
         // POST api/loadnewprice
         [HttpPost]
-        public IActionResult Post([FromBody]Price price)
+        public IActionResult Post(RegisterPriceModel price)
         {
             new PricesApi().LoadNewPrice(price);
             return this.StatusCode(201);
         }
-
         // DELETE api/values/5
         [HttpDelete] //[HttpDelete("price")]
         public IActionResult Delete([FromBody]Price price)
