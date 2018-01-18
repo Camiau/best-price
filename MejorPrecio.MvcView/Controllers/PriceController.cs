@@ -19,7 +19,7 @@ namespace MejorPrecio.MvcView.Controllers
                 var myProdutApi = new ProductsApi();
                 // var myProduct=myProdutApi.SearchProductByID(new Guid("3273A441-48C3-48D1-8DFF-0005003092A4"));
                 var myProduct = myProdutApi.SearchProductByID(uId);
-                ViewData["srcImg"] = myProduct.imgSrc;
+                ViewData["srcImg"] = myProduct.ImgSrc;
             }
             catch (System.Exception ex)
             {

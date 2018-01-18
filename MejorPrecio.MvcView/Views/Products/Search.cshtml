@@ -5,6 +5,12 @@
     {
         <div asp-validation-summary="All"></div>
     }
+    else if(ViewBag.BarCode != null)
+    {
+        <p>El producto con el código de barras '@ViewBag.BarCode' no existe. Deseas crearlo?</p>
+        <a href="/Products/Index"><button type="button">No (Sacame de aquí)</button></a>
+        <a href="/Products/NewProduct"><button type="button">Si!</button></a>
+    }
     else
     {
         <h2>

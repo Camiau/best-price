@@ -6,11 +6,12 @@ namespace MejorPrecio.MvcView.Models
 {
     public class ProductRegisterViewModel
     {
-        
-        public string description;
         [Required]
-        public IFormFile file;
-        
+        public string Description {get;set;}
+        public string Brand {get;set;}
+        public string ProductName {get;set;}
 
     }
+
+
 }

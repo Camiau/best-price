@@ -1,27 +1,61 @@
 @model System.String
-<div class="container">
+<link rel="stylesheet" href="@Url.Content("~/css/newProduct.css")"/>
+<div class="container-fluid row">
+    <form class="col-md-6" action="@Url.Action("NewProduct", "Products")" method="POST" enctype="multipart/form-data">
+         <div class="list-group">
+            <a href="#" class="list-group-item active">
+                <h4 class="list-group-item-heading">Ingresa los datos de tu nuevo producto</h4>
+                <p class="list-group-item-text">Instrucciones: para cargar un nuevo producto debes ingresar los datos
+                    y mover el marcador rojo en el mapa hasta que aparezca la dirección donde se comercializa</p>
+            </a>
+        </div>
+        <div class="form-group">
+            <input type="textarea" placeholder="Descripción del producto" name="Description">
+        </div>
 
-    <form action="/Products/NewProduct" method="post" enctype="multipart/form-data">
-        <p>Ingresa los datos de tu nuevo producto.</p>
         <div class="form-group">
-            <input type="text" placeholder="Descripción del producto" name="description">
+            <input type="text" placeholder="Marca del producto" name="Brand">
         </div>
+
         <div class="form-group">
-            <input type="file" name="file">
+            <input type="text" placeholder="Nombre del producto" name="ProductName">
         </div>
-        @if(Model == null)
+
+        <div class="form-group">
+            <label for="picture">Imagen del producto</label>
+            <input id="picture" type="file" name="Picture" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="addr" readonly>
+        </div>
+
+        @if(String.IsNullOrEmpty(Model))
         {
             <div class="form-group">
-                <input type="file" name="notFile">
-            </div>
+                 <input type="file" name="BarCode">
+           </div>
         }
         else
         {
-            <p>CODIGO DE BARRAS = @Model</p>
+            <p>Código de barras     <input type="text" value="@Model" readonly></p>
         }
         <div>
             <button type="submit">Enviar!</button>
         </div>
+
+
     </form>
+    <div class="col-md-6">
+        <div id="map" class="col-md-6" style="width:100%;height:400px">
+
+    </div>
+    </div>
 
 </div>
+@section Scripts 
+{
+        <script src="~/js/newProduct.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlh_1k6Nz4HrxT6bosPTVR79AxFxJZLCc&callback=initMap"></script>
+
+}
