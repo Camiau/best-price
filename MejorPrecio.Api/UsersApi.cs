@@ -12,9 +12,10 @@ namespace MejorPrecio.Api
         public Role GetCurrentRole()
         {
             var myRole = new RoleRepository();
-            var ret = myRole.InitRoles();
-            return ret[0];
+            return myRole.GetRoleByIdRole(this.pvrUser.IdRol);
         }
+        private ApplicationUser pvrUser = null;
+        public ApplicationUser LoggedUser { get { return pvrUser; } }
         public enum SignInStatus
         {
             Success,
@@ -57,17 +58,20 @@ namespace MejorPrecio.Api
         public SignInStatus Login(SimpleUserModel userLogin)
         {
             var db = new UserRepository();
-            var user = db.UserExist(userLogin.Email, userLogin.Dni);
-            if (user == null)
+            var newUser = db.UserExist(userLogin.Email, userLogin.Dni);
+            if (newUser == null)
             {
                 return SignInStatus.Failure;
             }
-            if (!user.EmailIsConfirmed)
+            if (!newUser.EmailIsConfirmed)
             {
                 return SignInStatus.RequiresVerification;
             }
             else
             {
+                pvrUser.Dni = newUser.Dni;
+                pvrUser.Email = newUser.Email;
+                pvrUser.IdUser = newUser.IdUser;
                 return SignInStatus.Success;
             }
             /*switch (result)

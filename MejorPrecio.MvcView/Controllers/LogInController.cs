@@ -4,52 +4,58 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using System.Threading;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using MejorPrecio.MvcView.Models;
-using System.Net.Http;
 using MejorPrecio.Api;
+using MejorPrecio.Common;
 
 namespace MejorPrecio.MvcView.Controllers
 {
     public class LogInController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index(LogInViewModel model)
         {
-            try
+            var myUsersApi = new UsersApi();
+            if (model.Dni==null||model.Email==null)
             {
+                return View("LogIn");
             }
-            catch (System.Exception ex)
+            int number;
+            if (!(Int32.TryParse(model.Dni, out number)))
             {
-                System.Console.WriteLine(ex.Message.ToString());
-                //RedirectToAction("products", "index");
+                this.ModelState.AddModelError("", "Dni Incorrecto");
+                return View("LogIn");
             }
-            return View("LogIn");
+            var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
+            if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
+            {
+                this.ModelState.AddModelError("", "Se requiere verificacion del Email");
+            }
+            else if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.Failure)
+            {
+                this.ModelState.AddModelError("", "Usuario o contraseña incorrecto");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var dniClaim = new Claim(ClaimTypes.Name, model.Dni);
+                var mailClaim = new Claim(ClaimTypes.Email, model.Email);
+                var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
+                var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
+                var principal = new ClaimsPrincipal(identity);
+
+                await this.HttpContext.SignInAsync(principal);
+                // hacer login
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("LogIn");
+            }
         }
-        /*public IActionResult PriceSucces(RegisterPriceModel priceToLoad)
-        {
-            try
-            {
-                var myPriceApi = new PricesApi();
-                priceToLoad.IdUser = new Guid("0103E7C2-AB6A-4ED6-9A99-0476C88A7C09");
-                priceToLoad.IdProduct = new Guid("3273A441-48C3-48D1-8DFF-0005003092A4");
-                var okLoad = myPriceApi.LoadNewPrice(convertMvcToCommon(priceToLoad));
-            }
-            catch (System.Exception ex)
-            {
-                System.Console.WriteLine(ex.Message.ToString());
-                RedirectToAction("products", "index");
-            }
-            return View("PriceSucces");
-        }
-        private Common.RegisterPriceModel convertMvcToCommon(RegisterPriceModel prcToConvert)
-        {
-            var newPriceToConvert = new Common.RegisterPriceModel();
-            newPriceToConvert.Date = prcToConvert.Date;
-            newPriceToConvert.IdProduct = prcToConvert.IdProduct;
-            newPriceToConvert.IdUser = prcToConvert.IdUser;
-            newPriceToConvert.Latitude = prcToConvert.Latitude;
-            newPriceToConvert.Longitude = prcToConvert.Longitude;
-            newPriceToConvert.PriceEffective = prcToConvert.PriceEffective;
-            return newPriceToConvert;
-        }*/
     }
 }

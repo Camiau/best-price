@@ -6,8 +6,17 @@ namespace MejorPrecio.MvcView.Models
     public class LogInViewModel
     {
         [Required]
-        public string username { get; set; }
+        public string Dni { get; set; }
         [Required]
-        public string email { get; set; }
+        public string Email { get; set; }
+    }
+    public class LoggedInViewModel
+    {
+        [Required]
+        public Guid IdUser { get; set; }
+        [Required]
+        public string Dni { get; set; }
+        [Required]
+        public string Email { get; set; }
     }
 }
