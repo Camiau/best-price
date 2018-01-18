@@ -68,7 +68,10 @@ namespace MejorPrecio.MvcView.Controllers
         {
             var api = new ProductsApi();
             Common.Product prod = api.SearchProductByID(idProduct);
-            
+            if(prod == null)
+            {
+                return " -";
+            }
             return prod.Description;
         }
 
