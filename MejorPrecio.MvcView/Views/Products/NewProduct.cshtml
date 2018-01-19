@@ -21,20 +21,22 @@
             <input type="text" placeholder="Nombre del producto" name="ProductName">
         </div>
 
-        <div class="form-group">
-            <label for="picture">Imagen del producto</label>
-            <input id="picture" type="file" name="Picture" accept="image/*">
+        <div class="form-group well">
+            <label for="picture">Click para seleccionar la imagen del producto</label>
+            <input id="picture" type="file" name="Picture" accept="image/*" style="display:none" >
         </div>
 
         <div class="form-group">
             <input type="text" id="addr" readonly>
         </div>
 
+        <input type="number" name="Latitude" class="hidden" readonly >
         @if(String.IsNullOrEmpty(Model))
         {
-            <div class="form-group">
-                 <input type="file" name="BarCode">
-           </div>
+            <div class="form-group well">
+                <label for="picture">Click para seleccionar la imagen del código de barras</label>
+                <input id="picture" type="file" name="BarCode" accept="image/*" style="display:none" >
+            </div>
         }
         else
         {

@@ -26,13 +26,13 @@ function initMap() {
 
       //Variables para obtener la direccion del lugar donde apunta el usuario con el marcador
       let address = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      //Inicializamos la geolocalizacion
+      //Inicializamos la geolocalizacion reversa
       let geocoder = new google.maps.Geocoder();
 
       geocoder.geocode({
         location: address
       }, function (geocoderResults) {
-        console.log(geocoderResults);
+        document.getElementById("addr").value = geocoderResults[0].address_components[1].short_name + ' ' + geocoderResults[0].address_components[0].long_name;
       });
 
       google.maps.event.addListener(marker, 'dragend', function (event) {
@@ -40,16 +40,9 @@ function initMap() {
         geocoder.geocode({
           location: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
         }, function (geocoderResults) {
-          console.log(geocoderResults);
-          var fierita = geocoderResults[0];
-          var feito = geocoderResults[0].address_components[1].short_name + ' ' + geocoderResults[0].address_components[0].long_name;
           document.getElementById("addr").value = geocoderResults[0].address_components[1].short_name + ' ' + geocoderResults[0].address_components[0].long_name;
         });
       });
-
-
-
-
 
     }, function () {
       handleLocationError(true, infoWindow, map.getCenter());
