@@ -24,7 +24,7 @@ namespace MejorPrecio.MvcView
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            // configuramos autenticacion por cookies solo
+            // configuramos autenticacion por cookies solor
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
