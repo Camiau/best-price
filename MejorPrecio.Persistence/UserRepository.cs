@@ -50,8 +50,6 @@ namespace MejorPrecio.Persistence
                 }
             }
         }
-
-
         public ApplicationUser UserExist(string email, string dni)
         {
             ApplicationUser user = null;

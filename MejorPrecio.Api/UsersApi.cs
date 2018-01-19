@@ -69,9 +69,7 @@ namespace MejorPrecio.Api
             }
             else
             {
-                pvrUser.Dni = newUser.Dni;
-                pvrUser.Email = newUser.Email;
-                pvrUser.IdUser = newUser.IdUser;
+                pvrUser=newUser;
                 return SignInStatus.Success;
             }
             /*switch (result)

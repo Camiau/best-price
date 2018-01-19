@@ -10,7 +10,7 @@ namespace MejorPrecio.MvcView.Models
         [Required]
         public string Email { get; set; }
     }
-    public class LoggedInViewModel
+    /*public class LoggedInViewModel
     {
         [Required]
         public Guid IdUser { get; set; }
@@ -18,5 +18,5 @@ namespace MejorPrecio.MvcView.Models
         public string Dni { get; set; }
         [Required]
         public string Email { get; set; }
-    }
+    }*/
 }

@@ -21,29 +21,30 @@ namespace MejorPrecio.MvcView.Controllers
             var myUsersApi = new UsersApi();
             if (model.Dni==null||model.Email==null)
             {
+                this.ModelState.Clear();
                 return View("LogIn");
             }
             int number;
             if (!(Int32.TryParse(model.Dni, out number)))
             {
-                this.ModelState.AddModelError("", "Dni Incorrecto");
+                this.ModelState.AddModelError("dni", "Dni Incorrecto");
                 return View("LogIn");
             }
             var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
             if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
             {
-                this.ModelState.AddModelError("", "Se requiere verificacion del Email");
+                this.ModelState.AddModelError("LogIn", "Se requiere verificacion del Email");
             }
             else if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.Failure)
             {
-                this.ModelState.AddModelError("", "Usuario o contraseña incorrecto");
+                this.ModelState.AddModelError("email", "Dni o email incorrecto");
             }
-
             if (ModelState.IsValid)
             {
                 var dniClaim = new Claim(ClaimTypes.Name, model.Dni);
                 var mailClaim = new Claim(ClaimTypes.Email, model.Email);
                 var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
+                //svar idClaim= new Claim(ClaimTypes.)
                 var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
                 var principal = new ClaimsPrincipal(identity);
 
