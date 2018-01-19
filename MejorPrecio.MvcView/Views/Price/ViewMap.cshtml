@@ -31,7 +31,7 @@
           
           $(document).ready(function() {
           
-            $.get('/price/viewprices',{ idProd: "50C89CDF-7D82-4348-993F-000018598E8E" },
+            $.get('/price/viewmapprices',{ idProd: "50C89CDF-7D82-4348-993F-000018598E8E" },
             function(serverResponse){
               console.log(serverResponse);
               var infowindow = new google.maps.InfoWindow();
@@ -51,11 +51,11 @@
                 });
               //markers.push(marker);
           
-                $.get('/price/useremail',{ userId: serverResponse[index]["idUser"] },
+                $.get('/price/viewmapuseremail',{ userId: serverResponse[index]["idUser"] },
                 function(serverResponse2){
                     console.log(serverResponse2);
               
-                    $.get('/price/productdata',{ userId: serverResponse[index]["idProduct"] },
+                    $.get('/price/viewmapproductdata',{ userId: serverResponse[index]["idProduct"] },
                     function(serverResponse3){
                       console.log(serverResponse3);
               

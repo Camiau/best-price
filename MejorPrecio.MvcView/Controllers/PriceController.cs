@@ -37,7 +37,7 @@ namespace MejorPrecio.MvcView.Controllers
             return View("ViewMap");
         }
 
-        public List<Common.Price> ViewPrices(Guid idProd)
+        public List<Common.Price> ViewMapPrices(Guid idProd)
         {
             var api = new PricesApi();
             var prod = new Common.Product();
@@ -46,7 +46,7 @@ namespace MejorPrecio.MvcView.Controllers
             return api.FindBestPrice(prod);
         }
 
-        public string UserEmail(Guid idUser)
+        public string ViewMapUserEmail(Guid idUser)
         {
             var api = new UsersApi();
             var user = new Common.ApplicationUser();
@@ -64,7 +64,7 @@ namespace MejorPrecio.MvcView.Controllers
             
         }
 
-        public string ProductData(Guid idProduct)
+        public string ViewMapProductData(Guid idProduct)
         {
             var api = new ProductsApi();
             Common.Product prod = api.SearchProductByID(idProduct);
