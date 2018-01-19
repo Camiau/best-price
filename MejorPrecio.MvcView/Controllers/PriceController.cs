@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+//using MejorPrecio.Common;
 using MejorPrecio.MvcView.Models;
 using System.Net.Http;
 using MejorPrecio.Api;
@@ -12,6 +11,7 @@ namespace MejorPrecio.MvcView.Controllers
 {
     public class PriceController : Controller
     {
+
         public IActionResult Index(Guid uId)
         {
             try
@@ -30,6 +30,51 @@ namespace MejorPrecio.MvcView.Controllers
             }
             return View("NewPrice");
         }
+
+[HttpGet]
+        public IActionResult Map()
+        {
+            return View("ViewMap");
+        }
+
+        public List<Common.Price> ViewMapPrices(Guid idProd)
+        {
+            var api = new PricesApi();
+            var prod = new Common.Product();
+            prod.IdProduct = idProd;
+
+            return api.FindBestPrice(prod);
+        }
+
+        public string ViewMapUserEmail(Guid idUser)
+        {
+            var api = new UsersApi();
+            var user = new Common.ApplicationUser();
+            
+            user = api.GetUserById( idUser );
+
+            if(user != null)
+            {
+                return user.Email;
+            }
+            else
+            {
+                return " -";
+            }
+            
+        }
+
+        public string ViewMapProductData(Guid idProduct)
+        {
+            var api = new ProductsApi();
+            Common.Product prod = api.SearchProductByID(idProduct);
+            if(prod == null)
+            {
+                return " -";
+            }
+            return prod.Description;
+        }
+
         public IActionResult PriceSucces(RegisterPriceModel priceToLoad)
         {
             try
@@ -57,5 +102,6 @@ namespace MejorPrecio.MvcView.Controllers
             newPriceToConvert.PriceEffective = prcToConvert.PriceEffective;
             return newPriceToConvert;
         }
+
     }
 }

@@ -68,5 +68,7 @@ namespace MejorPrecio.Api
 
             db.DeleteProduct(product.IdProduct);
         }
+
+        
     }
 }
