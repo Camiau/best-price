@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+   @{
+   }
+   <head>
+      <title>Simple Map</title>
+      <meta name="viewport" content="initial-scale=1.0">
+      <meta charset="utf-8">
+      <style>
+         /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+         #map {
+         height: 500px;
+         width:100%;
+         }
+      </style>
+   </head>
+   <body>
+      <h3>Mejor precio</h3>
+      <div id="map"></div>
+      @section Scripts{
+        <script>
+          var map;
+          function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: -34.6083, lng: -58.3712},
+              zoom: 15
+            });                 
+          var infowindow = new google.maps.InfoWindow();          
+          }
+          
+          $(document).ready(function() {
+          
+            $.get('/price/viewmapprices',{ idProd: "50C89CDF-7D82-4348-993F-000018598E8E" },
+            function(serverResponse){
+              console.log(serverResponse);
+              var infowindow = new google.maps.InfoWindow();
+
+              map.setOptions({
+                  center: {lat:serverResponse[0]["latitude"], lng: serverResponse[0]["longitude"]},
+                  zoom: 15
+              });
+              
+              
+              var markers = [];
+              $.each(serverResponse, function(index) {
+                var marker = new google.maps.Marker({
+                  position: {lat: serverResponse[index]["latitude"], lng: serverResponse[index]["longitude"]},
+                  map: map,
+                  label: (index+1) + ""
+                });
+              //markers.push(marker);
+          
+                $.get('/price/viewmapuseremail',{ userId: serverResponse[index]["idUser"] },
+                function(serverResponse2){
+                    console.log(serverResponse2);
+              
+                    $.get('/price/viewmapproductdata',{ userId: serverResponse[index]["idProduct"] },
+                    function(serverResponse3){
+                      console.log(serverResponse3);
+              
+                      var dateTime = serverResponse[index]["date"].split("T");
+                      var date = dateTime[0].split("-");
+                      var time = dateTime[1].split(":");
+                      date = date[2] + "-" + date[1] + "-" + date[0];
+                      time = time[0] + ":" + time[1]; 
+                      
+                      marker.addListener('click', function() {
+                        if (infowindow) {
+                            infowindow.close();
+                        }
+                        infowindow = infowindow = new google.maps.InfoWindow({
+                            content: "Producto: " + serverResponse3 + "</br>Precio: $" + serverResponse[index]["priceEffective"] + "</br> Subido por " + serverResponse2 + "</br> Fecha: " + date + "</br> Hora: " + time
+                        });
+                        infowindow.open(map, marker);
+                      });
+                    });
+                });
+          
+              }); 
+          
+            });   
+          });     
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE3SszsRQSvtBzYUn3hiiqwNLtOUabAx8&callback=initMap"
+          async defer></script>
+      }
+   </body>
+</html>

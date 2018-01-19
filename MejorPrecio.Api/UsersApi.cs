@@ -120,6 +120,11 @@ namespace MejorPrecio.Api
 
         }
 
+        public ApplicationUser GetUserById(Guid idUser)
+        {
+            var data = new UserRepository();
+            return data.GetUserById( idUser );
+        }
 
     }
 

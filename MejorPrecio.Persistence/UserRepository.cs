@@ -84,5 +84,39 @@ namespace MejorPrecio.Persistence
             return user;
         }
 
+        public ApplicationUser GetUserById(Guid idUser)
+        {
+            var user = new ApplicationUser();
+
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
+                    command.CommandText = @"SELECT * FROM users WHERE idUser=@idUs";
+                    command.Parameters.AddWithValue("@idUs", idUser);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            user.Name = reader["nameUser"].ToString();
+                            user.Surname = reader["lastName"].ToString();
+                            user.Dni = reader["dni"].ToString();
+                            user.Email = reader["mail"].ToString();
+                            user.ImagePath = reader["imagePath"].ToString();
+                            user.IdRol = (Guid)reader["idRol"];
+                            user.EmailIsConfirmed = bool.Parse(reader["EmailIsConfirmed"].ToString());
+                        }
+                        else
+                        {
+                            user = null;
+                        }
+                    }
+                }
+            }
+            return user;
+        }
+
     }
 }
