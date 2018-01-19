@@ -32,12 +32,10 @@ namespace MejorPrecio.Common
         public SimpleUserModel(string email,string dni)
         {
             this.Email=email;
-            this.Dni=Dni;
+            this.Dni=dni;
         }
         public SimpleUserModel()
         {
         }
     }
-    
-
 }

@@ -1,0 +1,20 @@
+@model MejorPrecio.MvcView.Models.LogInViewModel
+
+@if (!ViewData.ModelState.IsValid) {
+    <div class="error" style="color: red">Hubo un error</div>
+    foreach (var state in ViewData.ModelState.Values) {
+        foreach (var error in state.Errors) {
+            <div class="errorLogin">@error.ErrorMessage</div>
+        } 
+    }
+}
+<head>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<form method="POST">
+    Dni: <input type="text" name="dni" /><br />
+    Email: <input type="email" name="email" /><br />
+    <input type="submit" value="Login" name="LogIn" /><br/>
+    Sí usted no esta registrado, por favor registrese<br/>
+    <input type="submit" value="Registrarse" onclick="">
+</form>
