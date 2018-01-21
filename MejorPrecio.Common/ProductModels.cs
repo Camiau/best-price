@@ -16,15 +16,17 @@ namespace MejorPrecio.Common
     {
         public string BarCode;
         public string Description;
-
-        public ProductRegister(string barCode,string description)
+        public string Brand;
+        public string NameProduct;
+        public string ImgSrc;
+        public ProductRegister(string barCode, string description)
         {
-            this.BarCode=barCode;
-            this.Description=description;
+            this.BarCode = barCode;
+            this.Description = description;
         }
         public ProductRegister()
         {
-           
+
         }
     }
 }

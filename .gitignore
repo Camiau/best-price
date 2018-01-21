@@ -307,6 +307,11 @@ __pycache__/
 *.vob
 *.wmv
 
+### Images ###
+*.png
+*.jpg
+*.gif 
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

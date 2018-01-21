@@ -2,7 +2,7 @@ function initMap() {
   //inicializamos el mapa
   var map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: -34.608433, lng: -58.37251 },
-    zoom: 15
+    zoom: 17
   });
 
   // Intentamos obtener la geolocalizacion mediante html5
@@ -35,6 +35,12 @@ function initMap() {
         document.getElementById("addr").value = geocoderResults[0].address_components[1].short_name + ' ' + geocoderResults[0].address_components[0].long_name;
       });
 
+      //Rellenamos los inputs de direccion con la latitud y longitud
+      document.getElementById("lat").value = position.coords.latitude;
+
+      document.getElementById("lng").value = position.coords.longitude;
+
+      //Rellenamos los inputs esta vez cuando el usuario mueve el marcador
       google.maps.event.addListener(marker, 'dragend', function (event) {
 
         geocoder.geocode({
@@ -42,6 +48,11 @@ function initMap() {
         }, function (geocoderResults) {
           document.getElementById("addr").value = geocoderResults[0].address_components[1].short_name + ' ' + geocoderResults[0].address_components[0].long_name;
         });
+
+        document.getElementById("lat").value = event.latLng.lat();
+
+        document.getElementById("lng").value = event.latLng.lng();
+
       });
 
     }, function () {
