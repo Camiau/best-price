@@ -31,10 +31,10 @@ namespace MejorPrecio.MvcView.Controllers
             return View("NewPrice");
         }
 
-[HttpGet]
-        public IActionResult Map()
+        [HttpGet]
+        public IActionResult Map(Guid idProduct)
         {
-            return View("ViewMap");
+            return View("ViewMap", idProduct);
         }
 
         public List<Common.Price> ViewMapPrices(Guid idProd)
