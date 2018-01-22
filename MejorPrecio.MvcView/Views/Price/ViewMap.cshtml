@@ -50,6 +50,10 @@
                   label: (index+1) + ""
                 });
               //markers.push(marker);
+              if(index == 0)
+              {
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+              }
           
                 $.get('/price/viewmapuseremail',{ userId: serverResponse[index]["idUser"] },
                 function(serverResponse2){
