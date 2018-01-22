@@ -33,16 +33,18 @@
 
         </div>
 
-        <div class="form-group">
-            <input type="textarea" placeholder="Descripción del producto" name="Description" required>
-        </div>
+
 
         <div class="form-group">
             <input type="text" placeholder="Marca del producto" name="Brand">
         </div>
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <input type="text" placeholder="Nombre del producto" name="ProductName">
+        </div>-->
+
+        <div class="form-group">
+            <input type="textarea" placeholder="Descripción del producto" name="Description" required>
         </div>
 
         <div class="form-group well">
@@ -50,7 +52,7 @@
             <input id="picture" type="file" name="productImage" accept="image/*" style="display:none" required>
         </div>
 
-        @if(String.IsNullOrEmpty(ViewBag.barCode))
+        @if(String.IsNullOrEmpty(ViewBag.BarCode))
         {
             <div class="form-group well">
                 <label for="barCodeImage">Click para seleccionar la imagen del código de barras</label>
@@ -59,7 +61,7 @@
         }
         else
         {
-            <p>Código de barras     <input type="text" value="@Model" readonly></p>
+            <p>Código de barras     <input type="text" name="BarCode" value="@ViewBag.BarCode" readonly></p>
         }
 
         <div class="form-group">

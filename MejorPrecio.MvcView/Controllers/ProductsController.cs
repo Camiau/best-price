@@ -30,8 +30,6 @@ namespace MejorPrecio.MvcView.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            TempData["BarCode"] = String.Empty;
-
             return View();
         }
 
@@ -49,7 +47,6 @@ namespace MejorPrecio.MvcView.Controllers
             if (product == null)
             {
                 ViewBag.BarCode = barCode;
-                TempData["BarCode"] = barCode;
                 return View();
             }
 
@@ -66,10 +63,18 @@ namespace MejorPrecio.MvcView.Controllers
         }
 
         [HttpGet]
-        public IActionResult NewProduct()
+        public IActionResult NewProduct(string barCode)
         {
-            ViewBag.barCode = TempData["BarCode"];
-            return View();
+            if (String.IsNullOrEmpty(barCode))
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.barCode = barCode;
+                return View();
+            }
+
         }
 
         [HttpPost]
@@ -87,7 +92,7 @@ namespace MejorPrecio.MvcView.Controllers
             {
                 Description = model.Description,
                 Brand = model.Brand,
-                NameProduct = model.ProductName,
+                //NameProduct = model.ProductName,
             };
 
             //Si no nos envía el barCode como string debemos procesar el archivo

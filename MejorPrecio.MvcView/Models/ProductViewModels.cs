@@ -9,7 +9,7 @@ namespace MejorPrecio.MvcView.Models
         [Required]
         public string Description { get; set; }
         public string Brand { get; set; }
-        public string ProductName { get; set; }
+        //public string ProductName { get; set; }
         public string BarCode { get; set; }
 
     }
