@@ -10,6 +10,7 @@ using MejorPrecio.MvcView.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MejorPrecio.MvcView.Controllers
 {
@@ -24,6 +25,7 @@ namespace MejorPrecio.MvcView.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         private ProductsApi logic = new ProductsApi();
+        private PricesApi priceApi = new PricesApi();
 
         [HttpGet]
         public IActionResult Index()
@@ -66,8 +68,8 @@ namespace MejorPrecio.MvcView.Controllers
         [HttpGet]
         public IActionResult NewProduct()
         {
-            var barCode = TempData["BarCode"];
-            return View(barCode);
+            ViewBag.barCode = TempData["BarCode"];
+            return View();
         }
 
         [HttpPost]

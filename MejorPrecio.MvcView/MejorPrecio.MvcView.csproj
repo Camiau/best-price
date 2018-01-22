@@ -4,7 +4,6 @@
    <TargetFramework>netcoreapp2.0</TargetFramework>
  </PropertyGroup>
 
-<<<<<<< HEAD
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="3.3.7" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
@@ -14,13 +13,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
   </ItemGroup>
-=======
- <ItemGroup>
-   <PackageReference Include="bootstrap" Version="3.3.7" />
-   <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
- </ItemGroup>
-
->>>>>>> master
 
  <ItemGroup>
    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
