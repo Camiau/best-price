@@ -74,24 +74,3 @@ function initMap() {
       'Error: Tu navegador no soporta geolocalizacion.');
   }
 }
-
-
-function alertSuccess() {
-  var p = $('.list-group-item-text').detach();
-  $('#infoDiv').append('<div class="alert alert-danger "> Debes ingresar algo</div>');
-  wait = 6000;
-  setTimeout(function () {
-      $('.alert').fadeOut();
-      $('#infoDiv').append(p);
-
-  }, wait);
-
-
-}
-function alertTimeout() {
-  wait = 6000;
-  setTimeout(function () {
-      $('.alert').fadeOut();
-  }, wait);
-}
-

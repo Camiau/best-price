@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using System.Globalization;
 
 namespace MejorPrecio.MvcView.Controllers
 {
@@ -136,8 +137,7 @@ namespace MejorPrecio.MvcView.Controllers
             }
 
             //Guardamos la fecha actual para el nuevo precio
-            newPrice.Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("America/Argentina/Buenos_Aires"));
-
+            newPrice.Date = DateTimeOffset.Now;
             /*Si no salta ninguna excepcion el producto no existía y se crea.
             Tengo que guardar en la BDD el producto antes de guardar la imagen en disco, en caso de que salga algo mal que explote ahora y no una vez que guardamos la imagen...*/
             try
@@ -148,8 +148,18 @@ namespace MejorPrecio.MvcView.Controllers
             //Caso contrario el producto existía o ocurrió un error no manejado
             catch (Exception e)
             {
+                //ViewBag.Message = e.Message;
                 ModelState.AddModelError(String.Empty, e.Message);
-                return RedirectToAction("Index");
+
+                foreach (var state in ViewData.ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
+
+                return View();
             }
 
             //Le decimos el path donde guardar el archivo

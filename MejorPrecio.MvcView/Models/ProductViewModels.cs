@@ -6,7 +6,7 @@ namespace MejorPrecio.MvcView.Models
 {
     public class ProductRegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "La descripción es obligatoria")]
         public string Description { get; set; }
         public string Brand { get; set; }
         //public string ProductName { get; set; }

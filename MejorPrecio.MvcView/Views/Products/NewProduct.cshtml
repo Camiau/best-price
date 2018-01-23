@@ -15,6 +15,13 @@
                     <a href="#" class="list-group-item active" style="background-color: #f2dede; border-color: #f2dede; color:#a94442">
                                 
                         <h4 class="list-group-item-heading ">Ingresa los datos de tu nuevo producto</h4>
+                        @foreach (var state in ViewData.ModelState.Values) 
+                        {
+                            @foreach (var error in state.Errors) 
+                            {
+                                <p class="list-group-item-text" style="color:#a94442" >@error.ErrorMessage</p>
+                            } 
+                        }
 
                     </a>
                 }
@@ -33,8 +40,6 @@
 
         </div>
 
-
-
         <div class="form-group">
             <input type="text" placeholder="Marca del producto" name="Brand">
         </div>
@@ -49,7 +54,7 @@
 
         <div class="form-group well">
             <label for="picture">Click para seleccionar la imagen del producto</label>
-            <input id="picture" type="file" name="productImage" accept="image/*" style="display:none" required>
+            <input id="picture" type="file" name="productImage" accept="image/*" style="display:none">
         </div>
 
         @if(String.IsNullOrEmpty(ViewBag.BarCode))
@@ -66,7 +71,7 @@
 
         <div class="form-group">
             <p>Precio del nuevo producto</p>
-            <input type="number"step="0.01" name="PriceEffective" value="0.0" required>
+            <input type="number"step="0.01" name="PriceEffective" value="0.0" min="0.0"  required>
         </div>
 
         <div class="form-group">
