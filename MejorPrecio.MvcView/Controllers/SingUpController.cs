@@ -11,24 +11,31 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using MejorPrecio.MvcView.Models;
 using MejorPrecio.Api;
 using MejorPrecio.Common;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MejorPrecio.MvcView.Controllers
 {
     public class SingUpController : Controller
     {
-        public async Task<IActionResult> Index(SigUpViewModel model)
+        public async Task<IActionResult> Index(SigUpViewModel model,IFormFile imgDni)
         {
             var myUsersApi = new UsersApi();
-            if (model.Dni==null||model.Email==null||model.Name==null||model.Surname==null)
+            if (model.Dni == null || model.Email == null || model.Name == null || model.Surname == null)
             {
                 this.ModelState.Clear();
+                ViewBag.imgSrc = Environment.GetEnvironmentVariable("DefaultPath") + "Untitled.png";
                 return View("SingUp");
+            }
+            using (var fileStream = new FileStream("../img/sjsjs.png", FileMode.Create))
+            {
+                await imgDni.CopyToAsync(fileStream);
             }
             int number;
             if (!(Int32.TryParse(model.Dni, out number)))
             {
                 this.ModelState.AddModelError("dni", "Dni Incorrecto");
-                return View("LogIn");
+                return View("SingUp");
             }
             var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
             if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
@@ -44,7 +51,6 @@ namespace MejorPrecio.MvcView.Controllers
                 var dniClaim = new Claim(ClaimTypes.Name, model.Dni);
                 var mailClaim = new Claim(ClaimTypes.Email, model.Email);
                 var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
-                //svar idClaim= new Claim(ClaimTypes.)
                 var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
                 var principal = new ClaimsPrincipal(identity);
 

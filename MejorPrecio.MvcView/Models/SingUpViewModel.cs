@@ -13,6 +13,6 @@ namespace MejorPrecio.MvcView.Models
         [Required]
         public string Dni { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string Email { get; set; }   
     }
 }

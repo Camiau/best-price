@@ -11,11 +11,15 @@
 <head>
     <link rel="stylesheet" href="/css/singUp.css">
 </head>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     Nombre:<input type="text" name="name" /><br />
     Apellido:<input type="text" name="surname" /><br />
     Dni: <input type="text" name="dni" /><br />
     Email: <input type="email" name="email" /><br />
     Por favor, ingrese una foto de su DNI:<br/>
+    <input type="file" name="imgDni" accept="image/*">
+    <img src="~/img/Untitled.png">
+    <img src="@ViewBag.imgSrc">
+
     <input type="submit" value="Registrarse" name="SingUp" /><br/>
 </form>
