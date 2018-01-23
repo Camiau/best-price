@@ -49,7 +49,6 @@ namespace MejorPrecio.MvcView.Controllers
                 var dniClaim = new Claim(ClaimTypes.Name, model.Dni);
                 var mailClaim = new Claim(ClaimTypes.Email, model.Email);
                 var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
-                //svar idClaim= new Claim(ClaimTypes.)
                 var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
                 var principal = new ClaimsPrincipal(identity);
 
