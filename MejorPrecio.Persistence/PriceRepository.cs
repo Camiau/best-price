@@ -40,7 +40,6 @@ public class PriceRepository
     }
     public bool RegisterPrice(RegisterPriceModel priceEspecific)
     {
-        var today = DateTimeOffset.Now;
         using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
         {
             conn.Open();
@@ -54,7 +53,7 @@ public class PriceRepository
                 command.Parameters.AddWithValue("@long", priceEspecific.Longitude);
                 command.Parameters.AddWithValue("@idProd", priceEspecific.IdProduct);
                 command.Parameters.AddWithValue("@idUser", priceEspecific.IdUser);
-                command.Parameters.AddWithValue("@date", today);
+                command.Parameters.AddWithValue("@date", priceEspecific.Date);
 
                 using (var reader = command.ExecuteReader())
                 {

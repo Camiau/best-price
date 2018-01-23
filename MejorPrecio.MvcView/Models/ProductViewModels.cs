@@ -8,6 +8,8 @@ namespace MejorPrecio.MvcView.Models
     {
         [Required(ErrorMessage = "La descripción es obligatoria")]
         public string Description { get; set; }
+        
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string Brand { get; set; }
         //public string ProductName { get; set; }
         public string BarCode { get; set; }
