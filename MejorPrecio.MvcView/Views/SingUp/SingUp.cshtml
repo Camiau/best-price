@@ -1,0 +1,21 @@
+@model MejorPrecio.MvcView.Models.LogInViewModel
+
+@if (!ViewData.ModelState.IsValid) {
+    <div class="error" style="color: red">Hubo un error</div>
+    foreach (var state in ViewData.ModelState.Values) {
+        foreach (var error in state.Errors) {
+            <div class="errorLogin">@error.ErrorMessage</div>
+        } 
+    }
+}
+<head>
+    <link rel="stylesheet" href="/css/singUp.css">
+</head>
+<form method="POST">
+    Nombre:<input type="text" name="name" /><br />
+    Apellido:<input type="text" name="surname" /><br />
+    Dni: <input type="text" name="dni" /><br />
+    Email: <input type="email" name="email" /><br />
+    Por favor, ingrese una foto de su DNI:<br/>
+    <input type="submit" value="Registrarse" name="SingUp" /><br/>
+</form>

@@ -14,35 +14,30 @@ using MejorPrecio.Common;
 
 namespace MejorPrecio.MvcView.Controllers
 {
-    public class LogInController : Controller
+    public class SingUpController : Controller
     {
-        public async Task<IActionResult> Index(LogInViewModel model)
+        public async Task<IActionResult> Index(SigUpViewModel model)
         {
             var myUsersApi = new UsersApi();
-            if (model.Dni==null||model.Email==null)
+            if (model.Dni==null||model.Email==null||model.Name==null||model.Surname==null)
             {
                 this.ModelState.Clear();
-                return View("LogIn",model);
+                return View("SingUp");
             }
             int number;
             if (!(Int32.TryParse(model.Dni, out number)))
             {
                 this.ModelState.AddModelError("dni", "Dni Incorrecto");
-                model.Dni="";
-                return View("LogIn",model);
+                return View("LogIn");
             }
             var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
             if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
             {
                 this.ModelState.AddModelError("LogIn", "Se requiere verificacion del Email");
-                return View("LogIn",model);
             }
             else if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.Failure)
             {
                 this.ModelState.AddModelError("email", "Dni o email incorrecto");
-                model.Dni="";
-                model.Email="";
-                return View("LogIn",model);
             }
             if (ModelState.IsValid)
             {

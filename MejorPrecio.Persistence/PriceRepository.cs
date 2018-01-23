@@ -48,7 +48,6 @@ public class PriceRepository
             {
                 command.CommandType = CommandType.Text;//Excecute scalar devele el 1er valor de la primera fila que devolveria
                 command.CommandText = @"INSERT INTO prices (price,latitude,longitude,idProduct,idUser,dateOfUpload) VALUES (@priceEsp ,@lat ,@long ,@idProd ,@idUser ,@date)";
-
                 command.Parameters.AddWithValue("@priceEsp", priceEspecific.PriceEffective);
                 command.Parameters.AddWithValue("@lat", priceEspecific.Latitude);
                 command.Parameters.AddWithValue("@long", priceEspecific.Longitude);
