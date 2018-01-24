@@ -14,6 +14,13 @@ namespace MejorPrecio.Persistence
         private SimpleUserModel _logedIn = new SimpleUserModel();
 
         public SimpleUserModel logedIn { get { return _logedIn; } }
+        public enum UserStatus
+        {
+            EmailExits,
+            DniExits,
+            UserExist,
+            OkToContinue
+        }
         private static string conectionStringLocalDB = Environment.GetEnvironmentVariable("conectionStringLocalDB");
         public bool CreateUser(ApplicationUser user)
         {
@@ -75,7 +82,7 @@ namespace MejorPrecio.Persistence
                             user.Dni = reader["dni"].ToString();
                             user.Email = reader["mail"].ToString();
                             user.ImagePath = reader["imagePath"].ToString();
-                            user.IdRol =(Guid)reader["idRole"];
+                            user.IdRol = (Guid)reader["idRole"];
                             user.EmailIsConfirmed = bool.Parse(reader["EmailIsConfirmed"].ToString());
                         }
                     }
@@ -83,7 +90,46 @@ namespace MejorPrecio.Persistence
             }
             return user;
         }
+        public UserStatus CheckUser(string email, string dni)
+        {
+            var res = UserStatus.OkToContinue;
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT * FROM users WHERE users.mail=@email AND active=1";
+                    command.Parameters.AddWithValue("@email", email);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows == true)
+                        {
+                            res = UserStatus.EmailExits;
+                        }
 
+                    }
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT * FROM users WHERE users.dni=@dni AND active=1";
+                    command.Parameters.AddWithValue("@dni", dni);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows == true)
+                        {
+                            if (res==UserStatus.EmailExits)
+                            {
+                                res= UserStatus.UserExist;
+                            }
+                            else
+                            {
+                                res = UserStatus.DniExits;
+                            }
+                        }
+                    }
+                }
+            }
+            return res;
+        }
         public ApplicationUser GetUserById(Guid idUser)
         {
             var user = new ApplicationUser();

@@ -125,7 +125,11 @@ namespace MejorPrecio.Api
             var data = new UserRepository();
             return data.GetUserById( idUser );
         }
-
+        public UserRepository.UserStatus CheckUser(string email, string dni)
+        {
+            var data = new UserRepository();
+            return data.CheckUser(email,dni);
+        }
     }
 
 }

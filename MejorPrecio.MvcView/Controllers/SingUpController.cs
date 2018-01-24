@@ -27,15 +27,16 @@ namespace MejorPrecio.MvcView.Controllers
                 ViewBag.imgSrc = Environment.GetEnvironmentVariable("DefaultPath") + "Untitled.png";
                 return View("SingUp");
             }
-            using (var fileStream = new FileStream("../img/sjsjs.png", FileMode.Create))
-            {
-                await imgDni.CopyToAsync(fileStream);
-            }
             int number;
             if (!(Int32.TryParse(model.Dni, out number)))
             {
                 this.ModelState.AddModelError("dni", "Dni Incorrecto");
                 return View("SingUp");
+            }
+            // To upload the image from DNI user 
+            using (var fileStream = new FileStream("../img/sjsjs.png", FileMode.Create))
+            {
+                await imgDni.CopyToAsync(fileStream);
             }
             var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
             if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
