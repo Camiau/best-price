@@ -1,4 +1,8 @@
 <div class="container row">
+    @if(!System.String.IsNullOrEmpty(ViewBag.Errors))
+    {
+        <div class="alert alert-danger">@ViewBag.Errors</div>
+    }
     <form class="col-md-6" action="/Products/Search" method="post" enctype="multipart/form-data">
         <p>Ingresa la imagen a buscar.</p>
         <div class="form-group">

@@ -1,4 +1,5 @@
 @using MejorPrecio.Common
+@using System
 @model Product
 <div>
     @if(!ViewData.ModelState.IsValid)
@@ -22,6 +23,7 @@
         <p>
             @Model.Description
         </p>
+        <img src="@Model.ImgSrc" style="width:300px; height:300px">
         <form action="@Url.Action("Map","Price")">
             <input class="hidden" type="text" name="idProduct" value="@Model.IdProduct.ToString()" readonly>
             <button type="submit">Ver en el mapa!</button>

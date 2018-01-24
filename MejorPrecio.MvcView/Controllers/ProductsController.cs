@@ -26,12 +26,15 @@ namespace MejorPrecio.MvcView.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         private ProductsApi logic = new ProductsApi();
-        private PricesApi priceApi = new PricesApi();
 
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+                if(TempData["Errors"] != null)
+                {
+                   ViewBag.Errors = TempData["Errors"].ToString(); 
+                }
+                return View();
         }
 
         [HttpGet]
@@ -50,6 +53,7 @@ namespace MejorPrecio.MvcView.Controllers
                 ViewBag.BarCode = barCode;
                 return View();
             }
+            product.ImgSrc = Environment.GetEnvironmentVariable("DefaultPath") + "Products/"+ product.ImgSrc;
 
             return View(product);
         }
@@ -58,6 +62,11 @@ namespace MejorPrecio.MvcView.Controllers
         public IActionResult Search(IFormFile image)
         {
 
+            if(image == null)
+            {
+                TempData["Errors"] = "Debes ingresar una imagen para buscar";
+                return RedirectToAction("Index");
+            }
             var code = logic.GetBarcode(image.OpenReadStream());
 
             return RedirectToAction("Search", new { barCode = code });
@@ -87,7 +96,7 @@ namespace MejorPrecio.MvcView.Controllers
                 return View();
             }
 
-            var productsImageFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images", "Products");
+            var productsImagesFolder = Path.Combine(Directory.GetCurrentDirectory() , "img", "Products");
 
             var newProduct = new ProductRegister()
             {
@@ -150,21 +159,12 @@ namespace MejorPrecio.MvcView.Controllers
             {
                 //ViewBag.Message = e.Message;
                 ModelState.AddModelError(String.Empty, e.Message);
-
-                foreach (var state in ViewData.ModelState.Values)
-                {
-                    foreach (var error in state.Errors)
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
-
                 return View();
             }
 
             //Le decimos el path donde guardar el archivo
-            productsImageFolder = Path.Combine(productsImageFolder, newProduct.ImgSrc);
-            using (var fileStream = new FileStream(productsImageFolder, FileMode.Create))
+            productsImagesFolder = Path.Combine(productsImagesFolder, newProduct.ImgSrc);
+            using (var fileStream = new FileStream(productsImagesFolder, FileMode.Create))
             {
                 await productImage.CopyToAsync(fileStream);
             }
