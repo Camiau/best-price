@@ -77,12 +77,12 @@ namespace MejorPrecio.MvcView
             app.UseAuthentication();
 
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
+           /* app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
            Path.Combine(Directory.GetCurrentDirectory(), "img")),
                 RequestPath = "/img"
-            });
+            });*/
 
             app.UseMvc(routes =>
             {

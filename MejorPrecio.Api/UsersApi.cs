@@ -27,6 +27,13 @@ namespace MejorPrecio.Api
             Success,
             Failure
         }
+        public enum UserStatus
+        {
+            EmailExits,
+            DniExits,
+            UserExist,
+            OkToContinue
+        }
         public SignUpStatus RegisterUser(RegisterModel newUser)
         {
             var db = new UserRepository();
@@ -39,6 +46,7 @@ namespace MejorPrecio.Api
                 saveuser.Dni = newUser.Dni;
                 saveuser.Email = newUser.Email;
                 saveuser.EmailIsConfirmed = false;
+                saveuser.ImagePath= newUser.ImagePath;
                 var singUpStatus = db.CreateUser(saveuser);
                 if (singUpStatus == true)
                 {
@@ -69,7 +77,7 @@ namespace MejorPrecio.Api
             }
             else
             {
-                pvrUser=newUser;
+                pvrUser = newUser;
                 return SignInStatus.Success;
             }
             /*switch (result)
@@ -123,12 +131,26 @@ namespace MejorPrecio.Api
         public ApplicationUser GetUserById(Guid idUser)
         {
             var data = new UserRepository();
-            return data.GetUserById( idUser );
+            return data.GetUserById(idUser);
         }
-        public UserRepository.UserStatus CheckUser(string email, string dni)
+        public UserStatus CheckUser(string email, string dni)
         {
             var data = new UserRepository();
-            return data.CheckUser(email,dni);
+            var chEmail = data.EmailExits(email);
+            var chDni = data.DniExits(dni);
+            if (chEmail==true && chDni==true)
+            {
+                return UserStatus.UserExist;
+            }
+            if (chEmail==true)
+            {
+                return UserStatus.EmailExits;
+            }
+            if (chDni==true)
+            {
+                return UserStatus.DniExits;
+            }
+            return UserStatus.OkToContinue;
         }
     }
 

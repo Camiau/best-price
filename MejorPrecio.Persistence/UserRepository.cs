@@ -14,13 +14,6 @@ namespace MejorPrecio.Persistence
         private SimpleUserModel _logedIn = new SimpleUserModel();
 
         public SimpleUserModel logedIn { get { return _logedIn; } }
-        public enum UserStatus
-        {
-            EmailExits,
-            DniExits,
-            UserExist,
-            OkToContinue
-        }
         private static string conectionStringLocalDB = Environment.GetEnvironmentVariable("conectionStringLocalDB");
         public bool CreateUser(ApplicationUser user)
         {
@@ -30,13 +23,14 @@ namespace MejorPrecio.Persistence
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('@userName', '@userSurname', '@userDni', '@userEmail', '@userImagePath ', '@idRol')";
+                    command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRole) VALUES(@userName, @userSurname, @userDni, @userEmail, @userImagePath , @idRole)";
                     command.Parameters.AddWithValue("@username", user.Name);
                     command.Parameters.AddWithValue("@userSurname", user.Surname);
                     command.Parameters.AddWithValue("@userDni", user.Dni);
                     command.Parameters.AddWithValue("@userEmail", user.Email);
                     command.Parameters.AddWithValue("@userImagePath", user.ImagePath);
-                    command.Parameters.AddWithValue("@idRol", 0);
+                    var myRoleId= new Guid("C81F1970-A6A7-4096-86AA-89EA6C9FD89F");
+                    command.Parameters.AddWithValue("@idRole",myRoleId);
                     command.ExecuteNonQuery();
                 }
             }
@@ -90,9 +84,9 @@ namespace MejorPrecio.Persistence
             }
             return user;
         }
-        public UserStatus CheckUser(string email, string dni)
+        public bool EmailExits(string email)
         {
-            var res = UserStatus.OkToContinue;
+            var res = false;
             using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
             {
                 conn.Open();
@@ -105,10 +99,22 @@ namespace MejorPrecio.Persistence
                     {
                         if (reader.HasRows == true)
                         {
-                            res = UserStatus.EmailExits;
+                            res = true;
                         }
 
                     }
+                }
+            }
+            return res;
+        }
+        public bool DniExits(string dni)
+        {
+            var res=false;
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
                     command.CommandType = CommandType.Text;
                     command.CommandText = @"SELECT * FROM users WHERE users.dni=@dni AND active=1";
                     command.Parameters.AddWithValue("@dni", dni);
@@ -116,14 +122,7 @@ namespace MejorPrecio.Persistence
                     {
                         if (reader.HasRows == true)
                         {
-                            if (res==UserStatus.EmailExits)
-                            {
-                                res= UserStatus.UserExist;
-                            }
-                            else
-                            {
-                                res = UserStatus.DniExits;
-                            }
+                            res=true;
                         }
                     }
                 }

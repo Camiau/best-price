@@ -18,7 +18,7 @@ namespace MejorPrecio.MvcView.Controllers
 {
     public class SingUpController : Controller
     {
-        public async Task<IActionResult> Index(SigUpViewModel model,IFormFile imgDni)
+        public async Task<IActionResult> Index(SigUpViewModel model, IFormFile imgDni)
         {
             var myUsersApi = new UsersApi();
             if (model.Dni == null || model.Email == null || model.Name == null || model.Surname == null)
@@ -33,36 +33,49 @@ namespace MejorPrecio.MvcView.Controllers
                 this.ModelState.AddModelError("dni", "Dni Incorrecto");
                 return View("SingUp");
             }
+            var chkUser = myUsersApi.CheckUser(model.Email, model.Dni);
+            if (!(chkUser == UsersApi.UserStatus.OkToContinue))
+            {
+                if (chkUser == UsersApi.UserStatus.DniExits)
+                {
+                    this.ModelState.AddModelError("dni", "El dni ya se encuentra registrado");
+                }
+                if (chkUser == UsersApi.UserStatus.EmailExits)
+                {
+                    this.ModelState.AddModelError("email", "El email ya se encuentra registrado");
+                }
+                if (chkUser == UsersApi.UserStatus.UserExist)
+                {
+                    this.ModelState.AddModelError("dni", "El usuario ya se encuentra registrado");
+                }
+                return View("SingUp");
+            }
             // To upload the image from DNI user 
-            using (var fileStream = new FileStream("../img/sjsjs.png", FileMode.Create))
+            var strPath = "../img/" + model.Name + model.Surname +model.Dni + ".png";
+            using (var fileStream = new FileStream(strPath, FileMode.Create))
             {
                 await imgDni.CopyToAsync(fileStream);
             }
-            var usrToLogIn = new SimpleUserModel(model.Email, model.Dni);
-            if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.RequiresVerification)
-            {
-                this.ModelState.AddModelError("LogIn", "Se requiere verificacion del Email");
-            }
-            else if (myUsersApi.Login(usrToLogIn) == UsersApi.SignInStatus.Failure)
-            {
-                this.ModelState.AddModelError("email", "Dni o email incorrecto");
-            }
             if (ModelState.IsValid)
             {
-                var dniClaim = new Claim(ClaimTypes.Name, model.Dni);
-                var mailClaim = new Claim(ClaimTypes.Email, model.Email);
-                var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
-                var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
-                var principal = new ClaimsPrincipal(identity);
-
-                await this.HttpContext.SignInAsync(principal);
-                // hacer login
-
-                return RedirectToAction("Index", "Home");
+                var usrToSignIn = new RegisterModel();
+                usrToSignIn.Dni = model.Dni;
+                usrToSignIn.Email = model.Email;
+                usrToSignIn.ImagePath = strPath;
+                usrToSignIn.Name = model.Name;
+                usrToSignIn.Surname = model.Surname;
+                if (myUsersApi.RegisterUser(usrToSignIn) == UsersApi.SignUpStatus.Success)
+                {
+                    return RedirectToAction("Index", "LogIn");
+                }
+                else
+                {
+                    return View("SingUp");
+                }
             }
             else
             {
-                return View("LogIn");
+                return View("SingUp");
             }
         }
     }
