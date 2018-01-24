@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace MejorPrecio.MvcView
 {
@@ -74,6 +76,14 @@ namespace MejorPrecio.MvcView
             app.UseAuthentication();
 
             app.UseStaticFiles();
+
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "img")),
+                RequestPath = "/img"
+            });
 
             app.UseMvc(routes =>
             {

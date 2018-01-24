@@ -1,9 +1,19 @@
 @using MejorPrecio.Common
+@using System
 @model Product
 <div>
     @if(!ViewData.ModelState.IsValid)
     {
         <div asp-validation-summary="All"></div>
+    }
+    else if(ViewBag.BarCode != null)
+    {
+        <p>El producto con el código de barras '@ViewBag.BarCode' no existe. Deseas crearlo?</p>
+        <a href="@Url.Action("Index", "Products")"><button type="button">No (Sacame de aquí)</button></a>
+        <form action="@Url.Action("NewProduct", "Products")" method="GET">
+            <input class="hidden" type="text" name="barCode" value="@ViewBag.BarCode" readonly>
+            <button type="submit">Si!</button>
+        </form>
     }
     else
     {
@@ -11,8 +21,12 @@
             @Model.BarCode
         </h2>
         <p>
-            @Model.IdProduct : @Model.Description
+            @Model.Description
         </p>
-
+        <img src="@Model.ImgSrc" style="width:300px; height:300px">
+        <form action="@Url.Action("Map","Price")">
+            <input class="hidden" type="text" name="idProduct" value="@Model.IdProduct.ToString()" readonly>
+            <button type="submit">Ver en el mapa!</button>
+        </form>
     }
 </div>
