@@ -19,6 +19,10 @@ namespace MejorPrecio.MvcView.Controllers
         public async Task<IActionResult> Index(LogInViewModel model)
         {
             var myUsersApi = new UsersApi();
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (model.Dni==null||model.Email==null)
             {
                 this.ModelState.Clear();
@@ -51,16 +55,20 @@ namespace MejorPrecio.MvcView.Controllers
                 var roleClaim = new Claim(ClaimTypes.Role, myUsersApi.GetCurrentRole().RoleName);
                 var identity = new ClaimsIdentity(new[] { dniClaim, mailClaim, roleClaim }, "cookie");
                 var principal = new ClaimsPrincipal(identity);
-
                 await this.HttpContext.SignInAsync(principal);
-                // hacer login
-
+                // hacer login  
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 return View("LogIn");
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> LogOut(ClaimsIdentity loggedIdentity)
+        {
+            await this.HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "LogIn");
         }
     }
 }
