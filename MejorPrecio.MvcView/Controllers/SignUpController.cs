@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace MejorPrecio.MvcView.Controllers
 {
-    public class SingUpController : Controller
+    public class SignUpController : Controller
     {
         public async Task<IActionResult> Index(SigUpViewModel model, IFormFile imgDni)
         {
@@ -25,13 +25,13 @@ namespace MejorPrecio.MvcView.Controllers
             {
                 this.ModelState.Clear();
                 ViewBag.imgSrc = Environment.GetEnvironmentVariable("DefaultPath") + "Untitled.png";
-                return View("SingUp");
+                return View("SignUp");
             }
             int number;
             if (!(Int32.TryParse(model.Dni, out number)))
             {
                 this.ModelState.AddModelError("dni", "Dni Incorrecto");
-                return View("SingUp");
+                return View("SignUp");
             }
             var chkUser = myUsersApi.CheckUser(model.Email, model.Dni);
             if (!(chkUser == UsersApi.UserStatus.OkToContinue))
@@ -48,7 +48,7 @@ namespace MejorPrecio.MvcView.Controllers
                 {
                     this.ModelState.AddModelError("dni", "El usuario ya se encuentra registrado");
                 }
-                return View("SingUp");
+                return View("SignUp");
             }
             // To upload the image from DNI user 
             var strPath = "../img/" + model.Name + model.Surname +model.Dni + ".png";
@@ -70,12 +70,12 @@ namespace MejorPrecio.MvcView.Controllers
                 }
                 else
                 {
-                    return View("SingUp");
+                    return View("SignUp");
                 }
             }
             else
             {
-                return View("SingUp");
+                return View("SignUp");
             }
         }
     }
