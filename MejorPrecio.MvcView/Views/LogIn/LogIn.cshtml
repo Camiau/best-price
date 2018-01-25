@@ -1,20 +1,41 @@
 @model MejorPrecio.MvcView.Models.LogInViewModel
-
+<head>
+    <link rel="stylesheet" href="/css/Login.css">
+</head>
 @if (!ViewData.ModelState.IsValid) {
-    <div class="error" style="color: red">Hubo un error</div>
+    <div class="error"><h6 class="errorLogin">Hubo un error</h6></div>
     foreach (var state in ViewData.ModelState.Values) {
         foreach (var error in state.Errors) {
             <div class="errorLogin">@error.ErrorMessage</div>
+            @if(@error.ErrorMessage=="Se requiere verificacion del Email")
+            {
+                <h6 class="errorMailLabel">Para volver a enviar el mail, por favor haga click aqui:</h6>
+                <input type="submit" value="Enviar Email" class="errorEmailButton" name="checkEmails" /><br/>
+            }
         } 
     }
 }
-<head>
-    <link rel="stylesheet" href="/css/login.css">
-</head>
 <form method="POST">
-    Dni: <input type="text" name="dni" /><br />
-    Email: <input type="email" name="email" /><br />
+        @if(Model.Dni==null)
+                {
+                   <h4>Dni:</h4> <input type="text" name="Dni"/><br>
+                }
+                else
+                {
+                  <h4>Dni:</h4> <input type="text" name="Dni" value="@Model.Dni" /><br>
+                }
+        @if(Model.Email==null)
+                {
+                    <h4>Email:</h4> <input type="email" name="email" /><br />
+                }
+                else
+                {
+                    <h4>Email:</h4> <input type="email" name="email" value="@Model.Email" /><br />
+                }
     <input type="submit" value="Login" name="LogIn" /><br/>
-    Sí usted no esta registrado, por favor registrese<br/>
-    <input type="submit" value="Registrarse" onclick="">
+    <h5>Sí usted no esta registrado, por favor registrese</h5><br/>
+    <a href="SignUp">
+        <input type="button" value="Registrarse" name="registerNewUser" class="registerNewUser">
+    </a>
 </form>
+    

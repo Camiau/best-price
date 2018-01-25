@@ -23,13 +23,14 @@ namespace MejorPrecio.Persistence
                 using (var command = conn.CreateCommand())
                 {
                     command.CommandType = CommandType.Text;
-                    command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRol) VALUES('@userName', '@userSurname', '@userDni', '@userEmail', '@userImagePath ', '@idRol')";
+                    command.CommandText = @"INSERT INTO users (nameUser,lastName,dni,mail,imagePath,idRole) VALUES(@userName, @userSurname, @userDni, @userEmail, @userImagePath , @idRole)";
                     command.Parameters.AddWithValue("@username", user.Name);
                     command.Parameters.AddWithValue("@userSurname", user.Surname);
                     command.Parameters.AddWithValue("@userDni", user.Dni);
                     command.Parameters.AddWithValue("@userEmail", user.Email);
                     command.Parameters.AddWithValue("@userImagePath", user.ImagePath);
-                    command.Parameters.AddWithValue("@idRol", 0);
+                    var myRoleId= new Guid("C81F1970-A6A7-4096-86AA-89EA6C9FD89F");
+                    command.Parameters.AddWithValue("@idRole",myRoleId);
                     command.ExecuteNonQuery();
                 }
             }
@@ -75,7 +76,7 @@ namespace MejorPrecio.Persistence
                             user.Dni = reader["dni"].ToString();
                             user.Email = reader["mail"].ToString();
                             user.ImagePath = reader["imagePath"].ToString();
-                            user.IdRol =(Guid)reader["idRole"];
+                            user.IdRol = (Guid)reader["idRole"];
                             user.EmailIsConfirmed = bool.Parse(reader["EmailIsConfirmed"].ToString());
                         }
                     }
@@ -83,7 +84,51 @@ namespace MejorPrecio.Persistence
             }
             return user;
         }
+        public bool EmailExits(string email)
+        {
+            var res = false;
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT * FROM users WHERE users.mail=@email AND active=1";
+                    command.Parameters.AddWithValue("@email", email);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows == true)
+                        {
+                            res = true;
+                        }
 
+                    }
+                }
+            }
+            return res;
+        }
+        public bool DniExits(string dni)
+        {
+            var res=false;
+            using (SqlConnection conn = new SqlConnection(conectionStringLocalDB))
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = @"SELECT * FROM users WHERE users.dni=@dni AND active=1";
+                    command.Parameters.AddWithValue("@dni", dni);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows == true)
+                        {
+                            res=true;
+                        }
+                    }
+                }
+            }
+            return res;
+        }
         public ApplicationUser GetUserById(Guid idUser)
         {
             var user = new ApplicationUser();

@@ -1,3 +1,16 @@
 .errorLogin{
     color: red;
 }
+.errorMailLabel
+{
+    color:red;
+}
+.errorEmailButton
+{
+    height: 25px;
+    width: 100px;
+}
+.registerNewUser
+{
+    color: black;
+}

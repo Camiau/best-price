@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.IO;
 using Microsoft.Extensions.FileProviders;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MejorPrecio.MvcView
 {
@@ -33,14 +29,16 @@ namespace MejorPrecio.MvcView
             })
                 .AddCookie(option =>
                 {
-                    option.Events.OnRedirectToLogin = async context =>
+                    option.Events.OnRedirectToLogin =  context =>
                     {
                         context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
                     };
 
-                    option.Events.OnRedirectToAccessDenied = async context =>
+                    option.Events.OnRedirectToAccessDenied =  context =>
                     {
                         context.Response.StatusCode = 403;
+                        return Task.CompletedTask;
                     };
                 });
             // configuramos autenticacion por cookies y custom
@@ -76,14 +74,20 @@ namespace MejorPrecio.MvcView
             app.UseAuthentication();
 
             app.UseStaticFiles();
+           /* app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), "img")),
+                RequestPath = "/img"
+            });*/
 
 
-            app.UseStaticFiles(new StaticFileOptions
+            /*app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "img")),
                 RequestPath = "/img"
-            });
+            });¨*/
 
             app.UseMvc(routes =>
             {

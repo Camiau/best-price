@@ -35,6 +35,14 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
             </div>
+            @if (User.Identity.IsAuthenticated)
+             {
+                <form id="logoutForm" class="nav navbar-nav navbar-right" action="@Url.Action("LogOut", "LogIn")" method="POST" >
+                    <ul class="">
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+                    </ul>
+                </form>
+           }
         </div>
     </nav> 
     <div class="container body-content">

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MejorPrecio.Api;
 using System.Text.RegularExpressions;// For regex
+using MejorPrecio.Persistence;
 
 namespace testconsola.mejor_precio_6
 {
@@ -56,7 +57,7 @@ namespace testconsola.mejor_precio_6
             System.Console.WriteLine("OS:" + os.Platform.ToString());
             var sendGr = new Example.Example2();
             sendGr.Main();
-
+            
         }
         /*static private void Fer()
         {
