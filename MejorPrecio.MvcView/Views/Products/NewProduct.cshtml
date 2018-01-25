@@ -1,27 +1,103 @@
 @model System.String
-<div class="container">
+@{
+    ViewBag.Title = "Nuevo producto";
+}
+<link rel="stylesheet" href="@Url.Content("~/css/newProduct.css")"/>
 
-    <form action="/Products/NewProduct" method="post" enctype="multipart/form-data">
-        <p>Ingresa los datos de tu nuevo producto.</p>
-        <div class="form-group">
-            <input type="text" placeholder="Descripción del producto" name="description">
+<div class="container-fluid row">
+
+    <form class="col-md-6" action="@Url.Action("NewProduct", "Products")" method="POST" enctype="multipart/form-data">
+
+         <div class="list-group">
+
+                @if(!ViewData.ModelState.IsValid)
+                {
+                    <a href="#" class="list-group-item active" style="background-color: #f2dede; border-color: #f2dede; color:#a94442">
+                                
+                        <h4 class="list-group-item-heading ">Ingresa los datos de tu nuevo producto</h4>
+                        @foreach (var state in ViewData.ModelState.Values) 
+                        {
+                            @foreach (var error in state.Errors) 
+                            {
+                                <p class="list-group-item-text" style="color:#a94442" >@error.ErrorMessage</p>
+                            } 
+                        }
+
+                    </a>
+                }
+                else
+                {
+                    <a href="#" id="infoDiv" class="list-group-item active">
+
+                        <h4 class="list-group-item-heading">Ingresa los datos de tu nuevo producto</h4>
+
+                        <p class="list-group-item-text">Instrucciones: para cargar un nuevo producto debes ingresar los datos
+                            y mover el marcador rojo en el mapa hasta que aparezca la dirección donde se comercializa
+                        </p>
+
+                    </a>
+                }
+
         </div>
+
         <div class="form-group">
-            <input type="file" name="file">
+            <input type="text" placeholder="Marca del producto" name="Brand">
         </div>
-        @if(Model == null)
+
+        <!--<div class="form-group">
+            <input type="text" placeholder="Nombre del producto" name="ProductName">
+        </div>-->
+
+        <div class="form-group">
+            <input type="textarea" placeholder="Descripción del producto" name="Description" required>
+        </div>
+
+        <div class="form-group well">
+            <label for="picture">Click para seleccionar la imagen del producto</label>
+            <input id="picture" type="file" name="productImage" accept="image/*" style="display:none">
+        </div>
+
+        @if(String.IsNullOrEmpty(ViewBag.BarCode))
         {
-            <div class="form-group">
-                <input type="file" name="notFile">
+            <div class="form-group well">
+                <label for="barCodeImage">Click para seleccionar la imagen del código de barras</label>
+                <input id="barCodeImage" type="file" name="barCodeImage" accept="image/*" style="display:none" required>
             </div>
         }
         else
         {
-            <p>CODIGO DE BARRAS = @Model</p>
+            <p>Código de barras     <input type="text" name="BarCode" value="@ViewBag.BarCode" readonly></p>
         }
+
+        <div class="form-group">
+            <p>Precio del nuevo producto</p>
+            <input type="number"step="0.01" name="PriceEffective" value="0.0" min="0.0"  required>
+        </div>
+
+        <div class="form-group">
+            <p>Dirección del negocio. ( seleccionar en el mapa )</p><input type="text" id="addr" readonly>
+        </div>
+
+        <input id="lat" type="number" name="Latitude"  class="hidden" readonly>
+
+        <input id="lng" type="number" name="Longitude" class="hidden" readonly>
+
         <div>
             <button type="submit">Enviar!</button>
         </div>
+
     </form>
 
+    <div class="col-md-6">
+
+        <div id="map" class="col-md-6" style="width:100%;height:400px"></div>
+
+    </div>
+
 </div>
+@section Scripts 
+{
+        <script src="~/js/newProduct.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlh_1k6Nz4HrxT6bosPTVR79AxFxJZLCc&callback=initMap"></script>
+
+}

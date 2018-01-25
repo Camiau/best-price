@@ -31,10 +31,10 @@ namespace MejorPrecio.MvcView.Controllers
             return View("NewPrice");
         }
 
-[HttpGet]
-        public IActionResult Map()
+        [HttpGet]
+        public IActionResult Map(Guid idProduct)
         {
-            return View("ViewMap");
+            return View("ViewMap", idProduct);
         }
 
         public List<Common.Price> ViewMapPrices(Guid idProd)
@@ -82,6 +82,7 @@ namespace MejorPrecio.MvcView.Controllers
                 var myPriceApi = new PricesApi();
                 priceToLoad.IdUser = new Guid("0103E7C2-AB6A-4ED6-9A99-0476C88A7C09");
                 priceToLoad.IdProduct = new Guid("3273A441-48C3-48D1-8DFF-0005003092A4");
+                priceToLoad.Date = DateTimeOffset.Now;
                 var okLoad = myPriceApi.LoadNewPrice(convertMvcToCommon(priceToLoad));
             }
             catch (System.Exception ex)

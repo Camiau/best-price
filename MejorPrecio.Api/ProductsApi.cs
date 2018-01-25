@@ -11,7 +11,7 @@ namespace MejorPrecio.Api
         private ProductRepository db = new ProductRepository();
         private BarcodeScanner scanner = new BarcodeScanner();
 
-        public string GetBarcode (Stream str)
+        public string GetBarcode(Stream str)
         {
             return scanner.ScanBarcode(str);
 
@@ -46,7 +46,11 @@ namespace MejorPrecio.Api
                 Product product = new Product()
                 {
                     BarCode = newProduct.BarCode,
-                    Description = newProduct.Description
+                    Description = newProduct.Description,
+                    Brand = newProduct.Brand,
+                    NameProduct = newProduct.NameProduct,
+                    ImgSrc = newProduct.ImgSrc,
+                    
                 };
 
                 db.RegisterProduct(product);
@@ -69,6 +73,6 @@ namespace MejorPrecio.Api
             db.DeleteProduct(product.IdProduct);
         }
 
-        
+
     }
 }

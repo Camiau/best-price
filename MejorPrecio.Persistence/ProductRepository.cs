@@ -99,10 +99,11 @@ public class ProductRepository
             using (var command = conn.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct,imgProduct) VALUES (@barCode, @description,@imgProduct)";
+                command.CommandText = @"INSERT INTO products (codeBar, descriptionProduct,imgProduct, brand) VALUES (@barCode, @description,@imgProduct,@brand)";
                 command.Parameters.AddWithValue("@barCode", product.BarCode);
                 command.Parameters.AddWithValue("@description", product.Description);
                 command.Parameters.AddWithValue("@imgProduct", product.ImgSrc);
+                command.Parameters.AddWithValue("@brand", product.Brand);
                 command.ExecuteNonQuery();
             }
         }

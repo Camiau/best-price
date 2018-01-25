@@ -27,6 +27,7 @@ namespace MejorPrecio.WebApi.Controllers
         [HttpPost]
         public IActionResult Post(RegisterPriceModel price)
         {
+            price.Date = DateTimeOffset.Now;
             new PricesApi().LoadNewPrice(price);
             return this.StatusCode(201);
         }
